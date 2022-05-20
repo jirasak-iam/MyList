@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="myListModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'myList.dbo.ListTypeMast' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ListTypeMast">
+          <Key>
+            <PropertyRef Name="listTypeId" />
+          </Key>
+          <Property Name="listTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="listTypeCode" Type="nvarchar" MaxLength="3" />
+          <Property Name="listTypeDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'myList.dbo.MyListMast' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MyListMast">
+          <Key>
+            <PropertyRef Name="listId" />
+            <PropertyRef Name="listTypeId" />
+            <PropertyRef Name="stsId" />
+          </Key>
+          <Property Name="listId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="listTypeId" Type="int" Nullable="false" />
+          <Property Name="listCode" Type="int" />
+          <Property Name="listName" Type="nvarchar(max)" />
+          <Property Name="listLink" Type="nvarchar(max)" />
+          <Property Name="listEP" Type="nvarchar(max)" />
+          <Property Name="listComment" Type="nvarchar(max)" />
+          <Property Name="stsId" Type="int" Nullable="false" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StsMast">
+          <Key>
+            <PropertyRef Name="stsId" />
+          </Key>
+          <Property Name="stsId" Type="int" Nullable="false" />
+          <Property Name="stsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="stsDesc" Type="nvarchar" MaxLength="50" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'myList.dbo.UserProfile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="50" />
+          <Property Name="userPass" Type="varbinary(max)" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="myListModelStoreContainer">
+          <EntitySet Name="StsMast" EntityType="Self.StsMast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListTypeMast" EntityType="Self.ListTypeMast" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ListTypeMast].[listTypeId] AS [listTypeId], 
+    [ListTypeMast].[listTypeCode] AS [listTypeCode], 
+    [ListTypeMast].[listTypeDesc] AS [listTypeDesc], 
+    [ListTypeMast].[recStatus] AS [recStatus], 
+    [ListTypeMast].[createDate] AS [createDate], 
+    [ListTypeMast].[createBy] AS [createBy], 
+    [ListTypeMast].[updateDate] AS [updateDate], 
+    [ListTypeMast].[updateBy] AS [updateBy]
+    FROM [dbo].[ListTypeMast] AS [ListTypeMast]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MyListMast" EntityType="Self.MyListMast" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MyListMast].[listId] AS [listId], 
+    [MyListMast].[listTypeId] AS [listTypeId], 
+    [MyListMast].[listCode] AS [listCode], 
+    [MyListMast].[listName] AS [listName], 
+    [MyListMast].[listLink] AS [listLink], 
+    [MyListMast].[listEP] AS [listEP], 
+    [MyListMast].[listComment] AS [listComment], 
+    [MyListMast].[stsId] AS [stsId], 
+    [MyListMast].[recStatus] AS [recStatus], 
+    [MyListMast].[createDate] AS [createDate], 
+    [MyListMast].[createBy] AS [createBy], 
+    [MyListMast].[updateDate] AS [updateDate], 
+    [MyListMast].[updateBy] AS [updateBy]
+    FROM [dbo].[MyListMast] AS [MyListMast]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserProfile].[userId] AS [userId], 
+    [UserProfile].[userName] AS [userName], 
+    [UserProfile].[userPass] AS [userPass], 
+    [UserProfile].[recStatus] AS [recStatus], 
+    [UserProfile].[createDate] AS [createDate], 
+    [UserProfile].[createBy] AS [createBy], 
+    [UserProfile].[updateDate] AS [updateDate], 
+    [UserProfile].[updateBy] AS [updateBy]
+    FROM [dbo].[UserProfile] AS [UserProfile]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="myListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="StsMast">
+          <Key>
+            <PropertyRef Name="stsId" />
+          </Key>
+          <Property Name="stsId" Type="Int32" Nullable="false" />
+          <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ListTypeMast">
+          <Key>
+            <PropertyRef Name="listTypeId" />
+          </Key>
+          <Property Name="listTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="listTypeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="listTypeDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MyListMast">
+          <Key>
+            <PropertyRef Name="listId" />
+            <PropertyRef Name="listTypeId" />
+            <PropertyRef Name="stsId" />
+          </Key>
+          <Property Name="listId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="listTypeId" Type="Int32" Nullable="false" />
+          <Property Name="listCode" Type="Int32" />
+          <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listEP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="stsId" Type="Int32" Nullable="false" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userPass" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="myListEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="StsMasts" EntityType="Self.StsMast" />
+          <EntitySet Name="ListTypeMasts" EntityType="Self.ListTypeMast" />
+          <EntitySet Name="MyListMasts" EntityType="Self.MyListMast" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="myListModelStoreContainer" CdmEntityContainer="myListEntities">
+          <EntitySetMapping Name="StsMasts">
+            <EntityTypeMapping TypeName="myListModel.StsMast">
+              <MappingFragment StoreEntitySet="StsMast">
+                <ScalarProperty Name="stsId" ColumnName="stsId" />
+                <ScalarProperty Name="stsCode" ColumnName="stsCode" />
+                <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListTypeMasts">
+            <EntityTypeMapping TypeName="myListModel.ListTypeMast">
+              <MappingFragment StoreEntitySet="ListTypeMast">
+                <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
+                <ScalarProperty Name="listTypeCode" ColumnName="listTypeCode" />
+                <ScalarProperty Name="listTypeDesc" ColumnName="listTypeDesc" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MyListMasts">
+            <EntityTypeMapping TypeName="myListModel.MyListMast">
+              <MappingFragment StoreEntitySet="MyListMast">
+                <ScalarProperty Name="listId" ColumnName="listId" />
+                <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
+                <ScalarProperty Name="listCode" ColumnName="listCode" />
+                <ScalarProperty Name="listName" ColumnName="listName" />
+                <ScalarProperty Name="listLink" ColumnName="listLink" />
+                <ScalarProperty Name="listEP" ColumnName="listEP" />
+                <ScalarProperty Name="listComment" ColumnName="listComment" />
+                <ScalarProperty Name="stsId" ColumnName="stsId" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="myListModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userPass" ColumnName="userPass" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

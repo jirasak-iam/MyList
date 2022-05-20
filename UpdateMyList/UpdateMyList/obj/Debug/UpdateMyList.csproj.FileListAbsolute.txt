@@ -1,0 +1,16 @@
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.exe.config
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.exe
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.pdb
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\EntityFramework.dll
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\EntityFramework.SqlServer.dll
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\EntityFramework.xml
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\EntityFramework.SqlServer.xml
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.csprojAssemblyReference.cache
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.Properties.Resources.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.csproj.GenerateResource.cache
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.csproj.CoreCompileInputs.cache
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.csproj.CopyComplete
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.exe
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.pdb
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.Forms.MainForm.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.Forms.MyListForm.resources
