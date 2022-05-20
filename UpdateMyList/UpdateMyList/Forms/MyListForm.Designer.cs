@@ -103,7 +103,7 @@
             this.stslb.Name = "stslb";
             this.stslb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.stslb.Size = new System.Drawing.Size(294, 36);
-            this.stslb.TabIndex = 4;
+            this.stslb.TabIndex = 3;
             this.stslb.SelectedIndexChanged += new System.EventHandler(this.stslb_SelectedIndexChanged);
             // 
             // searchbtn
@@ -111,7 +111,7 @@
             this.searchbtn.Location = new System.Drawing.Point(623, 1);
             this.searchbtn.Name = "searchbtn";
             this.searchbtn.Size = new System.Drawing.Size(63, 29);
-            this.searchbtn.TabIndex = 5;
+            this.searchbtn.TabIndex = 4;
             this.searchbtn.Text = "ค้นหา";
             this.searchbtn.UseVisualStyleBackColor = true;
             this.searchbtn.Click += new System.EventHandler(this.searchbtn_Click);
@@ -130,7 +130,7 @@
             this.searchtxt.Location = new System.Drawing.Point(59, 8);
             this.searchtxt.Name = "searchtxt";
             this.searchtxt.Size = new System.Drawing.Size(192, 22);
-            this.searchtxt.TabIndex = 3;
+            this.searchtxt.TabIndex = 2;
             this.searchtxt.TextChanged += new System.EventHandler(this.searchtxt_TextChanged);
             // 
             // label4
@@ -147,7 +147,7 @@
             this.mainbtn.Location = new System.Drawing.Point(692, 1);
             this.mainbtn.Name = "mainbtn";
             this.mainbtn.Size = new System.Drawing.Size(63, 28);
-            this.mainbtn.TabIndex = 6;
+            this.mainbtn.TabIndex = 5;
             this.mainbtn.Text = "Main";
             this.mainbtn.UseVisualStyleBackColor = true;
             this.mainbtn.Click += new System.EventHandler(this.mainbtn_Click);
@@ -189,7 +189,7 @@
             this.dataGridView1.RowHeadersWidth = 25;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(1512, 430);
-            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
