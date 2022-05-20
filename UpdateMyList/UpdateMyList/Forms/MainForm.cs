@@ -36,6 +36,18 @@ namespace UpdateMyList.Forms
 
         private void listTypelb_DoubleClick(object sender, EventArgs e)
         {
+            openForm();
+        }
+
+        private void listTypelb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                openForm();
+            }
+        }
+        private void openForm()
+        {
             try
             {
                 var selectItem = (ListTypeModel)listTypelb.SelectedItem;
@@ -57,7 +69,11 @@ namespace UpdateMyList.Forms
             {
                 throw ex;
             }
-           
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _uow.Dispose();
         }
     }
 }

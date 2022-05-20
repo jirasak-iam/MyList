@@ -10,6 +10,8 @@ namespace UpdateMyList.Entity.Repository
     public interface IMyListRepository : IBaseRepository<MyListMast>
     {
         List<MyListModel> SelectByType(ListTypeModel model);
+        int UpdateByApp(MyListModel model);
+        int Insert(MyListModel model);
     }
     public class MyListRepository : BaseRepository<MyListMast>, IMyListRepository
     {
@@ -20,7 +22,8 @@ namespace UpdateMyList.Entity.Repository
         public List<MyListModel> SelectByType(ListTypeModel model)
         {
             var rs = (from a in _context.MyListMasts
-                      join b in _context.StsMasts on a.stsId equals b.stsId 
+                      join b in _context.StsMasts on a.stsId equals b.stsId
+                      where a.listTypeId == model.listTypeId
                       select new MyListModel
                       {
                           listId = a.listId,
@@ -38,6 +41,54 @@ namespace UpdateMyList.Entity.Repository
                           updateBy = a.updateBy,
                           updateDate = a.updateDate
                       }).ToList();
+            return rs;
+        }
+        public int UpdateByApp(MyListModel model)
+        {
+            var rs = 0;
+            if (model.listId > 0)
+            {
+                var data = _context.MyListMasts.FirstOrDefault(p => p.listId == model.listId);
+                data.listName = model.listName;
+                data.listLink = model.listLink;
+                data.listEP = model.listEP;
+                data.listComment = model.listComment;
+                data.stsId = model.stsId;
+                data.updateDate = DateTime.Now;
+            }
+            return rs;
+        }
+        public int Insert(MyListModel model)
+        {
+            var rs = 0;
+            if (model != null)
+            {
+                var data = new MyListMast
+                {
+                    listTypeId = model.listTypeId,
+                    listCode = GetMaxCodeByType(model.listTypeId),
+                    listName = model.listName,
+                    listLink = model.listLink,
+                    listEP = model.listEP,
+                    listComment = model.listComment,
+                    stsId = model.stsId,
+                    recStatus= model.recStatus,
+                    createBy = model.createBy,
+                    createDate = model.createDate,
+                    updateDate = model.updateDate
+                };
+                _context.MyListMasts.Add(data);
+            }
+            return rs;
+        }
+        private int GetMaxCodeByType(int typeId)
+        {
+            var rs = 1;
+            if (typeId > 1)
+            {
+                rs = _context.MyListMasts.Where(p => p.listTypeId == typeId).Select(o => o.listCode).Max() ?? 1;
+                rs += 1;
+            }
             return rs;
         }
 

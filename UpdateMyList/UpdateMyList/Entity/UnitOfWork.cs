@@ -10,6 +10,7 @@ namespace UpdateMyList.Entity
     public interface IUnitOfWork
     {
         int Save();
+        void Dispose();
         IMyListRepository MyListRepository { get; }
         IListTypeMastRepository ListTypeMastRepository { get; }
         IStsMastRepository StsMastRepository { get; }

@@ -60,8 +60,10 @@
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Model\BaseModel.cs" />
+    <Compile Include="Entity\Model\DataGridViewModel.cs" />
     <Compile Include="Entity\Model\ListTypeModel.cs" />
     <Compile Include="Entity\Model\MyListModel.cs" />
+    <Compile Include="Entity\Model\StsMastModel.cs" />
     <Compile Include="Entity\MyListEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

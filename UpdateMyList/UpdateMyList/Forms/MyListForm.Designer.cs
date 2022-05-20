@@ -72,7 +72,8 @@
             this.listMangatap.Name = "listMangatap";
             this.listMangatap.SelectedIndex = 0;
             this.listMangatap.Size = new System.Drawing.Size(1579, 553);
-            this.listMangatap.TabIndex = 10;
+            this.listMangatap.TabIndex = 1;
+            this.listMangatap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listMangatap_KeyDown);
             // 
             // listtap
             // 
@@ -102,16 +103,18 @@
             this.stslb.Name = "stslb";
             this.stslb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.stslb.Size = new System.Drawing.Size(294, 36);
-            this.stslb.TabIndex = 6;
+            this.stslb.TabIndex = 4;
+            this.stslb.SelectedIndexChanged += new System.EventHandler(this.stslb_SelectedIndexChanged);
             // 
             // searchbtn
             // 
             this.searchbtn.Location = new System.Drawing.Point(623, 1);
             this.searchbtn.Name = "searchbtn";
             this.searchbtn.Size = new System.Drawing.Size(63, 29);
-            this.searchbtn.TabIndex = 7;
+            this.searchbtn.TabIndex = 5;
             this.searchbtn.Text = "ค้นหา";
             this.searchbtn.UseVisualStyleBackColor = true;
+            this.searchbtn.Click += new System.EventHandler(this.searchbtn_Click);
             // 
             // label6
             // 
@@ -127,7 +130,8 @@
             this.searchtxt.Location = new System.Drawing.Point(59, 8);
             this.searchtxt.Name = "searchtxt";
             this.searchtxt.Size = new System.Drawing.Size(192, 22);
-            this.searchtxt.TabIndex = 4;
+            this.searchtxt.TabIndex = 3;
+            this.searchtxt.TextChanged += new System.EventHandler(this.searchtxt_TextChanged);
             // 
             // label4
             // 
@@ -143,27 +147,30 @@
             this.mainbtn.Location = new System.Drawing.Point(692, 1);
             this.mainbtn.Name = "mainbtn";
             this.mainbtn.Size = new System.Drawing.Size(63, 28);
-            this.mainbtn.TabIndex = 8;
+            this.mainbtn.TabIndex = 6;
             this.mainbtn.Text = "Main";
             this.mainbtn.UseVisualStyleBackColor = true;
+            this.mainbtn.Click += new System.EventHandler(this.mainbtn_Click);
             // 
             // reloadbtn
             // 
             this.reloadbtn.Location = new System.Drawing.Point(1429, 472);
             this.reloadbtn.Name = "reloadbtn";
             this.reloadbtn.Size = new System.Drawing.Size(86, 35);
-            this.reloadbtn.TabIndex = 3;
+            this.reloadbtn.TabIndex = 8;
             this.reloadbtn.Text = "Reload";
             this.reloadbtn.UseVisualStyleBackColor = true;
+            this.reloadbtn.Click += new System.EventHandler(this.reloadbtn_Click);
             // 
             // editbtn
             // 
             this.editbtn.Location = new System.Drawing.Point(1341, 472);
             this.editbtn.Name = "editbtn";
             this.editbtn.Size = new System.Drawing.Size(82, 35);
-            this.editbtn.TabIndex = 2;
+            this.editbtn.TabIndex = 7;
             this.editbtn.Text = "แก้ไข";
             this.editbtn.UseVisualStyleBackColor = true;
+            this.editbtn.Click += new System.EventHandler(this.editbtn_Click);
             // 
             // dataGridView1
             // 
@@ -182,7 +189,11 @@
             this.dataGridView1.RowHeadersWidth = 25;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(1512, 430);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
+            this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
+            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
             // inserttap
             // 
@@ -214,27 +225,30 @@
             this.gobtn.Location = new System.Drawing.Point(946, 107);
             this.gobtn.Name = "gobtn";
             this.gobtn.Size = new System.Drawing.Size(27, 23);
-            this.gobtn.TabIndex = 15;
+            this.gobtn.TabIndex = 14;
             this.gobtn.Text = "G";
             this.gobtn.UseVisualStyleBackColor = true;
+            this.gobtn.Click += new System.EventHandler(this.gobtn_Click);
             // 
             // minusbtn
             // 
             this.minusbtn.Location = new System.Drawing.Point(946, 82);
             this.minusbtn.Name = "minusbtn";
             this.minusbtn.Size = new System.Drawing.Size(27, 23);
-            this.minusbtn.TabIndex = 13;
+            this.minusbtn.TabIndex = 12;
             this.minusbtn.Text = "-";
             this.minusbtn.UseVisualStyleBackColor = true;
+            this.minusbtn.Click += new System.EventHandler(this.minusbtn_Click);
             // 
             // plusbtn
             // 
             this.plusbtn.Location = new System.Drawing.Point(946, 55);
             this.plusbtn.Name = "plusbtn";
             this.plusbtn.Size = new System.Drawing.Size(27, 23);
-            this.plusbtn.TabIndex = 12;
+            this.plusbtn.TabIndex = 11;
             this.plusbtn.Text = "+";
             this.plusbtn.UseVisualStyleBackColor = true;
+            this.plusbtn.Click += new System.EventHandler(this.plusbtn_Click);
             // 
             // label9
             // 
@@ -250,7 +264,8 @@
             this.commenttxt.Location = new System.Drawing.Point(151, 150);
             this.commenttxt.Name = "commenttxt";
             this.commenttxt.Size = new System.Drawing.Size(789, 22);
-            this.commenttxt.TabIndex = 16;
+            this.commenttxt.TabIndex = 15;
+            this.commenttxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.commenttxt_KeyDown);
             // 
             // stscbb
             // 
@@ -277,9 +292,10 @@
             this.claerbtn.Location = new System.Drawing.Point(871, 237);
             this.claerbtn.Name = "claerbtn";
             this.claerbtn.Size = new System.Drawing.Size(75, 32);
-            this.claerbtn.TabIndex = 19;
+            this.claerbtn.TabIndex = 18;
             this.claerbtn.Text = "Clear";
             this.claerbtn.UseVisualStyleBackColor = true;
+            this.claerbtn.Click += new System.EventHandler(this.claerbtn_Click);
             // 
             // label3
             // 
@@ -295,14 +311,16 @@
             this.ePtxt.Location = new System.Drawing.Point(151, 69);
             this.ePtxt.Name = "ePtxt";
             this.ePtxt.Size = new System.Drawing.Size(789, 22);
-            this.ePtxt.TabIndex = 11;
+            this.ePtxt.TabIndex = 10;
+            this.ePtxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ePtxt_KeyDown);
+            this.ePtxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ePtxt_KeyPress);
             // 
             // saveBtn
             // 
             this.saveBtn.Location = new System.Drawing.Point(790, 237);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 32);
-            this.saveBtn.TabIndex = 18;
+            this.saveBtn.TabIndex = 17;
             this.saveBtn.Text = "บันทึก";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
@@ -321,7 +339,8 @@
             this.linkUrltxt.Location = new System.Drawing.Point(151, 107);
             this.linkUrltxt.Name = "linkUrltxt";
             this.linkUrltxt.Size = new System.Drawing.Size(789, 22);
-            this.linkUrltxt.TabIndex = 14;
+            this.linkUrltxt.TabIndex = 13;
+            this.linkUrltxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.linkUrltxt_KeyDown);
             // 
             // label1
             // 
@@ -337,7 +356,8 @@
             this.nametxt.Location = new System.Drawing.Point(151, 28);
             this.nametxt.Name = "nametxt";
             this.nametxt.Size = new System.Drawing.Size(789, 22);
-            this.nametxt.TabIndex = 10;
+            this.nametxt.TabIndex = 9;
+            this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
             // MyListForm
             // 
@@ -348,7 +368,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MyListForm";
             this.Text = "MyListForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MyListForm_FormClosed);
             this.Load += new System.EventHandler(this.MyListForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MyListForm_KeyDown);
             this.listMangatap.ResumeLayout(false);
             this.listtap.ResumeLayout(false);
             this.listtap.PerformLayout();
