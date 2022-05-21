@@ -1,64 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="myListModelStoreContainer" CdmEntityContainer="myListEntities">
-    <EntitySetMapping Name="StsMasts">
-      <EntityTypeMapping TypeName="myListModel.StsMast">
-        <MappingFragment StoreEntitySet="StsMast">
-          <ScalarProperty Name="stsId" ColumnName="stsId" />
-          <ScalarProperty Name="stsCode" ColumnName="stsCode" />
-          <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ListTypeMasts">
       <EntityTypeMapping TypeName="myListModel.ListTypeMast">
         <MappingFragment StoreEntitySet="ListTypeMast">
-          <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
-          <ScalarProperty Name="listTypeCode" ColumnName="listTypeCode" />
-          <ScalarProperty Name="listTypeDesc" ColumnName="listTypeDesc" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
           <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="listTypeDesc" ColumnName="listTypeDesc" />
+          <ScalarProperty Name="listTypeCode" ColumnName="listTypeCode" />
+          <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MyListMasts">
       <EntityTypeMapping TypeName="myListModel.MyListMast">
         <MappingFragment StoreEntitySet="MyListMast">
-          <ScalarProperty Name="listId" ColumnName="listId" />
-          <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
-          <ScalarProperty Name="listCode" ColumnName="listCode" />
-          <ScalarProperty Name="listName" ColumnName="listName" />
-          <ScalarProperty Name="listLink" ColumnName="listLink" />
-          <ScalarProperty Name="listEP" ColumnName="listEP" />
-          <ScalarProperty Name="listComment" ColumnName="listComment" />
-          <ScalarProperty Name="stsId" ColumnName="stsId" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
           <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="stsId" ColumnName="stsId" />
+          <ScalarProperty Name="listComment" ColumnName="listComment" />
+          <ScalarProperty Name="listEP" ColumnName="listEP" />
+          <ScalarProperty Name="listLink" ColumnName="listLink" />
+          <ScalarProperty Name="listName" ColumnName="listName" />
+          <ScalarProperty Name="listCode" ColumnName="listCode" />
+          <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
+          <ScalarProperty Name="listId" ColumnName="listId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StsMasts">
+      <EntityTypeMapping TypeName="myListModel.StsMast">
+        <MappingFragment StoreEntitySet="StsMast">
+          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
+          <ScalarProperty Name="stsCode" ColumnName="stsCode" />
+          <ScalarProperty Name="stsId" ColumnName="stsId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserProfiles">
       <EntityTypeMapping TypeName="myListModel.UserProfile">
         <MappingFragment StoreEntitySet="UserProfile">
-          <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="userName" ColumnName="userName" />
-          <ScalarProperty Name="userPass" ColumnName="userPass" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
           <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="userPass" ColumnName="userPass" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

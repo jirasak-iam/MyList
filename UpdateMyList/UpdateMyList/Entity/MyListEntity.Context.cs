@@ -25,9 +25,9 @@ namespace UpdateMyList.Entity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<StsMast> StsMasts { get; set; }
         public virtual DbSet<ListTypeMast> ListTypeMasts { get; set; }
         public virtual DbSet<MyListMast> MyListMasts { get; set; }
+        public virtual DbSet<StsMast> StsMasts { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
     }
 }

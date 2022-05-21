@@ -65,6 +65,41 @@ namespace UpdateMyList.Forms
             _model = model;
         }
 
+        private int saveData()
+        {
+            var rs = 0;
+            if (this.IU_Flag == "U")
+            {
+                var data = new MyListModel
+                {
+                    listId = this.myListId,
+                    listName = this.nametxt.Text,
+                    listLink = this.linkUrltxt.Text,
+                    listEP = this.ePtxt.Text,
+                    listComment = this.commenttxt.Text,
+                    stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
+                };
+                rs= _uow.MyListRepository.UpdateByApp(data);
+            }
+            else
+            {
+                var data = new MyListModel
+                {
+                    listTypeId = this._model.listTypeId,
+                    listName = this.nametxt.Text,
+                    listLink = this.linkUrltxt.Text,
+                    listEP = this.ePtxt.Text,
+                    listComment = this.commenttxt.Text,
+                    stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
+                    recStatus = "A",
+                    createBy = "C# Win App",
+                    createDate = DateTime.Now,
+                    updateDate = DateTime.Now
+                };
+                rs= _uow.MyListRepository.Insert(data);
+            }
+            return rs;
+        }
         private void saveBtn_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.nametxt.Text))
@@ -74,43 +109,15 @@ namespace UpdateMyList.Forms
                     if (!string.IsNullOrEmpty(this.linkUrltxt.Text))
                     {
                         var result = 0;
-                        if (this.IU_Flag == "U")
-                        {
-                            var data = new MyListModel
-                            {
-                                listId = this.myListId,
-                                listName = this.nametxt.Text,
-                                listLink = this.linkUrltxt.Text,
-                                listEP = this.ePtxt.Text,
-                                listComment = this.commenttxt.Text,
-                                stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
-                            };
-                            _uow.MyListRepository.UpdateByApp(data);
-                        }
-                        else
-                        {
-                            var data = new MyListModel
-                            {
-                                listTypeId = this._model.listTypeId,
-                                listName = this.nametxt.Text,
-                                listLink = this.linkUrltxt.Text,
-                                listEP = this.ePtxt.Text,
-                                listComment = this.commenttxt.Text,
-                                stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
-                                recStatus = "A",
-                                createBy = "C# Win App",
-                                createDate = DateTime.Now,
-                                updateDate = DateTime.Now
-                            };
-                           _uow.MyListRepository.Insert(data);
-                        }
                         var chkContain = CheckContainByName(this.nametxt.Text);
+                        
+                        
                         this.IU_Flag = this.IU_Flag ?? "I";
                         if (chkContain && !this.IU_Flag.Equals("U"))
                         {
                             if (MessageBox.Show("มีชื่อเรื่องที่คล้ายกันอยู่คือ " + this.similar + "ต้องการทำรายการต่อหรือไม่ ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                result = _uow.Save();
+                                result = saveData();
                                 if (result > 0)
                                 {
                                     ClearPage(true);
@@ -119,7 +126,7 @@ namespace UpdateMyList.Forms
                         }
                         else
                         {
-                            result = _uow.Save();
+                            result = saveData();
                             if (result > 0)
                             {
                                 ClearPage(true);
@@ -435,6 +442,15 @@ namespace UpdateMyList.Forms
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            if (e.KeyCode == Keys.Add)
+            {
+                plusbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Subtract)
+            {
+                minusbtn.PerformClick();
+            }
+
         }
 
         private void linkUrltxt_KeyDown(object sender, KeyEventArgs e)

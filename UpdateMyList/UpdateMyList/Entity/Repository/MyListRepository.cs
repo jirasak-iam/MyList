@@ -48,7 +48,7 @@ namespace UpdateMyList.Entity.Repository
             var rs = 0;
             if (model.listId > 0)
             {
-                var data = _context.MyListMasts.FirstOrDefault(p => p.listId == model.listId);
+                var data = Read().FirstOrDefault(p => p.listId == model.listId);
                 data.listName = model.listName;
                 data.listLink = model.listLink;
                 data.listEP = model.listEP;
@@ -56,6 +56,7 @@ namespace UpdateMyList.Entity.Repository
                 data.stsId = model.stsId;
                 data.updateDate = DateTime.Now;
             }
+            rs = _context.SaveChanges();
             return rs;
         }
         public int Insert(MyListModel model)
@@ -79,6 +80,7 @@ namespace UpdateMyList.Entity.Repository
                 };
                 _context.MyListMasts.Add(data);
             }
+            rs = _context.SaveChanges();
             return rs;
         }
         private int GetMaxCodeByType(int typeId)

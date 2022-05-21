@@ -1,18 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="myListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="StsMast">
-    <Key>
-      <PropertyRef Name="stsId" />
-    </Key>
-    <Property Name="stsId" Type="Int32" Nullable="false" />
-    <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-    <Property Name="createDate" Type="DateTime" Precision="3" />
-    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="updateDate" Type="DateTime" Precision="3" />
-    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
+  <EntityContainer Name="myListEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ListTypeMasts" EntityType="myListModel.ListTypeMast" />
+    <EntitySet Name="MyListMasts" EntityType="myListModel.MyListMast" />
+    <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
+    <EntitySet Name="UserProfiles" EntityType="myListModel.UserProfile" />
+  </EntityContainer>
   <EntityType Name="ListTypeMast">
     <Key>
       <PropertyRef Name="listTypeId" />
@@ -29,8 +22,6 @@
   <EntityType Name="MyListMast">
     <Key>
       <PropertyRef Name="listId" />
-      <PropertyRef Name="listTypeId" />
-      <PropertyRef Name="stsId" />
     </Key>
     <Property Name="listId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="listTypeId" Type="Int32" Nullable="false" />
@@ -40,6 +31,19 @@
     <Property Name="listEP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="listComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="stsId" Type="Int32" Nullable="false" />
+    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="updateDate" Type="DateTime" Precision="3" />
+    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="StsMast">
+    <Key>
+      <PropertyRef Name="stsId" />
+    </Key>
+    <Property Name="stsId" Type="Int32" Nullable="false" />
+    <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
     <Property Name="createDate" Type="DateTime" Precision="3" />
     <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -59,10 +63,4 @@
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityContainer Name="myListEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="StsMasts" EntityType="Self.StsMast" />
-    <EntitySet Name="ListTypeMasts" EntityType="Self.ListTypeMast" />
-    <EntitySet Name="MyListMasts" EntityType="Self.MyListMast" />
-    <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
-  </EntityContainer>
 </Schema>
