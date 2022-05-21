@@ -40,7 +40,7 @@ namespace UpdateMyList.Forms
                 this.stscbb.SelectedIndex = 0;
                 this.similar = "";
                 gobtn.Enabled = false;
-                listMangatap.SelectedTab = listtap;
+                myListtap.SelectedTab = listtap;
             }
             if (cleaFlag)
             {
@@ -303,13 +303,17 @@ namespace UpdateMyList.Forms
             mainForm.Show();
         }
 
-        private void listMangatap_KeyDown(object sender, KeyEventArgs e)
+        private void myListap_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
                 escapeToMain();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
             }
         }
 
@@ -353,7 +357,7 @@ namespace UpdateMyList.Forms
                 this.commenttxt.Text = data.listComment;
                 this.myListId = data.listId;
 
-                listMangatap.SelectedTab = inserttap;
+                myListtap.SelectedTab = inserttap;
 
             }
 
@@ -432,6 +436,10 @@ namespace UpdateMyList.Forms
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
         }
 
         private void ePtxt_KeyDown(object sender, KeyEventArgs e)
@@ -450,7 +458,10 @@ namespace UpdateMyList.Forms
             {
                 minusbtn.PerformClick();
             }
-
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
         }
 
         private void linkUrltxt_KeyDown(object sender, KeyEventArgs e)
@@ -461,6 +472,10 @@ namespace UpdateMyList.Forms
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
         }
 
         private void commenttxt_KeyDown(object sender, KeyEventArgs e)
@@ -470,6 +485,10 @@ namespace UpdateMyList.Forms
                 saveBtn.PerformClick();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
             }
         }
 
@@ -522,6 +541,178 @@ namespace UpdateMyList.Forms
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void plusbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                plusbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void minusbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                minusbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void gobtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                gobtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void stscbb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                saveBtn.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void saveBtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                saveBtn.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void claerbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ClearPage(true);
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void searchbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+
+        private void mainbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+
+        private void searchtxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+
+        private void stslb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+
+        private void editbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                editbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+
+        private void reloadbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                reloadbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
             }
         }
     }

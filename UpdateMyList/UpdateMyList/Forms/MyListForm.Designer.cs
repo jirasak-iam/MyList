@@ -30,7 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyListForm));
-            this.listMangatap = new System.Windows.Forms.TabControl();
+            this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
             this.stslb = new System.Windows.Forms.ListBox();
             this.searchbtn = new System.Windows.Forms.Button();
@@ -57,23 +57,23 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.listMangatap.SuspendLayout();
+            this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.inserttap.SuspendLayout();
             this.SuspendLayout();
             // 
-            // listMangatap
+            // myListtap
             // 
-            this.listMangatap.Controls.Add(this.listtap);
-            this.listMangatap.Controls.Add(this.inserttap);
-            this.listMangatap.ItemSize = new System.Drawing.Size(50, 30);
-            this.listMangatap.Location = new System.Drawing.Point(3, 1);
-            this.listMangatap.Name = "listMangatap";
-            this.listMangatap.SelectedIndex = 0;
-            this.listMangatap.Size = new System.Drawing.Size(1579, 553);
-            this.listMangatap.TabIndex = 1;
-            this.listMangatap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listMangatap_KeyDown);
+            this.myListtap.Controls.Add(this.listtap);
+            this.myListtap.Controls.Add(this.inserttap);
+            this.myListtap.ItemSize = new System.Drawing.Size(50, 30);
+            this.myListtap.Location = new System.Drawing.Point(3, 1);
+            this.myListtap.Name = "myListtap";
+            this.myListtap.SelectedIndex = 0;
+            this.myListtap.Size = new System.Drawing.Size(1579, 553);
+            this.myListtap.TabIndex = 1;
+            this.myListtap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.myListap_KeyDown);
             // 
             // listtap
             // 
@@ -105,6 +105,7 @@
             this.stslb.Size = new System.Drawing.Size(294, 36);
             this.stslb.TabIndex = 3;
             this.stslb.SelectedIndexChanged += new System.EventHandler(this.stslb_SelectedIndexChanged);
+            this.stslb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.stslb_KeyDown);
             // 
             // searchbtn
             // 
@@ -115,6 +116,7 @@
             this.searchbtn.Text = "ค้นหา";
             this.searchbtn.UseVisualStyleBackColor = true;
             this.searchbtn.Click += new System.EventHandler(this.searchbtn_Click);
+            this.searchbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchbtn_KeyDown);
             // 
             // label6
             // 
@@ -132,6 +134,7 @@
             this.searchtxt.Size = new System.Drawing.Size(192, 22);
             this.searchtxt.TabIndex = 2;
             this.searchtxt.TextChanged += new System.EventHandler(this.searchtxt_TextChanged);
+            this.searchtxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchtxt_KeyDown);
             // 
             // label4
             // 
@@ -151,6 +154,7 @@
             this.mainbtn.Text = "Main";
             this.mainbtn.UseVisualStyleBackColor = true;
             this.mainbtn.Click += new System.EventHandler(this.mainbtn_Click);
+            this.mainbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mainbtn_KeyDown);
             // 
             // reloadbtn
             // 
@@ -161,6 +165,7 @@
             this.reloadbtn.Text = "Reload";
             this.reloadbtn.UseVisualStyleBackColor = true;
             this.reloadbtn.Click += new System.EventHandler(this.reloadbtn_Click);
+            this.reloadbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reloadbtn_KeyDown);
             // 
             // editbtn
             // 
@@ -171,6 +176,7 @@
             this.editbtn.Text = "แก้ไข";
             this.editbtn.UseVisualStyleBackColor = true;
             this.editbtn.Click += new System.EventHandler(this.editbtn_Click);
+            this.editbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.editbtn_KeyDown);
             // 
             // dataGridView1
             // 
@@ -229,6 +235,7 @@
             this.gobtn.Text = "G";
             this.gobtn.UseVisualStyleBackColor = true;
             this.gobtn.Click += new System.EventHandler(this.gobtn_Click);
+            this.gobtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gobtn_KeyDown);
             // 
             // minusbtn
             // 
@@ -239,6 +246,7 @@
             this.minusbtn.Text = "-";
             this.minusbtn.UseVisualStyleBackColor = true;
             this.minusbtn.Click += new System.EventHandler(this.minusbtn_Click);
+            this.minusbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.minusbtn_KeyDown);
             // 
             // plusbtn
             // 
@@ -249,6 +257,7 @@
             this.plusbtn.Text = "+";
             this.plusbtn.UseVisualStyleBackColor = true;
             this.plusbtn.Click += new System.EventHandler(this.plusbtn_Click);
+            this.plusbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.plusbtn_KeyDown);
             // 
             // label9
             // 
@@ -277,6 +286,7 @@
             this.stscbb.Size = new System.Drawing.Size(179, 24);
             this.stscbb.TabIndex = 17;
             this.stscbb.ValueMember = "stsId";
+            this.stscbb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.stscbb_KeyDown);
             // 
             // label5
             // 
@@ -296,6 +306,7 @@
             this.claerbtn.Text = "Clear";
             this.claerbtn.UseVisualStyleBackColor = true;
             this.claerbtn.Click += new System.EventHandler(this.claerbtn_Click);
+            this.claerbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.claerbtn_KeyDown);
             // 
             // label3
             // 
@@ -324,6 +335,7 @@
             this.saveBtn.Text = "บันทึก";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            this.saveBtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.saveBtn_KeyDown);
             // 
             // label2
             // 
@@ -364,14 +376,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1584, 554);
-            this.Controls.Add(this.listMangatap);
+            this.Controls.Add(this.myListtap);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MyListForm";
             this.Text = "MyListForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MyListForm_FormClosed);
             this.Load += new System.EventHandler(this.MyListForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MyListForm_KeyDown);
-            this.listMangatap.ResumeLayout(false);
+            this.myListtap.ResumeLayout(false);
             this.listtap.ResumeLayout(false);
             this.listtap.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -383,7 +395,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl listMangatap;
+        private System.Windows.Forms.TabControl myListtap;
         private System.Windows.Forms.TabPage listtap;
         private System.Windows.Forms.ListBox stslb;
         private System.Windows.Forms.Button searchbtn;

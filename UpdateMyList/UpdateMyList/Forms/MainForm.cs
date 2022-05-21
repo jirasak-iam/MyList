@@ -45,6 +45,11 @@ namespace UpdateMyList.Forms
             {
                 openForm();
             }
+            if (e.KeyCode == Keys.Escape)
+            {
+                _uow.Dispose();
+                this.Close();
+            }
         }
         private void openForm()
         {
@@ -74,6 +79,15 @@ namespace UpdateMyList.Forms
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _uow.Dispose();
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                _uow.Dispose();
+                this.Close();
+            }
         }
     }
 }
