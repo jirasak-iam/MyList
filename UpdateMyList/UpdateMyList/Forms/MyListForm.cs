@@ -78,6 +78,8 @@ namespace UpdateMyList.Forms
                     listEP = this.ePtxt.Text,
                     listComment = this.commenttxt.Text,
                     stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
+                    updateBy = "C# Win App",
+                    updateDate = DateTime.Now
                 };
                 rs= _uow.MyListRepository.UpdateByApp(data);
             }

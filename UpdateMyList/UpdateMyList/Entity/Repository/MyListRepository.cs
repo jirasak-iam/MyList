@@ -54,7 +54,8 @@ namespace UpdateMyList.Entity.Repository
                 data.listEP = model.listEP;
                 data.listComment = model.listComment;
                 data.stsId = model.stsId;
-                data.updateDate = DateTime.Now;
+                data.updateBy = model.updateBy;
+                data.updateDate = model.updateDate;
             }
             rs = _context.SaveChanges();
             return rs;
