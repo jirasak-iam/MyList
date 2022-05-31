@@ -87,7 +87,7 @@ namespace UpdateMyList.Entity.Repository
         private int GetMaxCodeByType(int typeId)
         {
             var rs = 1;
-            if (typeId > 1)
+            if (typeId > 0)
             {
                 rs = _context.MyListMasts.Where(p => p.listTypeId == typeId).Select(o => o.listCode).Max() ?? 1;
                 rs += 1;
