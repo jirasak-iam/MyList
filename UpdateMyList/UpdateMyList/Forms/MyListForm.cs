@@ -164,6 +164,8 @@ namespace UpdateMyList.Forms
             this.stscbb.DisplayMember = "stsDesc";
             this.stscbb.ValueMember = "stsId";
 
+            this.gobtn.Enabled = false;
+
         }
         private void search()
         {

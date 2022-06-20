@@ -12,6 +12,7 @@
     <Property Name="createBy" Type="nvarchar" MaxLength="50" />
     <Property Name="updateDate" Type="datetime" />
     <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="sortSeq" Type="int" />
   </EntityType>
   <EntityType Name="MyListMast">
     <Key>

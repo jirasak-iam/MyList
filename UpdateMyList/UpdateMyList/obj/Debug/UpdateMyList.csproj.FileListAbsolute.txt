@@ -14,3 +14,7 @@ D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.exe
 D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.pdb
 D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.Forms.MainForm.resources
 D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.Forms.MyListForm.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.exe.manifest
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.application
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.exe.manifest
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.application

@@ -21,6 +21,8 @@ namespace UpdateMyList.Entity.Repository
         public List<ListTypeModel> Select()
         {
             var rs = (from a in _context.ListTypeMasts
+                      orderby a.sortSeq
+                      where a.recStatus == "A"
                       select new ListTypeModel
                       { 
                           listTypeId = a.listTypeId,

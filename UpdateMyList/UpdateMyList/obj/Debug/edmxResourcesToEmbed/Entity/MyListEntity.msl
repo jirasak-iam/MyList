@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="myListModelStoreContainer" CdmEntityContainer="myListEntities">
-    <EntitySetMapping Name="ListTypeMasts">
-      <EntityTypeMapping TypeName="myListModel.ListTypeMast">
-        <MappingFragment StoreEntitySet="ListTypeMast">
-          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="listTypeDesc" ColumnName="listTypeDesc" />
-          <ScalarProperty Name="listTypeCode" ColumnName="listTypeCode" />
-          <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="MyListMasts">
       <EntityTypeMapping TypeName="myListModel.MyListMast">
         <MappingFragment StoreEntitySet="MyListMast">
@@ -59,6 +45,21 @@
           <ScalarProperty Name="userPass" ColumnName="userPass" />
           <ScalarProperty Name="userName" ColumnName="userName" />
           <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListTypeMasts">
+      <EntityTypeMapping TypeName="myListModel.ListTypeMast">
+        <MappingFragment StoreEntitySet="ListTypeMast">
+          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="listTypeDesc" ColumnName="listTypeDesc" />
+          <ScalarProperty Name="listTypeCode" ColumnName="listTypeCode" />
+          <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

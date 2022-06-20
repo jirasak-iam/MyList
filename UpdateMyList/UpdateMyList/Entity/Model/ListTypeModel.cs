@@ -11,5 +11,6 @@ namespace UpdateMyList.Entity.Model
         public int listTypeId { get; set; }
         public string listTypeCode { get; set; }
         public string listTypeDesc { get; set; }
+        public int sortSeq { get; set; }
     }
 }
