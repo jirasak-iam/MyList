@@ -404,7 +404,7 @@ namespace UpdateMyList.Forms
                 {
                     foreach (var item in nameSeparator)
                     {
-                        if (!Constants.badWord.ToList().Where(p => p.Equals(item)).ToList().Any())
+                        if (!Constants.badWord.ToList().Where(p => p.ToUpper().Equals(item.ToUpper())).ToList().Any())
                         {
                             var listData = _uow.MyListRepository.SelectByType(_model);
                             var list = listData.Where(p => p.listName.Contains(item.Replace(" ", ""))).ToList();

@@ -8,6 +8,6 @@ namespace UpdateMyList.Common
 {
     public static class Constants
     {
-        public static string[] badWord = { "no", "NO", "No", "nO", "to", "To" };
+        public static string[] badWord = { "no", "to" ,"!","@","#","$","%","&","*","(",")","-","_","+","=","is","am","are"};
     }
 }
