@@ -15,6 +15,8 @@ namespace UpdateMyList.Entity.Model
         public string listLink { get; set; }
         public string stsDesc { get; set; }
         public string listEP { get; set; }
+        public string seasonDesc { get; set; }
+        public string genreDesc { get; set; }
         public string updateDateStr { get; set; }
     }
 }

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.listTypelb = new System.Windows.Forms.ListBox();
+            this.settingbtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listTypelb
@@ -46,11 +47,22 @@
             this.listTypelb.DoubleClick += new System.EventHandler(this.listTypelb_DoubleClick);
             this.listTypelb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listTypelb_KeyDown);
             // 
+            // settingbtn
+            // 
+            this.settingbtn.Location = new System.Drawing.Point(247, 22);
+            this.settingbtn.Name = "settingbtn";
+            this.settingbtn.Size = new System.Drawing.Size(116, 36);
+            this.settingbtn.TabIndex = 2;
+            this.settingbtn.Text = "Setting";
+            this.settingbtn.UseVisualStyleBackColor = true;
+            this.settingbtn.Click += new System.EventHandler(this.settingbtn_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(247, 315);
+            this.ClientSize = new System.Drawing.Size(375, 315);
+            this.Controls.Add(this.settingbtn);
             this.Controls.Add(this.listTypelb);
             this.Font = new System.Drawing.Font("Cloud", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -67,5 +79,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox listTypelb;
+        private System.Windows.Forms.Button settingbtn;
     }
 }

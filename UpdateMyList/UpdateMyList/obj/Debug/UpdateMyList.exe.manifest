@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateMyList.exe" size="200160">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateMyList.exe" size="384480">
       <assemblyIdentity name="UpdateMyList" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SiOQi01yJVVp2MzhDN80ZrabYzrCDPrN2tgvUbEERmc=</dsig:DigestValue>
+        <dsig:DigestValue>y3fn2X2ovSvLrV+3Q8tOVYttbqv+J+NFoBuckOLVeQY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -93,6 +93,33 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>70BY7vYDcLJZqehDXSiyquriPQEVnp3NLsD49FgxRuk=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Image\4043233-anime-away-face-no-nobody-spirited_113254.ico" size="67646">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zjbOS07/ausi7xrhmLgi7iT7VJ0BS9L1cIFtNilAi+I=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Image\Angel.ico" size="199159">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rY/phswZBr2Bc+EzTBuMPYFfbEYyRgYbK4WhjggixBw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Image\settingico.ico" size="104514">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>/zUhoT9Gz7kEk10Oz1l4sjiU9jZfzJpp84Q/oni7+sk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="UpdateMyList.exe.config" size="1348">

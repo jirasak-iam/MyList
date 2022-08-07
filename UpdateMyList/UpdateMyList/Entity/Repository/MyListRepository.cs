@@ -23,7 +23,10 @@ namespace UpdateMyList.Entity.Repository
         {
             var rs = (from a in _context.MyListMasts
                       join b in _context.StsMasts on a.stsId equals b.stsId
+                      join c in _context.SeasonMasts on a.seasonId equals c.seaId  into c2
+                      from cc in c2.DefaultIfEmpty()
                       where a.listTypeId == model.listTypeId
+                      orderby a.listId descending
                       select new MyListModel
                       {
                           listId = a.listId,
@@ -39,7 +42,9 @@ namespace UpdateMyList.Entity.Repository
                           recStatus = a.recStatus,
                           stsDesc = b.stsDesc,
                           updateBy = a.updateBy,
-                          updateDate = a.updateDate
+                          updateDate = a.updateDate,
+                          seasonId = cc.seaId,
+                          seasonDesc = cc.seaDesc,
                       }).ToList();
             return rs;
         }
@@ -54,10 +59,13 @@ namespace UpdateMyList.Entity.Repository
                 data.listEP = model.listEP;
                 data.listComment = model.listComment;
                 data.stsId = model.stsId;
+                data.seasonId = model.seasonId;
                 data.updateBy = model.updateBy;
                 data.updateDate = model.updateDate;
+                _context.SaveChanges();
+                rs = data.listId;
             }
-            rs = _context.SaveChanges();
+            
             return rs;
         }
         public int Insert(MyListModel model)
@@ -74,14 +82,17 @@ namespace UpdateMyList.Entity.Repository
                     listEP = model.listEP,
                     listComment = model.listComment,
                     stsId = model.stsId,
-                    recStatus= model.recStatus,
+                    seasonId = model.seasonId,
+                    recStatus = model.recStatus,
                     createBy = model.createBy,
                     createDate = model.createDate,
                     updateDate = model.updateDate
                 };
                 _context.MyListMasts.Add(data);
+                _context.SaveChanges();
+                rs = data.listId;
             }
-            rs = _context.SaveChanges();
+            
             return rs;
         }
         private int GetMaxCodeByType(int typeId)
@@ -89,7 +100,7 @@ namespace UpdateMyList.Entity.Repository
             var rs = 0;
             if (typeId > 0)
             {
-                rs = _context.MyListMasts.Where(p => p.listTypeId == typeId).Select(o => o.listCode).Max() ?? 1;
+                rs = _context.MyListMasts.Where(p => p.listTypeId == typeId).Select(o => o.listCode).Max() ?? 0;
                 rs += 1;
             }
             return rs;

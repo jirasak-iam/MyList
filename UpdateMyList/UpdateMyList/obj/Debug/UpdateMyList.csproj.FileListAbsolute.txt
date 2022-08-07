@@ -18,3 +18,4 @@ D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.exe.manifest
 D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\UpdateMyList.application
 D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.exe.manifest
 D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.application
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.Forms.SettingForm.resources

@@ -21,5 +21,6 @@ namespace UpdateMyList.Entity.Model
         {
             get { return updateDate != null ? updateDate?.ToString(formatDateStr, culTH) : DateTime.Now.ToString(formatDateStr, culTH); }
         }
+        public int? sortSeq { get; set; }
     }
 }

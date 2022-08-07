@@ -27,5 +27,6 @@ namespace UpdateMyList.Entity
         public string createBy { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public string updateBy { get; set; }
+        public Nullable<int> seasonId { get; set; }
     }
 }

@@ -14,6 +14,10 @@ namespace UpdateMyList.Entity
         IMyListRepository MyListRepository { get; }
         IListTypeMastRepository ListTypeMastRepository { get; }
         IStsMastRepository StsMastRepository { get; }
+        ISeasonMastRepository SeasonMastRepository { get; }
+        IGenreMastRepository GenreMastRepository { get; }
+        IMapSetingParamRepository MapSetingParamRepository { get; }
+        IGenreGroupRepository GenreGroupRepository { get; }
     }
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
@@ -57,8 +61,10 @@ namespace UpdateMyList.Entity
         private MyListRepository _myListRepository;
         private ListTypeMastRepository _listTypeMastRepository;
         private StsMastRepository _stsMastRepository;
-
-
+        private SeasonMastRepository _seasonMastRepository;
+        private GenreMastRepository _genreMastRepository;
+        private MapSetingParamRepository _mapSettingParamRepository;
+        private GenreGroupRepository _genreGroupRepository;
         public IMyListRepository MyListRepository
         {
             get { return _myListRepository ?? (_myListRepository = new MyListRepository(_context)); }
@@ -70,6 +76,22 @@ namespace UpdateMyList.Entity
         public IStsMastRepository StsMastRepository
         {
             get { return _stsMastRepository ?? (_stsMastRepository = new StsMastRepository(_context)); }
+        }
+        public ISeasonMastRepository SeasonMastRepository
+        {
+            get { return _seasonMastRepository ?? (_seasonMastRepository = new SeasonMastRepository(_context)); }
+        }
+        public IGenreMastRepository GenreMastRepository
+        {
+            get { return _genreMastRepository ?? (_genreMastRepository = new GenreMastRepository(_context)); }
+        }
+        public IMapSetingParamRepository MapSetingParamRepository
+        {
+            get { return _mapSettingParamRepository ?? (_mapSettingParamRepository = new MapSetingParamRepository(_context)); }
+        }
+        public IGenreGroupRepository GenreGroupRepository
+        {
+            get { return _genreGroupRepository ?? (_genreGroupRepository = new GenreGroupRepository(_context)); }
         }
     }
 }

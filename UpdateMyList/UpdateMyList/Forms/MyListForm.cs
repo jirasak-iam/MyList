@@ -40,6 +40,8 @@ namespace UpdateMyList.Forms
                 this.stscbb.SelectedIndex = 0;
                 this.similar = "";
                 gobtn.Enabled = false;
+                this.seasoncbb.SelectedIndex = 0;
+                ClearSelection();
                 myListtap.SelectedTab = listtap;
             }
             if (cleaFlag)
@@ -47,6 +49,15 @@ namespace UpdateMyList.Forms
                 this.stslb.ClearSelected();
                 this.stslb.SelectedIndex = 0;
                 this.stscbb.SelectedIndex = 0;
+
+                this.seasonlb.ClearSelected();
+                this.seasonlb.SelectedIndex = 0;
+                this.seasoncbb.SelectedIndex = 0;
+
+                ClearSelection();
+                this.genrelb.ClearSelected();
+                this.genrelb.SelectedIndex = 0;
+
                 this.searchtxt.Text = "";
                 this.clear = false;
             }
@@ -78,7 +89,8 @@ namespace UpdateMyList.Forms
                     listEP = this.ePtxt.Text,
                     listComment = this.commenttxt.Text,
                     stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
-                    updateBy = "C# Win App",
+                    seasonId = Convert.ToInt32(this.seasoncbb.SelectedValue),
+                    updateBy = Constants.UserApp,
                     updateDate = DateTime.Now
                 };
                 rs= _uow.MyListRepository.UpdateByApp(data);
@@ -93,12 +105,53 @@ namespace UpdateMyList.Forms
                     listEP = this.ePtxt.Text,
                     listComment = this.commenttxt.Text,
                     stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
-                    recStatus = "A",
-                    createBy = "C# Win App",
+                    seasonId = Convert.ToInt32(this.seasoncbb.SelectedValue),
+                    recStatus = RecStatus.Active,
+                    createBy = Constants.UserApp,
                     createDate = DateTime.Now,
                     updateDate = DateTime.Now
                 };
-                rs= _uow.MyListRepository.Insert(data);
+                rs = _uow.MyListRepository.Insert(data);
+            }
+            var genreList = this.genreclb.Items;
+            for (int i = 0; i < this.genreclb.Items.Count; i++)
+            {
+                if (this.genreclb.GetItemCheckState(i) == CheckState.Checked)
+                {
+                    var genre = (GenreModel)this.genreclb.Items[i];
+                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
+                    if (genreGroup == null)
+                    {
+                        var genGroup = new GenreGroupModel
+                        {
+                            genId = genre.genreId,
+                            listId = rs,
+                            recStatus = RecStatus.Active,
+                            createBy = Constants.UserApp,
+                            createDate = DateTime.Now
+                        };
+                        _uow.GenreGroupRepository.Insert(genGroup);
+                    }
+                }
+                else if (this.genreclb.GetItemCheckState(i) == CheckState.Unchecked)
+                {
+                    var genre = (GenreModel)this.genreclb.Items[i];
+                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
+                    if (genreGroup != null)
+                    {
+                        var genGroup = new GenreGroupModel
+                        {
+                            gengroupId = genreGroup.gengroupId,
+                            genId = genre.genreId,
+                            listId = rs,
+                            recStatus = RecStatus.Close,
+                            updateBy = Constants.UserApp,
+                            updateDate = DateTime.Now
+                        };
+                        _uow.GenreGroupRepository.UpdateOut(genGroup);
+                    }
+                }
+                
             }
             return rs;
         }
@@ -164,21 +217,56 @@ namespace UpdateMyList.Forms
             this.stscbb.DisplayMember = "stsDesc";
             this.stscbb.ValueMember = "stsId";
 
-            this.gobtn.Enabled = false;
+            this.genreclb.DataSource = _uow.GenreMastRepository.Select();
+            this.genreclb.DisplayMember = "genreDisplay";
+            this.genreclb.ValueMember = "genreId";
+
+            this.genrelb.DataSource = _uow.GenreMastRepository.SelectAll();
+            this.genrelb.DisplayMember = "genreDisplay";
+            this.genrelb.ValueMember = "genreId";
+
+            this.seasoncbb.DataSource = _uow.SeasonMastRepository.Select();
+            this.seasoncbb.DisplayMember = "seasonDesc";
+            this.seasoncbb.ValueMember = "seasonId";
+
+            this.seasonlb.DataSource = _uow.SeasonMastRepository.SelectAll();
+            this.seasonlb.DisplayMember = "seasonDesc";
+            this.seasonlb.ValueMember = "seasonId";
+            //this.genreclb.DataBindings
+
+            //this.gobtn.Enabled = false;
 
         }
         private void search()
         {
             var stsLb = this.stslb.SelectedItems.Cast<StsMastModel>().ToList();
             var stsLbSelect = stsLb?.Select(p => p.stsId).ToList();
-            var chkSelect = stsLbSelect?.Sum();
+            var chkSelectSts = stsLbSelect?.Sum() ?? 0;
+
+            var seasonLb = this.seasonlb.SelectedItems.Cast<SeasonMastModel>().ToList();
+            var seasonLbSelect = seasonLb?.Select(p => p.seasonId).ToList();
+            var chkSelectSeason = seasonLbSelect?.Sum() ?? 0;
+
+            var genreLb = this.genrelb.SelectedItems.Cast<GenreModel>().ToList();
+            var genreLbSelect = genreLb?.Select(p => p.genreId).ToList();
+            var chkSelectGen = genreLbSelect?.Sum() ?? 0;
+
             var searchName = this.searchtxt.Text.ToUpper();
             if (_model != null)
             {
                 var getByType = _uow.MyListRepository.SelectByType(_model);
-                if (chkSelect > 0)
+                if (chkSelectSts > 0)
                 {
                     getByType = getByType.Where(p => stsLbSelect.Contains(p.stsId)).ToList();
+                }
+                if (chkSelectSeason > 0)
+                {
+                    getByType = getByType.Where(p => seasonLbSelect.Contains(p.seasonId ?? 0)).ToList();
+                }
+                if (chkSelectGen > 0)
+                {
+                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupBygenIdMany(genreLbSelect).Select(a => a.listId).ToList();
+                    getByType = getByType.Where(p => genreGroup.Contains(p.listId)).ToList();
                 }
                 if (!string.IsNullOrEmpty(searchName))
                 {
@@ -191,6 +279,7 @@ namespace UpdateMyList.Forms
         {
             try
             {
+                var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListIdMany(lstModel.Select(a => a.listId).ToList());
                 var preData = (from a in lstModel
                                select new DataGridViewModel
                                {
@@ -199,9 +288,10 @@ namespace UpdateMyList.Forms
                                    listLink = a.listLink,
                                    stsDesc = a.stsDesc,
                                    listEP = a.listEP,
+                                   seasonDesc = a.seasonDesc,
+                                   genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).ToList()),
                                    updateDateStr = a.updateDateStr
                                }).ToList();
-
                 this.dataGridView1.DataSource = preData;
                 this.dataGridView1.Columns[0].HeaderText = "ID";
                 this.dataGridView1.Columns[0].Width = 50;
@@ -220,9 +310,15 @@ namespace UpdateMyList.Forms
                 this.dataGridView1.Columns[4].Width = 80;
                 this.dataGridView1.Columns[4].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                this.dataGridView1.Columns[5].HeaderText = "แก้ไขล่าสุด";
+                this.dataGridView1.Columns[5].HeaderText = "Seasonal";
                 this.dataGridView1.Columns[5].Width = 125;
                 this.dataGridView1.Columns[5].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridView1.Columns[6].HeaderText = "Genre";
+                this.dataGridView1.Columns[6].Width = 250;
+                this.dataGridView1.Columns[6].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridView1.Columns[7].HeaderText = "แก้ไขล่าสุด";
+                this.dataGridView1.Columns[7].Width = 125;
+                this.dataGridView1.Columns[7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
             catch (Exception)
             {
@@ -360,8 +456,23 @@ namespace UpdateMyList.Forms
                 stscbb.SelectedIndex = data.stsId - 1;
                 this.commenttxt.Text = data.listComment;
                 this.myListId = data.listId;
+                this.seasoncbb.SelectedValue = (data.seasonId ?? 0);
 
                 myListtap.SelectedTab = inserttap;
+                ClearSelection();
+                var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(data.listId);
+                if (genreGroup.Count > 0)
+                {
+                    for (int i = 0; i < this.genreclb.Items.Count; i++)
+                    {
+                        var genre = (GenreModel)this.genreclb.Items[i];
+                        var chkData = genreGroup.FirstOrDefault(p => p.genId == genre.genreId);
+                        if (chkData != null)
+                        {
+                            this.genreclb.SetItemChecked(i, true);
+                        }
+                    }
+                }
 
             }
 
@@ -509,6 +620,7 @@ namespace UpdateMyList.Forms
             this.rePageFlag = false;
             if (!string.IsNullOrEmpty(this.IU_Flag))
             {
+                changeStsByEp();
                 if (this.IU_Flag.Equals("U"))
                 {
                     saveBtn.PerformClick();
@@ -525,6 +637,7 @@ namespace UpdateMyList.Forms
             this.rePageFlag = false;
             if (!string.IsNullOrEmpty(this.IU_Flag))
             {
+                changeStsByEp();
                 if (this.IU_Flag.Equals("U"))
                 {
                     saveBtn.PerformClick();
@@ -709,6 +822,72 @@ namespace UpdateMyList.Forms
             if (e.KeyCode == Keys.Enter)
             {
                 reloadbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+        private void changeStsByEp()
+        {
+            var epDec = string.IsNullOrEmpty(this.ePtxt.Text) ? 0 : Convert.ToDecimal(this.ePtxt.Text);
+            if (epDec == 0)
+            {
+                this.stscbb.SelectedIndex = 4;
+            }
+            else
+            {
+                this.stscbb.SelectedIndex = 0;
+            }
+        }
+
+        private void ePtxt_TextChanged(object sender, EventArgs e)
+        {
+            changeStsByEp();
+        }
+        private void ClearSelection()
+        {
+            for (int i = 0; i < this.genreclb.Items.Count; i++)
+            {
+                this.genreclb.SetItemChecked(i, false);
+            }
+        }
+
+        private void seasonlb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchbtn.PerformClick();
+        }
+
+        private void seasonlb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reloadbtn.PerformClick();
+            }
+        }
+
+        private void genrelb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchbtn.PerformClick();
+        }
+
+        private void genrelb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchbtn.PerformClick();
             }
             if (e.KeyCode == Keys.Escape)
             {

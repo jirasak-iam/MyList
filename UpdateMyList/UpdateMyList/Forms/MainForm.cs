@@ -89,5 +89,13 @@ namespace UpdateMyList.Forms
                 this.Close();
             }
         }
+
+        private void settingbtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var settingForm = new SettingForm(_uow);
+            settingForm.Closed += (s, args) => this.Close();
+            settingForm.Show();
+        }
     }
 }

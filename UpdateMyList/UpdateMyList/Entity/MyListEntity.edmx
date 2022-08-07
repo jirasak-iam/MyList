@@ -5,6 +5,33 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="myListModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GenreGroup">
+          <Key>
+            <PropertyRef Name="gengroupId" />
+          </Key>
+          <Property Name="gengroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="genId" Type="int" Nullable="false" />
+          <Property Name="listId" Type="int" Nullable="false" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="GenreMast">
+          <Key>
+            <PropertyRef Name="genId" />
+          </Key>
+          <Property Name="genId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="genCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="genDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="sortSeq" Type="int" />
+        </EntityType>
         <EntityType Name="ListTypeMast">
           <Key>
             <PropertyRef Name="listTypeId" />
@@ -17,6 +44,21 @@
           <Property Name="createBy" Type="nvarchar" MaxLength="50" />
           <Property Name="updateDate" Type="datetime" />
           <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="sortSeq" Type="int" />
+        </EntityType>
+        <EntityType Name="MapSetingParam">
+          <Key>
+            <PropertyRef Name="mapId" />
+          </Key>
+          <Property Name="mapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mapCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="mapDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="mapTbName" Type="nvarchar" MaxLength="255" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="255" />
           <Property Name="sortSeq" Type="int" />
         </EntityType>
         <EntityType Name="MyListMast">
@@ -36,6 +78,21 @@
           <Property Name="createBy" Type="nvarchar" MaxLength="50" />
           <Property Name="updateDate" Type="datetime" />
           <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="seasonId" Type="int" />
+        </EntityType>
+        <EntityType Name="SeasonMast">
+          <Key>
+            <PropertyRef Name="seaId" />
+          </Key>
+          <Property Name="seaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seaCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="seaDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="createBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="updateBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="sortSeq" Type="int" />
         </EntityType>
         <EntityType Name="StsMast">
           <Key>
@@ -49,6 +106,7 @@
           <Property Name="createBy" Type="nvarchar" MaxLength="50" />
           <Property Name="updateDate" Type="datetime" />
           <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="sortSeq" Type="int" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -64,8 +122,12 @@
           <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="myListModelStoreContainer">
+          <EntitySet Name="GenreGroup" EntityType="Self.GenreGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GenreMast" EntityType="Self.GenreMast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ListTypeMast" EntityType="Self.ListTypeMast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MapSetingParam" EntityType="Self.MapSetingParam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MyListMast" EntityType="Self.MyListMast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeasonMast" EntityType="Self.SeasonMast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StsMast" EntityType="Self.StsMast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -74,42 +136,15 @@
     <edmx:ConceptualModels>
       <Schema Namespace="myListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="myListEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="MyListMasts" EntityType="myListModel.MyListMast" />
-          <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
           <EntitySet Name="UserProfiles" EntityType="myListModel.UserProfile" />
           <EntitySet Name="ListTypeMasts" EntityType="myListModel.ListTypeMast" />
+          <EntitySet Name="MyListMasts" EntityType="myListModel.MyListMast" />
+          <EntitySet Name="GenreGroups" EntityType="myListModel.GenreGroup" />
+          <EntitySet Name="MapSetingParams" EntityType="myListModel.MapSetingParam" />
+          <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
+          <EntitySet Name="SeasonMasts" EntityType="myListModel.SeasonMast" />
+          <EntitySet Name="GenreMasts" EntityType="myListModel.GenreMast" />
         </EntityContainer>
-        <EntityType Name="MyListMast">
-          <Key>
-            <PropertyRef Name="listId" />
-          </Key>
-          <Property Name="listId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="listTypeId" Type="Int32" Nullable="false" />
-          <Property Name="listCode" Type="Int32" />
-          <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="listLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="listEP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="listComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="stsId" Type="Int32" Nullable="false" />
-          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="createDate" Type="DateTime" Precision="3" />
-          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="updateDate" Type="DateTime" Precision="3" />
-          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="StsMast">
-          <Key>
-            <PropertyRef Name="stsId" />
-          </Key>
-          <Property Name="stsId" Type="Int32" Nullable="false" />
-          <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="createDate" Type="DateTime" Precision="3" />
-          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="updateDate" Type="DateTime" Precision="3" />
-          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="userId" />
@@ -137,45 +172,101 @@
           <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="sortSeq" Type="Int32" />
         </EntityType>
+        <EntityType Name="MyListMast">
+          <Key>
+            <PropertyRef Name="listId" />
+          </Key>
+          <Property Name="listId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="listTypeId" Type="Int32" Nullable="false" />
+          <Property Name="listCode" Type="Int32" />
+          <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listEP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="stsId" Type="Int32" Nullable="false" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="seasonId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="GenreGroup">
+          <Key>
+            <PropertyRef Name="gengroupId" />
+          </Key>
+          <Property Name="gengroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="genId" Type="Int32" Nullable="false" />
+          <Property Name="listId" Type="Int32" Nullable="false" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MapSetingParam">
+          <Key>
+            <PropertyRef Name="mapId" />
+          </Key>
+          <Property Name="mapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mapCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="mapDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="mapTbName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sortSeq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StsMast">
+          <Key>
+            <PropertyRef Name="stsId" />
+          </Key>
+          <Property Name="stsId" Type="Int32" Nullable="false" />
+          <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sortSeq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SeasonMast">
+          <Key>
+            <PropertyRef Name="seaId" />
+          </Key>
+          <Property Name="seaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seaCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="seaDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sortSeq" Type="Int32" />
+        </EntityType>
+        <EntityType Name="GenreMast">
+          <Key>
+            <PropertyRef Name="genId" />
+          </Key>
+          <Property Name="genId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="genCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="genDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sortSeq" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="myListModelStoreContainer" CdmEntityContainer="myListEntities">
-          <EntitySetMapping Name="MyListMasts">
-            <EntityTypeMapping TypeName="myListModel.MyListMast">
-              <MappingFragment StoreEntitySet="MyListMast">
-                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-                <ScalarProperty Name="createBy" ColumnName="createBy" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-                <ScalarProperty Name="stsId" ColumnName="stsId" />
-                <ScalarProperty Name="listComment" ColumnName="listComment" />
-                <ScalarProperty Name="listEP" ColumnName="listEP" />
-                <ScalarProperty Name="listLink" ColumnName="listLink" />
-                <ScalarProperty Name="listName" ColumnName="listName" />
-                <ScalarProperty Name="listCode" ColumnName="listCode" />
-                <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
-                <ScalarProperty Name="listId" ColumnName="listId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StsMasts">
-            <EntityTypeMapping TypeName="myListModel.StsMast">
-              <MappingFragment StoreEntitySet="StsMast">
-                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-                <ScalarProperty Name="createBy" ColumnName="createBy" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-                <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
-                <ScalarProperty Name="stsCode" ColumnName="stsCode" />
-                <ScalarProperty Name="stsId" ColumnName="stsId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserProfiles">
             <EntityTypeMapping TypeName="myListModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
@@ -202,6 +293,101 @@
                 <ScalarProperty Name="listTypeDesc" ColumnName="listTypeDesc" />
                 <ScalarProperty Name="listTypeCode" ColumnName="listTypeCode" />
                 <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MyListMasts">
+            <EntityTypeMapping TypeName="myListModel.MyListMast">
+              <MappingFragment StoreEntitySet="MyListMast">
+                <ScalarProperty Name="seasonId" ColumnName="seasonId" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="stsId" ColumnName="stsId" />
+                <ScalarProperty Name="listComment" ColumnName="listComment" />
+                <ScalarProperty Name="listEP" ColumnName="listEP" />
+                <ScalarProperty Name="listLink" ColumnName="listLink" />
+                <ScalarProperty Name="listName" ColumnName="listName" />
+                <ScalarProperty Name="listCode" ColumnName="listCode" />
+                <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
+                <ScalarProperty Name="listId" ColumnName="listId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GenreGroups">
+            <EntityTypeMapping TypeName="myListModel.GenreGroup">
+              <MappingFragment StoreEntitySet="GenreGroup">
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="listId" ColumnName="listId" />
+                <ScalarProperty Name="genId" ColumnName="genId" />
+                <ScalarProperty Name="gengroupId" ColumnName="gengroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapSetingParams">
+            <EntityTypeMapping TypeName="myListModel.MapSetingParam">
+              <MappingFragment StoreEntitySet="MapSetingParam">
+                <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="mapTbName" ColumnName="mapTbName" />
+                <ScalarProperty Name="mapDesc" ColumnName="mapDesc" />
+                <ScalarProperty Name="mapCode" ColumnName="mapCode" />
+                <ScalarProperty Name="mapId" ColumnName="mapId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StsMasts">
+            <EntityTypeMapping TypeName="myListModel.StsMast">
+              <MappingFragment StoreEntitySet="StsMast">
+                <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
+                <ScalarProperty Name="stsCode" ColumnName="stsCode" />
+                <ScalarProperty Name="stsId" ColumnName="stsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeasonMasts">
+            <EntityTypeMapping TypeName="myListModel.SeasonMast">
+              <MappingFragment StoreEntitySet="SeasonMast">
+                <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="seaDesc" ColumnName="seaDesc" />
+                <ScalarProperty Name="seaCode" ColumnName="seaCode" />
+                <ScalarProperty Name="seaId" ColumnName="seaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GenreMasts">
+            <EntityTypeMapping TypeName="myListModel.GenreMast">
+              <MappingFragment StoreEntitySet="GenreMast">
+                <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="genDesc" ColumnName="genDesc" />
+                <ScalarProperty Name="genCode" ColumnName="genCode" />
+                <ScalarProperty Name="genId" ColumnName="genId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
