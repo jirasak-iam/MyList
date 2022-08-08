@@ -63,4 +63,23 @@ namespace UpdateMyList.Common
         [Description("MAP - Mapping Setting Parameters")]
         public const string MapSetingParameter = "MAP";
     }
+    public class SeasonValue
+    {
+        [Description("Winter")]
+        public const string Winter = "1";
+        [Description("Spring")]
+        public const string Spring = "2";
+        [Description("Summer")]
+        public const string Summer = "3";
+        [Description("Fall")]
+        public const string Fall = "4";
+    }
+    public enum SeasonList
+    {
+        Winter =1,
+        Spring=2,
+        Summer=3,
+        Fall=4
+    }
+
 }

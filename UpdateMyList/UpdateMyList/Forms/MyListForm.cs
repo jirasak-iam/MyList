@@ -39,10 +39,10 @@ namespace UpdateMyList.Forms
                 this.commenttxt.Text = "";
                 this.stscbb.SelectedIndex = 0;
                 this.similar = "";
-                gobtn.Enabled = false;
+                this.gobtn.Enabled = false;
                 this.seasoncbb.SelectedIndex = 0;
                 ClearSelection();
-                myListtap.SelectedTab = listtap;
+                this.myListtap.SelectedTab = listtap;
             }
             if (cleaFlag)
             {
@@ -72,8 +72,8 @@ namespace UpdateMyList.Forms
         {
             InitializeComponent();
             this.Text = $"MyList{model.listTypeDesc}";
-            _uow = uow;
-            _model = model;
+            this._uow = uow;
+            this._model = model;
         }
 
         private int saveData()
@@ -88,7 +88,7 @@ namespace UpdateMyList.Forms
                     listLink = this.linkUrltxt.Text,
                     listEP = this.ePtxt.Text,
                     listComment = this.commenttxt.Text,
-                    stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
+                    stsId = Convert.ToInt32(this.stscbb.SelectedValue),
                     seasonId = Convert.ToInt32(this.seasoncbb.SelectedValue),
                     updateBy = Constants.UserApp,
                     updateDate = DateTime.Now
@@ -104,7 +104,7 @@ namespace UpdateMyList.Forms
                     listLink = this.linkUrltxt.Text,
                     listEP = this.ePtxt.Text,
                     listComment = this.commenttxt.Text,
-                    stsId = Convert.ToInt32(this.stscbb.SelectedValue.ToString()),
+                    stsId = Convert.ToInt32(this.stscbb.SelectedValue),
                     seasonId = Convert.ToInt32(this.seasoncbb.SelectedValue),
                     recStatus = RecStatus.Active,
                     createBy = Constants.UserApp,
@@ -441,7 +441,7 @@ namespace UpdateMyList.Forms
         private void editbtn_Click(object sender, EventArgs e)
         {
             this.IU_Flag = "U";
-            gobtn.Enabled = true;
+            this.gobtn.Enabled = true;
             int rowindex = dataGridView1.CurrentCell.RowIndex;
             int columnindex = 0;
 
@@ -450,15 +450,15 @@ namespace UpdateMyList.Forms
             {
                 var data = _uow.MyListRepository.Read().FirstOrDefault(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
 
-                nametxt.Text = data.listName;
-                ePtxt.Text = data.listEP;
-                linkUrltxt.Text = data.listLink;
-                stscbb.SelectedIndex = data.stsId - 1;
+                this.nametxt.Text = data.listName;
+                this.ePtxt.Text = data.listEP;
+                this.linkUrltxt.Text = data.listLink;
+                this.stscbb.SelectedValue = data.stsId;
                 this.commenttxt.Text = data.listComment;
                 this.myListId = data.listId;
                 this.seasoncbb.SelectedValue = (data.seasonId ?? 0);
 
-                myListtap.SelectedTab = inserttap;
+                this.myListtap.SelectedTab = inserttap;
                 ClearSelection();
                 var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(data.listId);
                 if (genreGroup.Count > 0)
@@ -490,11 +490,11 @@ namespace UpdateMyList.Forms
 
         private void gobtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(linkUrltxt.Text))
+            if (!string.IsNullOrEmpty(this.linkUrltxt.Text))
             {
                 try
                 {
-                    Process.Start(linkUrltxt.Text);
+                    Process.Start(this.linkUrltxt.Text);
                 }
                 catch (Exception ex)
                 {
@@ -837,11 +837,11 @@ namespace UpdateMyList.Forms
             var epDec = string.IsNullOrEmpty(this.ePtxt.Text) ? 0 : Convert.ToDecimal(this.ePtxt.Text);
             if (epDec == 0)
             {
-                this.stscbb.SelectedIndex = 4;
+                this.stscbb.SelectedValue = 5;
             }
             else
             {
-                this.stscbb.SelectedIndex = 0;
+                this.stscbb.SelectedValue = 1;
             }
         }
 

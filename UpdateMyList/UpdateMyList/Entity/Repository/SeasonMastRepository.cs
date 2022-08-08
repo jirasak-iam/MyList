@@ -30,7 +30,7 @@ namespace UpdateMyList.Entity.Repository
                 seasonDesc = null
             });
             rs.AddRange(from a in _context.SeasonMasts
-                        orderby a.sortSeq, a.seaId
+                        orderby a.seaCode
                         where a.recStatus == RecStatus.Active
                         select new SeasonMastModel
                         {
@@ -45,7 +45,7 @@ namespace UpdateMyList.Entity.Repository
                             sortSeq = a.sortSeq,
                         });
 
-            return rs.OrderBy(o => o.seasonId).ToList();
+            return rs.ToList();
         }
         public List<SeasonMastModel> SelectAll()
         {
@@ -58,7 +58,7 @@ namespace UpdateMyList.Entity.Repository
                 seasonDesc = "All"
             }) ;
             rs.AddRange(from a in _context.SeasonMasts
-                        orderby a.sortSeq, a.seaId
+                        orderby a.seaCode
                         where a.recStatus == RecStatus.Active
                         select new SeasonMastModel
                         {
@@ -73,12 +73,12 @@ namespace UpdateMyList.Entity.Repository
                             sortSeq = a.sortSeq,
                         });
 
-            return rs.OrderBy(o => o.sortSeq).ToList();
+            return rs.ToList();
         }
         public List<SeasonMastModel> SelectAllType()
         {
             var rs = (from a in _context.SeasonMasts
-                      orderby a.sortSeq, a.seaId
+                      orderby a.seaCode
                       select new SeasonMastModel
                       {
                           seasonId = a.seaId,

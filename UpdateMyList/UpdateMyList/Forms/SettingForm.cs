@@ -179,6 +179,25 @@ namespace UpdateMyList.Forms
             {
                 label6.Visible = true;
                 tablenametxt.Visible = true;
+                this.seasonlistlb.Visible = false;
+                this.gencodebtn.Visible = false;
+            }
+            else if (MappingParam.Season.Equals(selectItem.mapCode))
+            {
+                label6.Visible = false;
+                tablenametxt.Visible = false;
+                this.seasonlistlb.Visible = true;
+                this.seasonlistlb.DataSource = Utility.GetSeasonalList();
+                this.seasonlistlb.DisplayMember = "seasonDisplay";
+                this.seasonlistlb.ValueMember = "seasonCode";
+                this.gencodebtn.Visible = true;
+            }
+            else
+            {
+                label6.Visible = false;
+                tablenametxt.Visible = false;
+                this.seasonlistlb.Visible = false;
+                this.gencodebtn.Visible = false;
             }
         }
 
@@ -542,6 +561,17 @@ namespace UpdateMyList.Forms
             {
                 var maxseq = _uow.MapSetingParamRepository.Read().Max(p => p.sortSeq) ?? 0;
                 this.sortseqnb.Value = maxseq + 1;
+            }
+        }
+
+        private void gencodebtn_Click(object sender, EventArgs e)
+        {
+            var textArray = this.desctxt.Text.Split(' ');
+            if (textArray.Length == 2)
+            {
+                var year = textArray[1];
+                var season = textArray[0].ToUpper();
+                this.codetxt.Text = $"{year}{Utility.GetSeasonalList().FirstOrDefault(p => p.seasonDesc.ToUpper().Equals(season)).seasonCode}";
             }
         }
     }

@@ -50,6 +50,7 @@ namespace UpdateMyList.Entity.Repository
             rs.Add(all);
 
             var fromDb = (from a in _context.StsMasts
+                          orderby a.sortSeq, a.stsId
                           select new StsMastModel
                           {
                               stsId = a.stsId,

@@ -40,5 +40,34 @@ namespace UpdateMyList.Common
                });
             return result.OrderBy(o => o.recStatus).ToList();
         }
+        public static List<SeasonMastModel> GetSeasonalList()
+        {
+            var result = new List<SeasonMastModel>();
+            result.Add(
+               new SeasonMastModel
+               {
+                   seasonCode = SeasonValue.Winter,
+                   seasonDesc = SeasonList.Winter.ToString(),
+               });
+            result.Add(
+               new SeasonMastModel
+               {
+                   seasonCode = SeasonValue.Spring,
+                   seasonDesc = SeasonList.Spring.ToString(),
+               });
+            result.Add(
+               new SeasonMastModel
+               {
+                   seasonCode = SeasonValue.Summer,
+                   seasonDesc = SeasonList.Summer.ToString(),
+               });
+            result.Add(
+               new SeasonMastModel
+               {
+                   seasonCode = SeasonValue.Fall,
+                   seasonDesc = SeasonList.Fall.ToString(),
+               });
+            return result.OrderBy(o => o.seasonCode).ToList();
+        }
     }
 }
