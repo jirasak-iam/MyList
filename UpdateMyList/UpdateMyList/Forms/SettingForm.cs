@@ -73,7 +73,6 @@ namespace UpdateMyList.Forms
                             sortSeq = a.sortSeq,
                             updateDate = a.updateDateStr
                         }).ToList();
-                    this.dataGridView1.DataSource = preData;
                 }
                 else if (MappingParam.ListType.Equals(data.mapCode))
                 {
@@ -87,7 +86,6 @@ namespace UpdateMyList.Forms
                            sortSeq = a.sortSeq,
                            updateDate = a.updateDateStr
                        }).ToList();
-                    this.dataGridView1.DataSource = preData;
                 }
                 else if (MappingParam.Genre.Equals(data.mapCode))
                 {
@@ -101,7 +99,6 @@ namespace UpdateMyList.Forms
                            sortSeq = a.sortSeq,
                            updateDate = a.updateDateStr
                        }).ToList();
-                    this.dataGridView1.DataSource = preData;
                 }
                 else if (MappingParam.Season.Equals(data.mapCode))
                 {
@@ -115,7 +112,6 @@ namespace UpdateMyList.Forms
                            sortSeq = a.sortSeq,
                            updateDate = a.updateDateStr
                        }).ToList();
-                    this.dataGridView1.DataSource = preData;
                 }
                 else if (MappingParam.MapSetingParameter.Equals(data.mapCode))
                 {
@@ -129,12 +125,16 @@ namespace UpdateMyList.Forms
                            sortSeq = a.sortSeq,
                            updateDate = a.updateDateStr
                        }).ToList();
-                    this.dataGridView1.DataSource = preData;
                 }
-                else
+                if (!string.IsNullOrEmpty(this.txtcode.Text))
                 {
-                    this.dataGridView1.DataSource = preData;
+                    preData = preData.Where(p => p.code.ToUpper().Contains(this.txtcode.Text.ToUpper())).ToList();
                 }
+                if (!string.IsNullOrEmpty(this.txtdesc.Text))
+                {
+                    preData = preData.Where(p => p.desc.ToUpper().Contains(this.txtdesc.Text.ToUpper())).ToList();
+                }
+                this.dataGridView1.DataSource = preData;
 
                 if (preData.Count > 0)
                 {
@@ -173,7 +173,12 @@ namespace UpdateMyList.Forms
 
         private void mapcbb_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Search();
+        }
+        private void Search()
+        {
             SearchOption();
+            this.settingtap.SelectedTab = tabPage1;
             var selectItem = (MapSettingParamModel)this.mapcbb.SelectedItem;
             if (MappingParam.MapSetingParameter.Equals(selectItem.mapCode))
             {
@@ -620,6 +625,16 @@ namespace UpdateMyList.Forms
                 var season = textArray[0].ToUpper();
                 this.codetxt.Text = $"{year}{Utility.GetSeasonalList().FirstOrDefault(p => p.seasonDesc.ToUpper().Equals(season)).seasonCode}";
             }
+        }
+
+        private void txtcode_TextChanged(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void txtdesc_TextChanged(object sender, EventArgs e)
+        {
+            Search();
         }
     }
 }

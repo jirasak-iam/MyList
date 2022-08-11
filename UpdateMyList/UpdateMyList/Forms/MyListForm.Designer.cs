@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyListForm));
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.lbpage = new System.Windows.Forms.ListBox();
+            this.tenrbtn = new System.Windows.Forms.RadioButton();
             this.hunrbtn = new System.Windows.Forms.RadioButton();
             this.fiftyrbtn = new System.Windows.Forms.RadioButton();
             this.allrbtn = new System.Windows.Forms.RadioButton();
@@ -66,7 +68,7 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.tenrbtn = new System.Windows.Forms.RadioButton();
+            this.label10 = new System.Windows.Forms.Label();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -89,6 +91,8 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
+            this.listtap.Controls.Add(this.label10);
+            this.listtap.Controls.Add(this.lbpage);
             this.listtap.Controls.Add(this.tenrbtn);
             this.listtap.Controls.Add(this.hunrbtn);
             this.listtap.Controls.Add(this.fiftyrbtn);
@@ -113,41 +117,67 @@
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
             // 
+            // lbpage
+            // 
+            this.lbpage.FormattingEnabled = true;
+            this.lbpage.ItemHeight = 16;
+            this.lbpage.Location = new System.Drawing.Point(131, 35);
+            this.lbpage.Name = "lbpage";
+            this.lbpage.Size = new System.Drawing.Size(120, 84);
+            this.lbpage.TabIndex = 33;
+            this.lbpage.SelectedIndexChanged += new System.EventHandler(this.lbpage_SelectedIndexChanged);
+            // 
+            // tenrbtn
+            // 
+            this.tenrbtn.AutoSize = true;
+            this.tenrbtn.Location = new System.Drawing.Point(23, 54);
+            this.tenrbtn.Name = "tenrbtn";
+            this.tenrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tenrbtn.Size = new System.Drawing.Size(45, 21);
+            this.tenrbtn.TabIndex = 32;
+            this.tenrbtn.TabStop = true;
+            this.tenrbtn.Text = "10";
+            this.tenrbtn.UseVisualStyleBackColor = true;
+            this.tenrbtn.Click += new System.EventHandler(this.tenrbtn_Click);
+            // 
             // hunrbtn
             // 
             this.hunrbtn.AutoSize = true;
-            this.hunrbtn.Location = new System.Drawing.Point(59, 104);
+            this.hunrbtn.Location = new System.Drawing.Point(15, 96);
             this.hunrbtn.Name = "hunrbtn";
+            this.hunrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.hunrbtn.Size = new System.Drawing.Size(53, 21);
             this.hunrbtn.TabIndex = 31;
             this.hunrbtn.TabStop = true;
             this.hunrbtn.Text = "100";
             this.hunrbtn.UseVisualStyleBackColor = true;
-            this.hunrbtn.CheckedChanged += new System.EventHandler(this.hunrbtn_CheckedChanged);
+            this.hunrbtn.Click += new System.EventHandler(this.hunrbtn_Click);
             // 
             // fiftyrbtn
             // 
             this.fiftyrbtn.AutoSize = true;
-            this.fiftyrbtn.Location = new System.Drawing.Point(59, 81);
+            this.fiftyrbtn.Location = new System.Drawing.Point(23, 76);
             this.fiftyrbtn.Name = "fiftyrbtn";
+            this.fiftyrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.fiftyrbtn.Size = new System.Drawing.Size(45, 21);
             this.fiftyrbtn.TabIndex = 30;
             this.fiftyrbtn.TabStop = true;
             this.fiftyrbtn.Text = "50";
             this.fiftyrbtn.UseVisualStyleBackColor = true;
-            this.fiftyrbtn.CheckedChanged += new System.EventHandler(this.fiftyrbtn_CheckedChanged);
+            this.fiftyrbtn.Click += new System.EventHandler(this.fiftyrbtn_Click);
             // 
             // allrbtn
             // 
             this.allrbtn.AutoSize = true;
-            this.allrbtn.Location = new System.Drawing.Point(59, 35);
+            this.allrbtn.Location = new System.Drawing.Point(24, 34);
             this.allrbtn.Name = "allrbtn";
+            this.allrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.allrbtn.Size = new System.Drawing.Size(44, 21);
             this.allrbtn.TabIndex = 29;
             this.allrbtn.TabStop = true;
             this.allrbtn.Text = "All";
             this.allrbtn.UseVisualStyleBackColor = true;
-            this.allrbtn.CheckedChanged += new System.EventHandler(this.allrbtn_CheckedChanged);
+            this.allrbtn.Click += new System.EventHandler(this.allrbtn_Click);
             // 
             // genrelb
             // 
@@ -514,17 +544,14 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
-            // tenrbtn
+            // label10
             // 
-            this.tenrbtn.AutoSize = true;
-            this.tenrbtn.Location = new System.Drawing.Point(59, 57);
-            this.tenrbtn.Name = "tenrbtn";
-            this.tenrbtn.Size = new System.Drawing.Size(45, 21);
-            this.tenrbtn.TabIndex = 32;
-            this.tenrbtn.TabStop = true;
-            this.tenrbtn.Text = "10";
-            this.tenrbtn.UseVisualStyleBackColor = true;
-            this.tenrbtn.CheckedChanged += new System.EventHandler(this.tenrbtn_CheckedChanged);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(78, 36);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(40, 17);
+            this.label10.TabIndex = 34;
+            this.label10.Text = "หน้าที่";
             // 
             // MyListForm
             // 
@@ -537,6 +564,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MyListForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "MyListForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MyListForm_FormClosed);
             this.Load += new System.EventHandler(this.MyListForm_Load);
@@ -590,5 +618,7 @@
         private System.Windows.Forms.RadioButton fiftyrbtn;
         private System.Windows.Forms.RadioButton allrbtn;
         private System.Windows.Forms.RadioButton tenrbtn;
+        private System.Windows.Forms.ListBox lbpage;
+        private System.Windows.Forms.Label label10;
     }
 }

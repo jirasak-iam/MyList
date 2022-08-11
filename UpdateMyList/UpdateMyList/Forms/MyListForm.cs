@@ -24,9 +24,12 @@ namespace UpdateMyList.Forms
         private string lstStsSelecet { get; set; }
         private bool? clear { get; set; }
         private string similar { get; set; }
-        private int? takeData { get; set; }
+        private int? takeData { get; set; } = 100;
         private string  sortCode { get; set; } = "Descending";
         private string sortUpdateDate { get; set; } = "Descending";
+        private int pageCount { get; set; } = 1;
+        private int pageSelect { get; set; } = 1;
+        private int countDataBfSkip { get; set; } = 0;
         public void ClearPage(bool allData)
         {
             var reFlag = this.rePageFlag ?? true;
@@ -229,7 +232,7 @@ namespace UpdateMyList.Forms
         {
             this.hunrbtn.Checked = true;
             this.dataGridView1.ReadOnly = true;
-            //search();
+
             this.stslb.DataSource = _uow.StsMastRepository.SelectAll();
             this.stslb.DisplayMember = "stsDesc";
             this.stslb.ValueMember = "stsId";
@@ -256,6 +259,8 @@ namespace UpdateMyList.Forms
             //this.genreclb.DataBindings
 
             //this.gobtn.Enabled = false;
+            var data = (List<DataGridViewModel>)dataGridView1.DataSource;
+            CalPage();
 
         }
         private void search()
@@ -294,15 +299,18 @@ namespace UpdateMyList.Forms
                 {
                     getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
                 }
-                if (this.takeData is null)
+                this.countDataBfSkip = getByType.Count;
+                if (this.pageSelect > 1)
                 {
-                    this.setDataGrid(getByType);
+                    var skip = (this.takeData ?? 0) * (pageSelect - 1);
+                    getByType = getByType.Skip(skip).ToList();
                 }
-                else
+                if (this.takeData != null)
                 {
-                    this.setDataGrid(getByType.Take(this.takeData.Value).ToList());
+                    getByType = getByType.Take(this.takeData.Value).ToList();
                 }
                 
+                this.setDataGrid(getByType);
             }
         }
         private void setDataGrid(List<MyListModel> lstModel)
@@ -959,27 +967,74 @@ namespace UpdateMyList.Forms
             }
         }
 
-        private void hunrbtn_CheckedChanged(object sender, EventArgs e)
-        {
-            this.takeData = 100;
-            search();
+        private void CalPage()
+         {
+            this.pageCount = 1;
+            this.lbpage.DataSource = null;
+            if (this.countDataBfSkip > 0)
+            {
+                var dataCount = this.countDataBfSkip;
+                var take = this.takeData ?? 0;
+                if (take > 0)
+                {
+                    this.pageCount += dataCount / this.takeData.Value;
+                }
+                else
+                {
+                    this.pageCount = 1;
+                }
+
+                if (pageCount > 0)
+                {
+                    var pageSource = new List<int>();
+                    for (int i = 1; i <= this.pageCount; i++)
+                    {
+                        pageSource.Add(i);
+                    }
+                    this.lbpage.DataSource = pageSource;
+                }
+            }
         }
 
-        private void fiftyrbtn_CheckedChanged(object sender, EventArgs e)
-        {
-            this.takeData = 50;
-            search();
-        }
-
-        private void allrbtn_CheckedChanged(object sender, EventArgs e)
+        private void allrbtn_Click(object sender, EventArgs e)
         {
             this.takeData = null;
+            CalPage();
             search();
         }
 
-        private void tenrbtn_CheckedChanged(object sender, EventArgs e)
+        private void tenrbtn_Click(object sender, EventArgs e)
         {
             this.takeData = 10;
+            CalPage();
+            search();
+        }
+
+        private void fiftyrbtn_Click(object sender, EventArgs e)
+        {
+            this.takeData = 50;
+            CalPage();
+            search();
+        }
+
+        private void hunrbtn_Click(object sender, EventArgs e)
+        {
+            this.takeData = 100;
+            CalPage();
+            search();
+        }
+
+        private void lbpage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var page = Convert.ToInt32(lbpage.SelectedValue);
+            if (page > 1)
+            {
+                this.pageSelect = page;
+            }
+            else
+            {
+                this.pageSelect = 1;
+            }
             search();
         }
     }
