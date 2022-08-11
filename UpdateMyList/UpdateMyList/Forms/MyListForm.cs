@@ -18,12 +18,15 @@ namespace UpdateMyList.Forms
     {
         private readonly IUnitOfWork _uow;
         private ListTypeModel _model;
-        public int myListId { get; set; }
-        public string IU_Flag { get; set; }
-        public bool? rePageFlag { get; set; }
-        public string lstStsSelecet { get; set; }
-        public bool? clear { get; set; }
-        public string similar { get; set; }
+        private int myListId { get; set; }
+        private string IU_Flag { get; set; }
+        private bool? rePageFlag { get; set; }
+        private string lstStsSelecet { get; set; }
+        private bool? clear { get; set; }
+        private string similar { get; set; }
+        private int? takeData { get; set; }
+        private string  sortCode { get; set; } = "Descending";
+        private string sortUpdateDate { get; set; } = "Descending";
         public void ClearPage(bool allData)
         {
             var reFlag = this.rePageFlag ?? true;
@@ -224,8 +227,9 @@ namespace UpdateMyList.Forms
 
         private void MyListForm_Load(object sender, EventArgs e)
         {
-            dataGridView1.ReadOnly = true;
-            search();
+            this.hunrbtn.Checked = true;
+            this.dataGridView1.ReadOnly = true;
+            //search();
             this.stslb.DataSource = _uow.StsMastRepository.SelectAll();
             this.stslb.DisplayMember = "stsDesc";
             this.stslb.ValueMember = "stsId";
@@ -256,6 +260,7 @@ namespace UpdateMyList.Forms
         }
         private void search()
         {
+            this.dataGridView1.DataSource = null;
             var stsLb = this.stslb.SelectedItems.Cast<StsMastModel>().ToList();
             var stsLbSelect = stsLb?.Select(p => p.stsId).ToList();
             var chkSelectSts = stsLbSelect?.Sum() ?? 0;
@@ -289,7 +294,15 @@ namespace UpdateMyList.Forms
                 {
                     getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
                 }
-                this.setDataGrid(getByType);
+                if (this.takeData is null)
+                {
+                    this.setDataGrid(getByType);
+                }
+                else
+                {
+                    this.setDataGrid(getByType.Take(this.takeData.Value).ToList());
+                }
+                
             }
         }
         private void setDataGrid(List<MyListModel> lstModel)
@@ -363,6 +376,36 @@ namespace UpdateMyList.Forms
             if (e.RowIndex != -1 && e.ColumnIndex == 2)
             {
                 openLink(e.RowIndex);
+            }
+            else if (e.RowIndex == -1)
+            {
+                var datagv = (List<DataGridViewModel>)this.dataGridView1.DataSource;
+                if (e.ColumnIndex == 0)
+                {
+                    if (this.sortCode.Equals(SortOrder.Descending.ToString()))
+                    {
+                        this.dataGridView1.DataSource = datagv.OrderBy(p => p.listCode).ToList();
+                        this.sortCode = SortOrder.Ascending.ToString();
+                    }
+                    else if (this.sortCode.Equals(SortOrder.Ascending.ToString()))
+                    {
+                        this.dataGridView1.DataSource = datagv.OrderByDescending(p => p.listCode).ToList();
+                        this.sortCode = SortOrder.Descending.ToString();
+                    }
+                }
+                else if (e.ColumnIndex == 7)
+                {
+                    if (this.sortUpdateDate.Equals(SortOrder.Descending.ToString()))
+                    {
+                        this.dataGridView1.DataSource = datagv.OrderBy(p => Utility.ConvertDateTHToEn(p.updateDateStr)).ToList();
+                        this.sortUpdateDate = SortOrder.Ascending.ToString();
+                    }
+                    else if (this.sortUpdateDate.Equals(SortOrder.Ascending.ToString()))
+                    {
+                        this.dataGridView1.DataSource = datagv.OrderByDescending(p => Utility.ConvertDateTHToEn(p.updateDateStr)).ToList();
+                        this.sortUpdateDate = SortOrder.Descending.ToString();
+                    }
+                }
             }
         }
         private void openLink(int rowIndex)
@@ -914,6 +957,30 @@ namespace UpdateMyList.Forms
             {
                 reloadbtn.PerformClick();
             }
+        }
+
+        private void hunrbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            this.takeData = 100;
+            search();
+        }
+
+        private void fiftyrbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            this.takeData = 50;
+            search();
+        }
+
+        private void allrbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            this.takeData = null;
+            search();
+        }
+
+        private void tenrbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            this.takeData = 10;
+            search();
         }
     }
 }

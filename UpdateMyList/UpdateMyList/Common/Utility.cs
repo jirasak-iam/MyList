@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using UpdateMyList.Common;
@@ -68,6 +69,34 @@ namespace UpdateMyList.Common
                    seasonDesc = SeasonList.Fall.ToString(),
                });
             return result.OrderBy(o => o.seasonCode).ToList();
+        }
+        public static DateTime ConvertDateTHToEn(string dateStr)
+        {
+            var dateTime = DateTime.Now;
+            var dateTimeArray = dateStr.Split(' ');
+            try
+            {
+                if (dateTimeArray.Length == 2)
+                {
+                    var date = dateTimeArray[0].Split('/');
+                    var time = dateTimeArray[1].Split(':');
+
+                    var day = Convert.ToInt32(date[0]);
+                    var month = Convert.ToInt32(date[1]);
+                    var year = Convert.ToInt32(date[2]) - 543;
+
+                    var hour = Convert.ToInt32(time[0]);
+                    var minute = Convert.ToInt32(time[1]);
+                    var sec = Convert.ToInt32(time[2]);
+
+                    dateTime = new DateTime(year, month, day, hour, minute, sec);
+                }
+            }
+            catch (Exception)
+            {
+                dateTime = DateTime.Now;
+            }
+            return dateTime;
         }
     }
 }
