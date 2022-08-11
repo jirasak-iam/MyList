@@ -122,15 +122,32 @@ namespace UpdateMyList.Forms
                     var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
                     if (genreGroup == null)
                     {
-                        var genGroup = new GenreGroupModel
+                        var genGroupClose = _uow.GenreGroupRepository.SelectGenreGroupByListIdButClose(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
+                        if (genGroupClose is null)
                         {
-                            genId = genre.genreId,
-                            listId = rs,
-                            recStatus = RecStatus.Active,
-                            createBy = Constants.UserApp,
-                            createDate = DateTime.Now
-                        };
-                        _uow.GenreGroupRepository.Insert(genGroup);
+                            var genGroup = new GenreGroupModel
+                            {
+                                genId = genre.genreId,
+                                listId = rs,
+                                recStatus = RecStatus.Active,
+                                createBy = Constants.UserApp,
+                                createDate = DateTime.Now
+                            };
+                            _uow.GenreGroupRepository.Insert(genGroup);
+                        }
+                        else
+                        {
+                            var genGroup = new GenreGroupModel
+                            {
+                                gengroupId = genGroupClose.gengroupId,
+                                genId = genGroupClose.genId,
+                                listId = genGroupClose.listId,
+                                recStatus = RecStatus.Active,
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now
+                            };
+                            _uow.GenreGroupRepository.UpdateGenGroup(genGroup);
+                        }
                     }
                 }
                 else if (this.genreclb.GetItemCheckState(i) == CheckState.Unchecked)
@@ -148,7 +165,7 @@ namespace UpdateMyList.Forms
                             updateBy = Constants.UserApp,
                             updateDate = DateTime.Now
                         };
-                        _uow.GenreGroupRepository.UpdateOut(genGroup);
+                        _uow.GenreGroupRepository.UpdateGenGroup(genGroup);
                     }
                 }
                 
@@ -289,7 +306,7 @@ namespace UpdateMyList.Forms
                                    stsDesc = a.stsDesc,
                                    listEP = a.listEP,
                                    seasonDesc = a.seasonDesc,
-                                   genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).ToList()),
+                                   genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).OrderBy(o => o).ToList()),
                                    updateDateStr = a.updateDateStr
                                }).ToList();
                 this.dataGridView1.DataSource = preData;

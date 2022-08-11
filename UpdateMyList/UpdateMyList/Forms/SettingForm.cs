@@ -294,7 +294,14 @@ namespace UpdateMyList.Forms
 
         private void savebtn_Click(object sender, EventArgs e)
         {
-            SaveSettingParam();
+            if (this.mapcbb.SelectedIndex > 0)
+            {
+                SaveSettingParam();
+            }
+            else
+            {
+                MessageBox.Show($"กรุณาเลือก Option ที่ต้องการบันทึก", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
         private void SaveSettingParam()
         {
@@ -326,10 +333,18 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var rs = _uow.StsMastRepository.Insert(data);
-                        if (rs > 0)
+                        var chqdup = _uow.StsMastRepository.Read().FirstOrDefault(p => p.stsCode.ToUpper().Equals(data.stsCode.ToUpper()));
+                        if (chqdup is null)
                         {
-                            Clear(true);
+                            var rs = _uow.StsMastRepository.Insert(data);
+                            if (rs > 0)
+                            {
+                                Clear(true);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{chqdup.stsCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
 
@@ -358,10 +373,18 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var rs = _uow.ListTypeMastRepository.Insert(data);
-                        if (rs > 0)
+                        var chqdup = _uow.ListTypeMastRepository.Read().FirstOrDefault(p => p.listTypeCode.ToUpper().Equals(data.listTypeCode.ToUpper()));
+                        if (chqdup is null)
                         {
-                            Clear(true);
+                            var rs = _uow.ListTypeMastRepository.Insert(data);
+                            if (rs > 0)
+                            {
+                                Clear(true);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{chqdup.listTypeCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
@@ -389,11 +412,19 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var rs = _uow.GenreMastRepository.Insert(data);
-                        if (rs > 0)
+                        var chqdup = _uow.GenreMastRepository.Read().FirstOrDefault(p => p.genCode.ToUpper().Equals(data.genreCode.ToUpper()));
+                        if (chqdup is null)
                         {
-                            Clear(true);
+                            var rs = _uow.GenreMastRepository.Insert(data);
+                            if (rs > 0)
+                            {
+                                Clear(true);
+                            }
                         }
+                        else
+                        {
+                            MessageBox.Show($"{chqdup.genCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        } 
                     }
                 }
                 else if (MappingParam.Season.Equals(this._mapCode))
@@ -420,10 +451,18 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var rs = _uow.SeasonMastRepository.Insert(data);
-                        if (rs > 0)
+                        var chqdup = _uow.SeasonMastRepository.Read().FirstOrDefault(p => p.seaCode.ToUpper().Equals(data.seasonCode.ToUpper()));
+                        if (chqdup is null)
                         {
-                            Clear(true);
+                            var rs = _uow.SeasonMastRepository.Insert(data);
+                            if (rs > 0)
+                            {
+                                Clear(true);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{chqdup.seaCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
@@ -452,10 +491,18 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var rs = _uow.MapSetingParamRepository.Insert(data);
-                        if (rs > 0)
+                        var chqdup = _uow.MapSetingParamRepository.Read().FirstOrDefault(p => p.mapCode.ToUpper().Equals(data.mapCode.ToUpper()));
+                        if (chqdup is null)
                         {
-                            Clear(true);
+                            var rs = _uow.MapSetingParamRepository.Insert(data);
+                            if (rs > 0)
+                            {
+                                Clear(true);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{chqdup.mapCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }

@@ -11,10 +11,11 @@ namespace UpdateMyList.Entity.Repository
     public interface IGenreGroupRepository : IBaseRepository<GenreGroup>
     {
         List<GenreGroupModel> SelectGenreGroupByListId(int listId);
+        List<GenreGroupModel> SelectGenreGroupByListIdButClose(int listId);
         List<GenreGroupModel> SelectGenreGroupBygenIdMany(List<int> genId);
         List<GenreGroupModel> SelectGenreGroupByListIdMany(List<int> listId);
         int Insert(GenreGroupModel data);
-        int UpdateOut(GenreGroupModel data);
+        int UpdateGenGroup(GenreGroupModel data);
     }
     public class GenreGroupRepository : BaseRepository<GenreGroup>, IGenreGroupRepository
     {
@@ -30,6 +31,26 @@ namespace UpdateMyList.Entity.Repository
                       //join c in _context.MyListMasts on a.listId equals c.listId
                       orderby a.gengroupId
                       where a.recStatus == RecStatus.Active && a.listId == listId
+                      select new GenreGroupModel
+                      {
+                          gengroupId = a.gengroupId,
+                          genId = a.genId,
+                          listId = a.listId,
+                          recStatus = a.recStatus,
+                          createBy = a.createBy,
+                          createDate = a.createDate,
+                          updateBy = a.updateBy,
+                          updateDate = a.updateDate
+                      }).ToList();
+            return rs;
+        }
+        public List<GenreGroupModel> SelectGenreGroupByListIdButClose(int listId)
+        {
+            var rs = (from a in _context.GenreGroups
+                          //join b in _context.GenreMasts on a.genId equals b.genId
+                          //join c in _context.MyListMasts on a.listId equals c.listId
+                      orderby a.gengroupId
+                      where a.recStatus == RecStatus.Close && a.listId == listId
                       select new GenreGroupModel
                       {
                           gengroupId = a.gengroupId,
@@ -85,7 +106,7 @@ namespace UpdateMyList.Entity.Repository
                       }).ToList();
             return rs;
         }
-        public int UpdateOut(GenreGroupModel data)
+        public int UpdateGenGroup(GenreGroupModel data)
         {
             var model = _context.GenreGroups.FirstOrDefault(p => p.gengroupId == data.gengroupId);
             if (model != null)
