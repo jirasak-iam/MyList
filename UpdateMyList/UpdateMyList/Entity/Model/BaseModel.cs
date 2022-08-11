@@ -19,7 +19,7 @@ namespace UpdateMyList.Entity.Model
         public DateTime? updateDate { get; set; }
         public string updateDateStr 
         {
-            get { return updateDate != null ? updateDate?.ToString(formatDateStr, culTH) : DateTime.Now.ToString(formatDateStr, culTH); }
+            get { return updateDate != null ? updateDate?.ToString(formatDateStr, culTH) : createDate?.ToString(formatDateStr, culTH); }
         }
         public int? sortSeq { get; set; }
     }
