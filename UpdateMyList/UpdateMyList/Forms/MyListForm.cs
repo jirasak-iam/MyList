@@ -24,12 +24,14 @@ namespace UpdateMyList.Forms
         private string lstStsSelecet { get; set; }
         private bool? clear { get; set; }
         private string similar { get; set; }
-        private int? takeData { get; set; } = 100;
+        private int? takeData { get; set; }
         private string  sortCode { get; set; } = "Descending";
         private string sortUpdateDate { get; set; } = "Descending";
         private int pageCount { get; set; } = 1;
+        private int totalCount { get; set; }
+        private int totalCountAfterFilter { get; set; }
         private int pageSelect { get; set; } = 1;
-        private int countDataBfSkip { get; set; } = 0;
+        private int countData { get; set; } = 0;
         public void ClearPage(bool allData)
         {
             var reFlag = this.rePageFlag ?? true;
@@ -230,7 +232,7 @@ namespace UpdateMyList.Forms
 
         private void MyListForm_Load(object sender, EventArgs e)
         {
-            this.hunrbtn.Checked = true;
+            this.tenrbtn.PerformClick();
             this.dataGridView1.ReadOnly = true;
 
             this.stslb.DataSource = _uow.StsMastRepository.SelectAll();
@@ -256,12 +258,8 @@ namespace UpdateMyList.Forms
             this.seasonlb.DataSource = _uow.SeasonMastRepository.SelectAll();
             this.seasonlb.DisplayMember = "seasonDesc";
             this.seasonlb.ValueMember = "seasonId";
-            //this.genreclb.DataBindings
 
-            //this.gobtn.Enabled = false;
-            var data = (List<DataGridViewModel>)dataGridView1.DataSource;
             CalPage();
-
         }
         private void search()
         {
@@ -282,6 +280,7 @@ namespace UpdateMyList.Forms
             if (_model != null)
             {
                 var getByType = _uow.MyListRepository.SelectByType(_model);
+                this.totalCount = getByType.Count;
                 if (chkSelectSts > 0)
                 {
                     getByType = getByType.Where(p => stsLbSelect.Contains(p.stsId)).ToList();
@@ -297,17 +296,39 @@ namespace UpdateMyList.Forms
                 }
                 if (!string.IsNullOrEmpty(searchName))
                 {
-                    getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                    var splitSearchName = searchName.Split(Constants.delimiterChars).ToList();
+                    if (splitSearchName.Count > 0)
+                    {
+                        splitSearchName = splitSearchName.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
+                        if (splitSearchName.Count > 0)
+                        {
+                            var tempData = new List<MyListModel>();
+                            splitSearchName.ForEach(item => tempData.AddRange(getByType.Where(p => p.listName.ToUpper().Contains(item.ToUpper())).ToList()));
+                            getByType = tempData;
+                        }
+                        else
+                        {
+                            getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                        }
+                    }
+                    else
+                    {
+                        getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                    }
                 }
-                this.countDataBfSkip = getByType.Count;
+                this.totalCountAfterFilter = getByType.Count;
                 if (this.pageSelect > 1)
                 {
                     var skip = (this.takeData ?? 0) * (pageSelect - 1);
                     getByType = getByType.Skip(skip).ToList();
                 }
+                this.countData = getByType.Count;
                 if (this.takeData != null)
                 {
-                    getByType = getByType.Take(this.takeData.Value).ToList();
+                    if (this.takeData > 0)
+                    {
+                        getByType = getByType.Take(this.takeData.Value).ToList();
+                    }
                 }
                 
                 this.setDataGrid(getByType);
@@ -357,6 +378,15 @@ namespace UpdateMyList.Forms
                 this.dataGridView1.Columns[7].HeaderText = "แก้ไขล่าสุด";
                 this.dataGridView1.Columns[7].Width = 125;
                 this.dataGridView1.Columns[7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                var maxDataInPage = this.takeData is null ? this.countData : this.countData < this.takeData ? this.countData : this.takeData;
+                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                {
+                    labelcountpage.Text = $"{maxDataInPage}/{this.totalCount}";
+                }
+                else
+                {
+                    labelcountpage.Text = $"{maxDataInPage}/{this.totalCountAfterFilter}";
+                }
             }
             catch (Exception)
             {
@@ -554,6 +584,7 @@ namespace UpdateMyList.Forms
         private void searchtxt_TextChanged(object sender, EventArgs e)
         {
             search();
+            CalPage();
         }
 
         private void gobtn_Click(object sender, EventArgs e)
@@ -677,7 +708,8 @@ namespace UpdateMyList.Forms
 
         private void stslb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            searchbtn.PerformClick();
+            search();
+            CalPage();
         }
 
         private void plusbtn_Click(object sender, EventArgs e)
@@ -809,7 +841,8 @@ namespace UpdateMyList.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                searchbtn.PerformClick();
+                search();
+                CalPage();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -841,7 +874,8 @@ namespace UpdateMyList.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                searchbtn.PerformClick();
+                search();
+                CalPage();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -857,7 +891,8 @@ namespace UpdateMyList.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                searchbtn.PerformClick();
+                search();
+                CalPage();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -919,6 +954,7 @@ namespace UpdateMyList.Forms
         }
         private void ClearSelection()
         {
+            this.genreclb.DataSource = _uow.GenreMastRepository.Select();
             for (int i = 0; i < this.genreclb.Items.Count; i++)
             {
                 this.genreclb.SetItemChecked(i, false);
@@ -927,14 +963,16 @@ namespace UpdateMyList.Forms
 
         private void seasonlb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            searchbtn.PerformClick();
+            search();
+            CalPage();
         }
 
         private void seasonlb_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                searchbtn.PerformClick();
+                search();
+                CalPage();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -948,14 +986,16 @@ namespace UpdateMyList.Forms
 
         private void genrelb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            searchbtn.PerformClick();
+            search();
+            CalPage();
         }
 
         private void genrelb_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                searchbtn.PerformClick();
+                search();
+                CalPage();
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -969,19 +1009,35 @@ namespace UpdateMyList.Forms
 
         private void CalPage()
          {
-            this.pageCount = 1;
+            this.pageCount = 0;
             this.lbpage.DataSource = null;
-            if (this.countDataBfSkip > 0)
+            if (this.countData > 0)
             {
-                var dataCount = this.countDataBfSkip;
-                var take = this.takeData ?? 0;
-                if (take > 0)
+                var dataCount = 0;
+                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
                 {
-                    this.pageCount += dataCount / this.takeData.Value;
+                    dataCount = this.totalCount;
                 }
                 else
                 {
-                    this.pageCount = 1;
+                    dataCount = this.countData;
+                }
+                var take = this.takeData ?? 0;
+                if (take > 0)
+                {
+                    var mod = dataCount % this.takeData.Value;
+                    if (mod == 0)
+                    {
+                        this.pageCount = dataCount / this.takeData.Value;
+                    }
+                    else
+                    {
+                        this.pageCount = (dataCount / this.takeData.Value) +1;
+                    }
+                }
+                else
+                {
+                    this.pageCount =1;
                 }
 
                 if (pageCount > 0)
@@ -999,29 +1055,29 @@ namespace UpdateMyList.Forms
         private void allrbtn_Click(object sender, EventArgs e)
         {
             this.takeData = null;
-            CalPage();
             search();
+            CalPage();
         }
 
         private void tenrbtn_Click(object sender, EventArgs e)
         {
             this.takeData = 10;
-            CalPage();
             search();
+            CalPage();
         }
 
         private void fiftyrbtn_Click(object sender, EventArgs e)
         {
             this.takeData = 50;
-            CalPage();
             search();
+            CalPage();
         }
 
         private void hunrbtn_Click(object sender, EventArgs e)
         {
             this.takeData = 100;
-            CalPage();
             search();
+            CalPage();
         }
 
         private void lbpage_SelectedIndexChanged(object sender, EventArgs e)

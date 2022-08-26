@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyListForm));
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.labelcountpage = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.lbpage = new System.Windows.Forms.ListBox();
             this.tenrbtn = new System.Windows.Forms.RadioButton();
             this.hunrbtn = new System.Windows.Forms.RadioButton();
@@ -68,7 +70,6 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -91,6 +92,7 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
+            this.listtap.Controls.Add(this.labelcountpage);
             this.listtap.Controls.Add(this.label10);
             this.listtap.Controls.Add(this.lbpage);
             this.listtap.Controls.Add(this.tenrbtn);
@@ -116,6 +118,23 @@
             this.listtap.TabIndex = 0;
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
+            // 
+            // labelcountpage
+            // 
+            this.labelcountpage.AutoSize = true;
+            this.labelcountpage.Location = new System.Drawing.Point(1851, 102);
+            this.labelcountpage.Name = "labelcountpage";
+            this.labelcountpage.Size = new System.Drawing.Size(0, 17);
+            this.labelcountpage.TabIndex = 35;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(78, 36);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(40, 17);
+            this.label10.TabIndex = 34;
+            this.label10.Text = "หน้าที่";
             // 
             // lbpage
             // 
@@ -372,12 +391,13 @@
             this.seasoncbb.DisplayMember = "stsDesc";
             this.seasoncbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.seasoncbb.FormattingEnabled = true;
+            this.seasoncbb.IntegralHeight = false;
+            this.seasoncbb.ItemHeight = 16;
             this.seasoncbb.Location = new System.Drawing.Point(151, 230);
             this.seasoncbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seasoncbb.Name = "seasoncbb";
             this.seasoncbb.Size = new System.Drawing.Size(289, 24);
             this.seasoncbb.TabIndex = 18;
-            this.seasoncbb.ValueMember = "stsId";
             // 
             // label7
             // 
@@ -544,15 +564,6 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(78, 36);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 17);
-            this.label10.TabIndex = 34;
-            this.label10.Text = "หน้าที่";
-            // 
             // MyListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -620,5 +631,6 @@
         private System.Windows.Forms.RadioButton tenrbtn;
         private System.Windows.Forms.ListBox lbpage;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label labelcountpage;
     }
 }

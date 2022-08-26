@@ -9,8 +9,9 @@ namespace UpdateMyList.Common
 {
     public static class Constants
     {
-        public static string[] badWord = { "no", "to" ,"!","@","#","$","%","&","*","(",")","-","_","+","=","is","am","are","1","2","3","4","5","6","7", "8", "9", "0","ภาค" };
-        public static string UserApp = "C# Win App";
+        public static readonly string[] badWord = { "no", "to" ,"!","@","#","$","%","&","*","(",")","-","_","+","=","is","am","are","1","2","3","4","5","6","7", "8", "9", "0","ภาค" };
+        public static readonly string UserApp = "C# Win App";
+        public static readonly char[] delimiterChars = { ','};
         /// <summary>
         /// A - เปิดใช้งาน
         /// </summary>
