@@ -232,7 +232,25 @@ namespace UpdateMyList.Forms
 
         private void MyListForm_Load(object sender, EventArgs e)
         {
-            this.tenrbtn.PerformClick();
+            var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+            var dataPerPage = config.DataPerPage ?? 0;
+            if (dataPerPage == 0 )
+            {
+                this.allrbtn.PerformClick();
+            }
+            else if(dataPerPage == 10)
+            {
+                this.tenrbtn.PerformClick();
+            }
+            else if (dataPerPage == 50)
+            {
+                this.fiftyrbtn.PerformClick();
+            }
+            else if (dataPerPage == 100)
+            {
+                this.hunrbtn.PerformClick();
+            }
+
             this.dataGridView1.ReadOnly = true;
 
             this.stslb.DataSource = _uow.StsMastRepository.SelectAll();

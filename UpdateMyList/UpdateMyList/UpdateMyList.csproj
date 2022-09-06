@@ -86,6 +86,9 @@
   <ItemGroup>
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Utility.cs" />
+    <Compile Include="Entity\ConfigMyList.cs">
+      <DependentUpon>MyListEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GenreGroup.cs">
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
@@ -128,6 +131,7 @@
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Repository\BaseRepository.cs" />
+    <Compile Include="Entity\Repository\ConfigMyListRepository.cs" />
     <Compile Include="Entity\Repository\GenreGroupRepository.cs" />
     <Compile Include="Entity\Repository\GenreMastRepository.cs" />
     <Compile Include="Entity\Repository\MapSetingParamRepository.cs" />

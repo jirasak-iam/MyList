@@ -125,5 +125,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ConfigMyLists">
+      <EntityTypeMapping TypeName="myListModel.ConfigMyList">
+        <MappingFragment StoreEntitySet="ConfigMyList">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="DataPerPage" ColumnName="DataPerPage" />
+          <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

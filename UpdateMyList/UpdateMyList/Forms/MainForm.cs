@@ -28,6 +28,24 @@ namespace UpdateMyList.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+            var dataPerPage = config.DataPerPage ?? 0;
+            if (dataPerPage == 0)
+            {
+                this.allrbtn.PerformClick();
+            }
+            else if (dataPerPage == 10)
+            {
+                this.tenrbtn.PerformClick();
+            }
+            else if (dataPerPage == 50)
+            {
+                this.fiftyrbtn.PerformClick();
+            }
+            else if (dataPerPage == 100)
+            {
+                this.hunrbtn.PerformClick();
+            }
             var listType = _uow.ListTypeMastRepository.Select();
             this.listTypelb.DataSource = listType;
             this.listTypelb.DisplayMember = "listTypeDesc";
@@ -36,6 +54,27 @@ namespace UpdateMyList.Forms
 
         private void listTypelb_DoubleClick(object sender, EventArgs e)
         {
+            var config = new ConfigMyList();
+            if (this.allrbtn.Checked)
+            {
+                config.DataPerPage = null;
+                _uow.ConfigMyListRepository.UpdateConfig(config);
+            }
+            else if (this.tenrbtn.Checked)
+            {
+                config.DataPerPage = 10;
+                _uow.ConfigMyListRepository.UpdateConfig(config);
+            }
+            else if (this.fiftyrbtn.Checked)
+            {
+                config.DataPerPage = 50;
+                _uow.ConfigMyListRepository.UpdateConfig(config);
+            }
+            else if (this.hunrbtn.Checked)
+            {
+                config.DataPerPage = 100;
+                _uow.ConfigMyListRepository.UpdateConfig(config);
+            }
             openForm();
         }
 
@@ -43,6 +82,27 @@ namespace UpdateMyList.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
+                var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+                if (this.allrbtn.Checked)
+                {
+                    config.DataPerPage = null;
+                    _uow.Save();
+                }
+                else if (this.tenrbtn.Checked)
+                {
+                    config.DataPerPage = 10;
+                    _uow.Save();
+                }
+                else if (this.fiftyrbtn.Checked)
+                {
+                    config.DataPerPage = 50;
+                    _uow.Save();
+                }
+                else if (this.hunrbtn.Checked)
+                {
+                    config.DataPerPage = 100;
+                    _uow.Save();
+                }
                 openForm();
             }
             if (e.KeyCode == Keys.Escape)

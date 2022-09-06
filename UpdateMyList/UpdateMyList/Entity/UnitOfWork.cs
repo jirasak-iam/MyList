@@ -18,6 +18,7 @@ namespace UpdateMyList.Entity
         IGenreMastRepository GenreMastRepository { get; }
         IMapSetingParamRepository MapSetingParamRepository { get; }
         IGenreGroupRepository GenreGroupRepository { get; }
+        IConfigMyListRepository ConfigMyListRepository { get; }
     }
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
@@ -65,6 +66,7 @@ namespace UpdateMyList.Entity
         private GenreMastRepository _genreMastRepository;
         private MapSetingParamRepository _mapSettingParamRepository;
         private GenreGroupRepository _genreGroupRepository;
+        private ConfigMyListRepository _configMyListRepository;
         public IMyListRepository MyListRepository
         {
             get { return _myListRepository ?? (_myListRepository = new MyListRepository(_context)); }
@@ -92,6 +94,10 @@ namespace UpdateMyList.Entity
         public IGenreGroupRepository GenreGroupRepository
         {
             get { return _genreGroupRepository ?? (_genreGroupRepository = new GenreGroupRepository(_context)); }
+        }
+        public IConfigMyListRepository ConfigMyListRepository
+        {
+            get { return _configMyListRepository ?? (_configMyListRepository = new ConfigMyListRepository(_context)); }
         }
     }
 }

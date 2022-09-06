@@ -9,6 +9,7 @@
     <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
     <EntitySet Name="SeasonMasts" EntityType="myListModel.SeasonMast" />
     <EntitySet Name="GenreMasts" EntityType="myListModel.GenreMast" />
+    <EntitySet Name="ConfigMyLists" EntityType="myListModel.ConfigMyList" />
   </EntityContainer>
   <EntityType Name="UserProfile">
     <Key>
@@ -125,5 +126,13 @@
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="sortSeq" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ConfigMyList">
+    <Key>
+      <PropertyRef Name="ConfigId" />
+    </Key>
+    <Property Name="ConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DataPerPage" Type="Int32" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>
