@@ -26,6 +26,7 @@ namespace UpdateMyList.Forms
         private string similar { get; set; }
         private int? takeData { get; set; }
         private string  sortCode { get; set; } = "Descending";
+        private string sortName { get; set; } = "Descending";
         private string sortUpdateDate { get; set; } = "Descending";
         private int pageCount { get; set; } = 1;
         private int totalCount { get; set; }
@@ -232,6 +233,8 @@ namespace UpdateMyList.Forms
 
         private void MyListForm_Load(object sender, EventArgs e)
         {
+            //this.editbtn.Visible = false;
+            //this.reloadbtn.Visible = false;
             var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
             var dataPerPage = config.DataPerPage ?? 0;
             if (dataPerPage == 0 )
@@ -298,6 +301,32 @@ namespace UpdateMyList.Forms
             if (_model != null)
             {
                 var getByType = _uow.MyListRepository.SelectByType(_model);
+                var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+                var sortmode = config.sortmode.Split(',');
+                var sortcolumn = sortmode.Length == 2 ? sortmode[0] : "";
+                var sortorder = sortmode.Length == 2 ? sortmode[1] : "";
+                if (sortcolumn.Contains("ID"))
+                {
+                    if (sortorder.Contains("ASC"))
+                    {
+                        getByType = getByType.OrderBy(o => o.listId).ToList();
+                    }
+                    else if (sortorder.Contains("DESC"))
+                    {
+                        getByType = getByType.OrderByDescending(o => o.listId).ToList();
+                    }
+                }
+                else if (sortcolumn.Contains("DATE"))
+                {
+                    if (sortorder.Contains("ASC"))
+                    {
+                        getByType = getByType.OrderBy(o => o.updateDate).ToList();
+                    }
+                    else if (sortorder.Contains("DESC"))
+                    {
+                        getByType = getByType.OrderByDescending(o => o.updateDate).ToList();
+                    }
+                }
                 this.totalCount = getByType.Count;
                 if (chkSelectSts > 0)
                 {
@@ -449,6 +478,19 @@ namespace UpdateMyList.Forms
                         this.sortCode = SortOrder.Descending.ToString();
                     }
                 }
+                else if (e.ColumnIndex == 1)
+                {
+                    if (this.sortName.Equals(SortOrder.Descending.ToString()))
+                    {
+                        this.dataGridView1.DataSource = datagv.OrderBy(p => p.listName).ToList();
+                        this.sortName = SortOrder.Ascending.ToString();
+                    }
+                    else if (this.sortName.Equals(SortOrder.Ascending.ToString()))
+                    {
+                        this.dataGridView1.DataSource = datagv.OrderByDescending(p => p.listName).ToList();
+                        this.sortName = SortOrder.Descending.ToString();
+                    }
+                }
                 else if (e.ColumnIndex == 7)
                 {
                     if (this.sortUpdateDate.Equals(SortOrder.Descending.ToString()))
@@ -491,7 +533,7 @@ namespace UpdateMyList.Forms
                 }
                 else
                 {
-                    editbtn.PerformClick();
+                    edit();
                 }
                 if (rowIndex > 0)
                 {
@@ -529,7 +571,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
 
@@ -543,7 +585,7 @@ namespace UpdateMyList.Forms
             }
         }
 
-        private void reloadbtn_Click(object sender, EventArgs e)
+        private void reload()
         {
             this.clear = true;
             ClearPage(true);
@@ -554,7 +596,7 @@ namespace UpdateMyList.Forms
             ClearPage(true);
         }
 
-        private void editbtn_Click(object sender, EventArgs e)
+        private void edit()
         {
             this.IU_Flag = "U";
             this.gobtn.Enabled = true;
@@ -591,12 +633,11 @@ namespace UpdateMyList.Forms
                 }
 
             }
-
         }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
-            editbtn.PerformClick();
+            edit();
         }
 
         private void searchtxt_TextChanged(object sender, EventArgs e)
@@ -868,7 +909,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
 
@@ -884,7 +925,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
 
@@ -901,7 +942,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
 
@@ -918,39 +959,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
-            }
-        }
-
-        private void editbtn_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                editbtn.PerformClick();
-            }
-            if (e.KeyCode == Keys.Escape)
-            {
-                escapeToMain();
-            }
-            if (e.KeyCode == Keys.F5)
-            {
-                reloadbtn.PerformClick();
-            }
-        }
-
-        private void reloadbtn_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                reloadbtn.PerformClick();
-            }
-            if (e.KeyCode == Keys.Escape)
-            {
-                escapeToMain();
-            }
-            if (e.KeyCode == Keys.F5)
-            {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
         private void changeStsByEp()
@@ -998,7 +1007,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
 
@@ -1021,7 +1030,7 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.F5)
             {
-                reloadbtn.PerformClick();
+                reload();
             }
         }
 

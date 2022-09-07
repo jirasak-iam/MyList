@@ -134,5 +134,6 @@
     <Property Name="ConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DataPerPage" Type="Int32" />
     <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="sortmode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

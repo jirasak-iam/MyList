@@ -7,6 +7,7 @@
     <Property Name="ConfigId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DataPerPage" Type="int" />
     <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="sortmode" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="GenreGroup">
     <Key>

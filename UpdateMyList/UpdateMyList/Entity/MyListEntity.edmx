@@ -12,6 +12,7 @@
           <Property Name="ConfigId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DataPerPage" Type="int" />
           <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="sortmode" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="GenreGroup">
           <Key>
@@ -278,6 +279,7 @@
           <Property Name="ConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DataPerPage" Type="Int32" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="sortmode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -412,6 +414,7 @@
           <EntitySetMapping Name="ConfigMyLists">
             <EntityTypeMapping TypeName="myListModel.ConfigMyList">
               <MappingFragment StoreEntitySet="ConfigMyList">
+                <ScalarProperty Name="sortmode" ColumnName="sortmode" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="DataPerPage" ColumnName="DataPerPage" />
                 <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />

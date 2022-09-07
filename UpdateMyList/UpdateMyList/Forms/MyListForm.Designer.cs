@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyListForm));
+            this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
             this.labelcountpage = new System.Windows.Forms.Label();
@@ -47,8 +48,6 @@
             this.searchtxt = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.mainbtn = new System.Windows.Forms.Button();
-            this.reloadbtn = new System.Windows.Forms.Button();
-            this.editbtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.inserttap = new System.Windows.Forms.TabPage();
             this.genreclb = new System.Windows.Forms.CheckedListBox();
@@ -70,23 +69,34 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
+            this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.inserttap.SuspendLayout();
             this.SuspendLayout();
             // 
+            // panel1
+            // 
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.myListtap);
+            this.panel1.Location = new System.Drawing.Point(3, 5);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2032, 674);
+            this.panel1.TabIndex = 2;
+            // 
             // myListtap
             // 
             this.myListtap.Controls.Add(this.listtap);
             this.myListtap.Controls.Add(this.inserttap);
             this.myListtap.ItemSize = new System.Drawing.Size(50, 30);
-            this.myListtap.Location = new System.Drawing.Point(3, 1);
+            this.myListtap.Location = new System.Drawing.Point(0, 2);
             this.myListtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.myListtap.Name = "myListtap";
             this.myListtap.SelectedIndex = 0;
-            this.myListtap.Size = new System.Drawing.Size(2036, 704);
-            this.myListtap.TabIndex = 1;
+            this.myListtap.Size = new System.Drawing.Size(2545, 809);
+            this.myListtap.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.myListtap.TabIndex = 2;
             this.myListtap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.myListap_KeyDown);
             // 
             // listtap
@@ -107,14 +117,12 @@
             this.listtap.Controls.Add(this.searchtxt);
             this.listtap.Controls.Add(this.label4);
             this.listtap.Controls.Add(this.mainbtn);
-            this.listtap.Controls.Add(this.reloadbtn);
-            this.listtap.Controls.Add(this.editbtn);
             this.listtap.Controls.Add(this.dataGridView1);
             this.listtap.Location = new System.Drawing.Point(4, 34);
             this.listtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listtap.Name = "listtap";
             this.listtap.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listtap.Size = new System.Drawing.Size(2028, 666);
+            this.listtap.Size = new System.Drawing.Size(2537, 771);
             this.listtap.TabIndex = 0;
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
@@ -282,36 +290,12 @@
             this.mainbtn.Location = new System.Drawing.Point(1301, 2);
             this.mainbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mainbtn.Name = "mainbtn";
-            this.mainbtn.Size = new System.Drawing.Size(63, 28);
+            this.mainbtn.Size = new System.Drawing.Size(63, 30);
             this.mainbtn.TabIndex = 5;
             this.mainbtn.Text = "Main";
             this.mainbtn.UseVisualStyleBackColor = true;
             this.mainbtn.Click += new System.EventHandler(this.mainbtn_Click);
             this.mainbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mainbtn_KeyDown);
-            // 
-            // reloadbtn
-            // 
-            this.reloadbtn.Location = new System.Drawing.Point(1935, 618);
-            this.reloadbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.reloadbtn.Name = "reloadbtn";
-            this.reloadbtn.Size = new System.Drawing.Size(85, 34);
-            this.reloadbtn.TabIndex = 8;
-            this.reloadbtn.Text = "Reload";
-            this.reloadbtn.UseVisualStyleBackColor = true;
-            this.reloadbtn.Click += new System.EventHandler(this.reloadbtn_Click);
-            this.reloadbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reloadbtn_KeyDown);
-            // 
-            // editbtn
-            // 
-            this.editbtn.Location = new System.Drawing.Point(1847, 618);
-            this.editbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.editbtn.Name = "editbtn";
-            this.editbtn.Size = new System.Drawing.Size(83, 34);
-            this.editbtn.TabIndex = 7;
-            this.editbtn.Text = "แก้ไข";
-            this.editbtn.UseVisualStyleBackColor = true;
-            this.editbtn.Click += new System.EventHandler(this.editbtn_Click);
-            this.editbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.editbtn_KeyDown);
             // 
             // dataGridView1
             // 
@@ -362,7 +346,7 @@
             this.inserttap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.inserttap.Name = "inserttap";
             this.inserttap.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.inserttap.Size = new System.Drawing.Size(2028, 666);
+            this.inserttap.Size = new System.Drawing.Size(2537, 771);
             this.inserttap.TabIndex = 1;
             this.inserttap.Text = "เพื่ม/แก้ไข";
             this.inserttap.UseVisualStyleBackColor = true;
@@ -374,7 +358,7 @@
             this.genreclb.Location = new System.Drawing.Point(151, 273);
             this.genreclb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.genreclb.Name = "genreclb";
-            this.genreclb.Size = new System.Drawing.Size(289, 106);
+            this.genreclb.Size = new System.Drawing.Size(289, 276);
             this.genreclb.TabIndex = 19;
             // 
             // label8
@@ -486,7 +470,7 @@
             // 
             // claerbtn
             // 
-            this.claerbtn.Location = new System.Drawing.Point(871, 395);
+            this.claerbtn.Location = new System.Drawing.Point(869, 577);
             this.claerbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.claerbtn.Name = "claerbtn";
             this.claerbtn.Size = new System.Drawing.Size(75, 32);
@@ -518,7 +502,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(789, 395);
+            this.saveBtn.Location = new System.Drawing.Point(787, 577);
             this.saveBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 32);
@@ -570,8 +554,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1924, 719);
-            this.Controls.Add(this.myListtap);
+            this.ClientSize = new System.Drawing.Size(2040, 691);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MyListForm";
@@ -580,6 +564,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MyListForm_FormClosed);
             this.Load += new System.EventHandler(this.MyListForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MyListForm_KeyDown);
+            this.panel1.ResumeLayout(false);
             this.myListtap.ResumeLayout(false);
             this.listtap.ResumeLayout(false);
             this.listtap.PerformLayout();
@@ -592,18 +577,30 @@
 
         #endregion
 
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl myListtap;
         private System.Windows.Forms.TabPage listtap;
+        private System.Windows.Forms.Label labelcountpage;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ListBox lbpage;
+        private System.Windows.Forms.RadioButton tenrbtn;
+        private System.Windows.Forms.RadioButton hunrbtn;
+        private System.Windows.Forms.RadioButton fiftyrbtn;
+        private System.Windows.Forms.RadioButton allrbtn;
+        private System.Windows.Forms.ListBox genrelb;
+        private System.Windows.Forms.ListBox seasonlb;
         private System.Windows.Forms.ListBox stslb;
         private System.Windows.Forms.Button searchbtn;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox searchtxt;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button mainbtn;
-        private System.Windows.Forms.Button reloadbtn;
-        private System.Windows.Forms.Button editbtn;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TabPage inserttap;
+        private System.Windows.Forms.CheckedListBox genreclb;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox seasoncbb;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button gobtn;
         private System.Windows.Forms.Button minusbtn;
         private System.Windows.Forms.Button plusbtn;
@@ -619,18 +616,5 @@
         private System.Windows.Forms.TextBox linkUrltxt;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox nametxt;
-        private System.Windows.Forms.ComboBox seasoncbb;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckedListBox genreclb;
-        private System.Windows.Forms.ListBox genrelb;
-        private System.Windows.Forms.ListBox seasonlb;
-        private System.Windows.Forms.RadioButton hunrbtn;
-        private System.Windows.Forms.RadioButton fiftyrbtn;
-        private System.Windows.Forms.RadioButton allrbtn;
-        private System.Windows.Forms.RadioButton tenrbtn;
-        private System.Windows.Forms.ListBox lbpage;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label labelcountpage;
     }
 }

@@ -30,6 +30,10 @@ namespace UpdateMyList.Forms
         {
             var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
             var dataPerPage = config.DataPerPage ?? 0;
+            var sortmode = config.sortmode.Split(',');
+            var sortcolumn = sortmode.Length == 2 ? sortmode[0] : "";
+            var sortorder = sortmode.Length == 2 ? sortmode[1] : "";
+
             if (dataPerPage == 0)
             {
                 this.allrbtn.PerformClick();
@@ -46,33 +50,81 @@ namespace UpdateMyList.Forms
             {
                 this.hunrbtn.PerformClick();
             }
+
+            if (sortcolumn.Contains("ID"))
+            {
+                if (sortorder.Contains("ASC"))
+                {
+                    this.idascrbtn.PerformClick();
+                }
+                else if (sortorder.Contains("DESC"))
+                {
+                    this.iddescrbtn.PerformClick();
+                }
+            }
+            else if (sortcolumn.Contains("DATE"))
+            {
+                if (sortorder.Contains("ASC"))
+                {
+                    this.dateascrbtn.PerformClick();
+                }
+                else if (sortorder.Contains("DESC"))
+                {
+                    this.datedescrbtn.PerformClick();
+                }
+            }
+
             var listType = _uow.ListTypeMastRepository.Select();
             this.listTypelb.DataSource = listType;
             this.listTypelb.DisplayMember = "listTypeDesc";
             this.listTypelb.ValueMember = "listTypeId";
         }
-
+        private string StringSortMode()
+        {
+            var sortstring = string.Empty;
+            if (this.idascrbtn.Checked)
+            {
+                sortstring = "ID,ASC";
+            }
+            else if (this.iddescrbtn.Checked)
+            {
+                sortstring = "ID,DESC";
+            }
+            else if (this.dateascrbtn.Checked)
+            {
+                sortstring = "DATE,ASC";
+            }
+            else if (this.datedescrbtn.Checked)
+            {
+                sortstring = "DATE,DESC";
+            }
+            return sortstring;
+        }
         private void listTypelb_DoubleClick(object sender, EventArgs e)
         {
             var config = new ConfigMyList();
             if (this.allrbtn.Checked)
             {
                 config.DataPerPage = null;
+                config.sortmode = StringSortMode();
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.tenrbtn.Checked)
             {
                 config.DataPerPage = 10;
+                config.sortmode = StringSortMode();
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.fiftyrbtn.Checked)
             {
                 config.DataPerPage = 50;
+                config.sortmode = StringSortMode();
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.hunrbtn.Checked)
             {
                 config.DataPerPage = 100;
+                config.sortmode = StringSortMode();
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             openForm();

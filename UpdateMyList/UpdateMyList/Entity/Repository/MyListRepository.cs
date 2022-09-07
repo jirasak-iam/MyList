@@ -26,7 +26,7 @@ namespace UpdateMyList.Entity.Repository
                       join c in _context.SeasonMasts on a.seasonId equals c.seaId  into c2
                       from cc in c2.DefaultIfEmpty()
                       where a.listTypeId == model.listTypeId
-                      orderby a.listId descending
+                      //orderby a.listId descending
                       select new MyListModel
                       {
                           listId = a.listId,

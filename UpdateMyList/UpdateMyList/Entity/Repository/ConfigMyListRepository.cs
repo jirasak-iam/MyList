@@ -25,6 +25,7 @@ namespace UpdateMyList.Entity.Repository
             {
                 config.UpdateDate = DateTime.Now;
                 config.DataPerPage = data.DataPerPage;
+                config.sortmode = data.sortmode;
                 _context.SaveChanges();
             }
         }

@@ -17,5 +17,6 @@ namespace UpdateMyList.Entity
         public int ConfigId { get; set; }
         public Nullable<int> DataPerPage { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
+        public string sortmode { get; set; }
     }
 }
