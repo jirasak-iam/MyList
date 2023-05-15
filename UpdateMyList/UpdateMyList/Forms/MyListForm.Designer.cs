@@ -69,6 +69,7 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
+            this.deletebtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -323,6 +324,7 @@
             // 
             // inserttap
             // 
+            this.inserttap.Controls.Add(this.deletebtn);
             this.inserttap.Controls.Add(this.genreclb);
             this.inserttap.Controls.Add(this.label8);
             this.inserttap.Controls.Add(this.seasoncbb);
@@ -548,6 +550,18 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
+            // deletebtn
+            // 
+            this.deletebtn.Location = new System.Drawing.Point(869, 528);
+            this.deletebtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.deletebtn.Name = "deletebtn";
+            this.deletebtn.Size = new System.Drawing.Size(75, 32);
+            this.deletebtn.TabIndex = 33;
+            this.deletebtn.Text = "Delete";
+            this.deletebtn.UseVisualStyleBackColor = true;
+            this.deletebtn.Click += new System.EventHandler(this.deletebtn_Click);
+            this.deletebtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.deletebtn_KeyDown);
+            // 
             // MyListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -616,5 +630,6 @@
         private System.Windows.Forms.TextBox linkUrltxt;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox nametxt;
+        private System.Windows.Forms.Button deletebtn;
     }
 }

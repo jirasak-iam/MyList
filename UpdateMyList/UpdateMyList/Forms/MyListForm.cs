@@ -49,6 +49,7 @@ namespace UpdateMyList.Forms
                 this.stscbb.SelectedIndex = 0;
                 this.similar = "";
                 this.gobtn.Enabled = false;
+                this.deletebtn.Enabled = false;
                 this.seasoncbb.SelectedIndex = 0;
                 ClearSelection();
                 this.myListtap.SelectedTab = listtap;
@@ -253,6 +254,8 @@ namespace UpdateMyList.Forms
             {
                 this.hunrbtn.PerformClick();
             }
+
+            this.deletebtn.Enabled = false;
 
             this.dataGridView1.ReadOnly = true;
 
@@ -600,6 +603,7 @@ namespace UpdateMyList.Forms
         {
             this.IU_Flag = "U";
             this.gobtn.Enabled = true;
+            this.deletebtn.Enabled = true;
             int rowindex = dataGridView1.CurrentCell.RowIndex;
             int columnindex = 0;
 
@@ -1119,6 +1123,39 @@ namespace UpdateMyList.Forms
                 this.pageSelect = 1;
             }
             search();
+        }
+
+        private void deletebtn_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show($"จะลบเรื่อง {this.nametxt.Text} ใช่มั้ย?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    var result = _uow.GenreGroupRepository.DeleteGenGroup(this.myListId);
+                    result = _uow.MyListRepository.DeleteMyList(this.myListId);
+                    if (result > 0)
+                    {
+                        ClearPage(true);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+        }
+
+        private void deletebtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                deletebtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
         }
     }
 }

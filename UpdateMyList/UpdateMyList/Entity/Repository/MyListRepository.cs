@@ -12,6 +12,7 @@ namespace UpdateMyList.Entity.Repository
         List<MyListModel> SelectByType(ListTypeModel model);
         int UpdateByApp(MyListModel model);
         int Insert(MyListModel model);
+        int DeleteMyList(int listId);
     }
     public class MyListRepository : BaseRepository<MyListMast>, IMyListRepository
     {
@@ -106,5 +107,12 @@ namespace UpdateMyList.Entity.Repository
             return rs;
         }
 
+        public int DeleteMyList(int listId)
+        {
+            var myList = _context.MyListMasts.FirstOrDefault(p => p.listId == listId);
+            _context.MyListMasts.Remove(myList);
+            var rs = _context.SaveChanges();
+            return rs;
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace UpdateMyList.Entity.Repository
         List<GenreGroupModel> SelectGenreGroupByListIdMany(List<int> listId);
         int Insert(GenreGroupModel data);
         int UpdateGenGroup(GenreGroupModel data);
+        int DeleteGenGroup(int listId);
     }
     public class GenreGroupRepository : BaseRepository<GenreGroup>, IGenreGroupRepository
     {
@@ -130,6 +131,13 @@ namespace UpdateMyList.Entity.Repository
                 model.createDate = data.createDate;
                 _context.GenreGroups.Add(model);
             }
+            var rs = _context.SaveChanges();
+            return rs;
+        }
+        public int DeleteGenGroup(int listId)
+        {
+            var genGroup = _context.GenreGroups.Where(p => p.listId == listId);
+            _context.GenreGroups.RemoveRange(genGroup);
             var rs = _context.SaveChanges();
             return rs;
         }
