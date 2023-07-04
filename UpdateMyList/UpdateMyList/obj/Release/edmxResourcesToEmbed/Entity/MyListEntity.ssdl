@@ -89,7 +89,7 @@
       <PropertyRef Name="seaId" />
     </Key>
     <Property Name="seaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="seaCode" Type="nvarchar" MaxLength="6" />
+    <Property Name="seaCode" Type="nvarchar" MaxLength="5" />
     <Property Name="seaDesc" Type="nvarchar" MaxLength="255" />
     <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
     <Property Name="createDate" Type="datetime" />

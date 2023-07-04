@@ -95,6 +95,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SeasonMasts">
+      <EntityTypeMapping TypeName="myListModel.SeasonMast">
+        <MappingFragment StoreEntitySet="SeasonMast">
+          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="seaDesc" ColumnName="seaDesc" />
+          <ScalarProperty Name="seaCode" ColumnName="seaCode" />
+          <ScalarProperty Name="seaId" ColumnName="seaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GenreMasts">
       <EntityTypeMapping TypeName="myListModel.GenreMast">
         <MappingFragment StoreEntitySet="GenreMast">
@@ -117,21 +132,6 @@
           <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
           <ScalarProperty Name="DataPerPage" ColumnName="DataPerPage" />
           <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SeasonMasts">
-      <EntityTypeMapping TypeName="myListModel.SeasonMast">
-        <MappingFragment StoreEntitySet="SeasonMast">
-          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
-          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="seaDesc" ColumnName="seaDesc" />
-          <ScalarProperty Name="seaCode" ColumnName="seaCode" />
-          <ScalarProperty Name="seaId" ColumnName="seaId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

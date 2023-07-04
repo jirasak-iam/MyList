@@ -94,7 +94,7 @@
             <PropertyRef Name="seaId" />
           </Key>
           <Property Name="seaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="seaCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="seaCode" Type="nvarchar" MaxLength="6" />
           <Property Name="seaDesc" Type="nvarchar" MaxLength="255" />
           <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
           <Property Name="createDate" Type="datetime" />
@@ -152,9 +152,9 @@
           <EntitySet Name="GenreGroups" EntityType="myListModel.GenreGroup" />
           <EntitySet Name="MapSetingParams" EntityType="myListModel.MapSetingParam" />
           <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
-          <EntitySet Name="SeasonMasts" EntityType="myListModel.SeasonMast" />
           <EntitySet Name="GenreMasts" EntityType="myListModel.GenreMast" />
           <EntitySet Name="ConfigMyLists" EntityType="myListModel.ConfigMyList" />
+          <EntitySet Name="SeasonMasts" EntityType="myListModel.SeasonMast" />
         </EntityContainer>
         <EntityType Name="UserProfile">
           <Key>
@@ -244,20 +244,6 @@
           <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="sortSeq" Type="Int32" />
         </EntityType>
-        <EntityType Name="SeasonMast">
-          <Key>
-            <PropertyRef Name="seaId" />
-          </Key>
-          <Property Name="seaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="seaCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="seaDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="createDate" Type="DateTime" Precision="3" />
-          <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="updateDate" Type="DateTime" Precision="3" />
-          <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="sortSeq" Type="Int32" />
-        </EntityType>
         <EntityType Name="GenreMast">
           <Key>
             <PropertyRef Name="genId" />
@@ -280,6 +266,20 @@
           <Property Name="DataPerPage" Type="Int32" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="sortmode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SeasonMast">
+          <Key>
+            <PropertyRef Name="seaId" />
+          </Key>
+          <Property Name="seaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seaCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="seaDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sortSeq" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -381,21 +381,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SeasonMasts">
-            <EntityTypeMapping TypeName="myListModel.SeasonMast">
-              <MappingFragment StoreEntitySet="SeasonMast">
-                <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
-                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-                <ScalarProperty Name="createBy" ColumnName="createBy" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-                <ScalarProperty Name="seaDesc" ColumnName="seaDesc" />
-                <ScalarProperty Name="seaCode" ColumnName="seaCode" />
-                <ScalarProperty Name="seaId" ColumnName="seaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GenreMasts">
             <EntityTypeMapping TypeName="myListModel.GenreMast">
               <MappingFragment StoreEntitySet="GenreMast">
@@ -418,6 +403,21 @@
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="DataPerPage" ColumnName="DataPerPage" />
                 <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeasonMasts">
+            <EntityTypeMapping TypeName="myListModel.SeasonMast">
+              <MappingFragment StoreEntitySet="SeasonMast">
+                <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+                <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createBy" ColumnName="createBy" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+                <ScalarProperty Name="seaDesc" ColumnName="seaDesc" />
+                <ScalarProperty Name="seaCode" ColumnName="seaCode" />
+                <ScalarProperty Name="seaId" ColumnName="seaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

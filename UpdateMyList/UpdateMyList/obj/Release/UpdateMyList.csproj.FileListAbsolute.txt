@@ -1,0 +1,9 @@
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.csprojAssemblyReference.cache
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.Forms.MainForm.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.Forms.MyListForm.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.Forms.SettingForm.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.Properties.Resources.resources
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.csproj.GenerateResource.cache
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.csproj.CoreCompileInputs.cache
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.exe
+D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Release\UpdateMyList.pdb
