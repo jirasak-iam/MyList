@@ -75,6 +75,23 @@ namespace UpdateMyList.Common
         [Description("Fall")]
         public const string Fall = "4";
     }
+    public class TypeValue
+    {
+        [Description("Manga")]
+        public const string Manga = "01";
+        [Description("Anime")]
+        public const string Anime = "02";
+        [Description("Serie")]
+        public const string Serie = "03";
+        [Description("Movie")]
+        public const string Movie = "04";
+        [Description("Novel")]
+        public const string Novel = "05";
+        [Description("TV Show")]
+        public const string TV_Show = "06";
+        [Description("Documentary")]
+        public const string Documentary = "07";
+    }
     public enum SeasonList
     {
         Winter =1,

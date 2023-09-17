@@ -104,6 +104,7 @@
     <Compile Include="Entity\Model\BaseModel.cs" />
     <Compile Include="Entity\Model\DataGridViewSettingModel.cs" />
     <Compile Include="Entity\Model\DataGridViewModel.cs" />
+    <Compile Include="Entity\Model\SeasonGroupModel.cs" />
     <Compile Include="Entity\Model\GenreGroupModel.cs" />
     <Compile Include="Entity\Model\ListTypeModel.cs" />
     <Compile Include="Entity\Model\MyListModel.cs" />
@@ -131,6 +132,7 @@
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Repository\BaseRepository.cs" />
+    <Compile Include="Entity\Repository\SeasonGroupRepository .cs" />
     <Compile Include="Entity\Repository\ConfigMyListRepository.cs" />
     <Compile Include="Entity\Repository\GenreGroupRepository.cs" />
     <Compile Include="Entity\Repository\GenreMastRepository.cs" />
@@ -139,6 +141,9 @@
     <Compile Include="Entity\Repository\ListTypeMastRepository.cs" />
     <Compile Include="Entity\Repository\MyListRepository.cs" />
     <Compile Include="Entity\Repository\StsMastRepository.cs" />
+    <Compile Include="Entity\SeasonGroup.cs">
+      <DependentUpon>MyListEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\SeasonMast.cs">
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>

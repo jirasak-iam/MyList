@@ -7,8 +7,8 @@ namespace UpdateMyList.Entity.Repository
 {
     public interface ISeasonMastRepository : IBaseRepository<SeasonMast>
     {
-        List<SeasonMastModel> Select();
-        List<SeasonMastModel> SelectAll();
+        List<SeasonMastModel> Select(int listTypeId);
+        List<SeasonMastModel> SelectAll(int listTypeId);
         List<SeasonMastModel> SelectAllType();
         int UpdateById(SeasonMastModel data);
         int Insert(SeasonMastModel model);
@@ -20,35 +20,67 @@ namespace UpdateMyList.Entity.Repository
         {
         }
 
-        public List<SeasonMastModel> Select()
+        public List<SeasonMastModel> Select(int listTypeId)
         {
+            var groups = _context.SeasonGroups
+                .Where(p => p.recStatus == RecStatus.Active && p.lisTypetId == listTypeId)
+                .Select(o => o.seaId)
+                .ToList();
+
             var rs = new List<SeasonMastModel>();
-            rs.Add(new SeasonMastModel 
-            { 
+            rs.Add(new SeasonMastModel
+            {
                 seasonId = 0,
                 seasonCode = null,
-                seasonDesc = null
+                seasonDesc = string.Empty
             });
-            rs.AddRange(from a in _context.SeasonMasts
-                        orderby a.seaCode
-                        where a.recStatus == RecStatus.Active
-                        select new SeasonMastModel
-                        {
-                            seasonId = a.seaId,
-                            seasonCode = a.seaCode,
-                            seasonDesc = a.seaDesc,
-                            recStatus = a.recStatus,
-                            createBy = a.createBy,
-                            createDate = a.createDate,
-                            updateBy = a.updateBy,
-                            updateDate = a.updateDate,
-                            sortSeq = a.sortSeq,
-                        });
+            if (groups.Count > 0)
+            {
+                rs.AddRange(from a in _context.SeasonMasts
+                            orderby a.seaCode
+                            where a.recStatus == RecStatus.Active && groups.Contains(a.seaId)
+                            select new SeasonMastModel
+                            {
+                                seasonId = a.seaId,
+                                seasonCode = a.seaCode,
+                                seasonDesc = a.seaDesc,
+                                recStatus = a.recStatus,
+                                createBy = a.createBy,
+                                createDate = a.createDate,
+                                updateBy = a.updateBy,
+                                updateDate = a.updateDate,
+                                sortSeq = a.sortSeq,
+                            });
+            }
+            else
+            {
+                rs.AddRange(from a in _context.SeasonMasts
+                            orderby a.seaCode
+                            where a.recStatus == RecStatus.Active
+                            select new SeasonMastModel
+                            {
+                                seasonId = a.seaId,
+                                seasonCode = a.seaCode,
+                                seasonDesc = a.seaDesc,
+                                recStatus = a.recStatus,
+                                createBy = a.createBy,
+                                createDate = a.createDate,
+                                updateBy = a.updateBy,
+                                updateDate = a.updateDate,
+                                sortSeq = a.sortSeq,
+                            });
+            }
+
 
             return rs.ToList();
         }
-        public List<SeasonMastModel> SelectAll()
+        public List<SeasonMastModel> SelectAll(int listTypeId)
         {
+            var groups = _context.SeasonGroups
+                .Where(p => p.recStatus == RecStatus.Active && p.lisTypetId == listTypeId)
+                .Select(o => o.seaId)
+                .ToList();
+
             var rs = new List<SeasonMastModel>();
             rs.Add(new SeasonMastModel
             {
@@ -56,22 +88,43 @@ namespace UpdateMyList.Entity.Repository
                 seasonId = 0,
                 seasonCode = "0",
                 seasonDesc = "All"
-            }) ;
-            rs.AddRange(from a in _context.SeasonMasts
-                        orderby a.seaCode
-                        where a.recStatus == RecStatus.Active
-                        select new SeasonMastModel
-                        {
-                            seasonId = a.seaId,
-                            seasonCode = a.seaCode,
-                            seasonDesc = a.seaDesc,
-                            recStatus = a.recStatus,
-                            createBy = a.createBy,
-                            createDate = a.createDate,
-                            updateBy = a.updateBy,
-                            updateDate = a.updateDate,
-                            sortSeq = a.sortSeq,
-                        });
+            });
+            if (groups.Count > 0)
+            {
+                rs.AddRange(from a in _context.SeasonMasts
+                            orderby a.seaCode
+                            where a.recStatus == RecStatus.Active && groups.Contains(a.seaId)
+                            select new SeasonMastModel
+                            {
+                                seasonId = a.seaId,
+                                seasonCode = a.seaCode,
+                                seasonDesc = a.seaDesc,
+                                recStatus = a.recStatus,
+                                createBy = a.createBy,
+                                createDate = a.createDate,
+                                updateBy = a.updateBy,
+                                updateDate = a.updateDate,
+                                sortSeq = a.sortSeq,
+                            });
+            }
+            else
+            {
+                rs.AddRange(from a in _context.SeasonMasts
+                            orderby a.seaCode
+                            where a.recStatus == RecStatus.Active
+                            select new SeasonMastModel
+                            {
+                                seasonId = a.seaId,
+                                seasonCode = a.seaCode,
+                                seasonDesc = a.seaDesc,
+                                recStatus = a.recStatus,
+                                createBy = a.createBy,
+                                createDate = a.createDate,
+                                updateBy = a.updateBy,
+                                updateDate = a.updateDate,
+                                sortSeq = a.sortSeq,
+                            });
+            }
 
             return rs.ToList();
         }
@@ -106,14 +159,14 @@ namespace UpdateMyList.Entity.Repository
                 model.updateBy = data.updateBy;
                 model.updateDate = data.updateDate;
             }
-            var rs = _context.SaveChanges();
-            return rs;
+            _context.SaveChanges();
+            return model.seaId;
         }
         public int Insert(SeasonMastModel data)
         {
+            var model = new SeasonMast();
             if (data != null)
             {
-                var model = new SeasonMast();
                 model.seaCode = data.seasonCode;
                 model.seaDesc = data.seasonDesc;
                 model.recStatus = data.recStatus;
@@ -122,8 +175,8 @@ namespace UpdateMyList.Entity.Repository
                 model.createDate = data.createDate;
                 _context.SeasonMasts.Add(model);
             }
-            var rs = _context.SaveChanges();
-            return rs;
+            _context.SaveChanges();
+            return model.seaId;
         }
     }
 }

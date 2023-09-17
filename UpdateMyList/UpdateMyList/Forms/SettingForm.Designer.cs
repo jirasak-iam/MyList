@@ -56,6 +56,7 @@
             this.txtcode = new System.Windows.Forms.TextBox();
             this.txtdesc = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.listTypeclb = new System.Windows.Forms.CheckedListBox();
             this.settingtap.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -71,7 +72,7 @@
             this.settingtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.settingtap.Name = "settingtap";
             this.settingtap.SelectedIndex = 0;
-            this.settingtap.Size = new System.Drawing.Size(888, 291);
+            this.settingtap.Size = new System.Drawing.Size(888, 364);
             this.settingtap.TabIndex = 2;
             this.settingtap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.settingtap_KeyDown);
             // 
@@ -82,7 +83,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(880, 262);
+            this.tabPage1.Size = new System.Drawing.Size(880, 335);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "รายการ";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -95,12 +96,13 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(870, 251);
+            this.dataGridView1.Size = new System.Drawing.Size(870, 324);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listTypeclb);
             this.tabPage2.Controls.Add(this.gencodebtn);
             this.tabPage2.Controls.Add(this.seasonlistlb);
             this.tabPage2.Controls.Add(this.gbtn);
@@ -120,7 +122,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(831, 295);
+            this.tabPage2.Size = new System.Drawing.Size(880, 335);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "เพิ่ม/แก้ไข";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -141,7 +143,7 @@
             // 
             this.seasonlistlb.FormattingEnabled = true;
             this.seasonlistlb.ItemHeight = 16;
-            this.seasonlistlb.Location = new System.Drawing.Point(592, 90);
+            this.seasonlistlb.Location = new System.Drawing.Point(592, 177);
             this.seasonlistlb.Name = "seasonlistlb";
             this.seasonlistlb.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.seasonlistlb.Size = new System.Drawing.Size(183, 132);
@@ -350,11 +352,20 @@
             this.label8.TabIndex = 7;
             this.label8.Text = "รายละเอียด";
             // 
+            // listTypeclb
+            // 
+            this.listTypeclb.FormattingEnabled = true;
+            this.listTypeclb.Location = new System.Drawing.Point(592, 16);
+            this.listTypeclb.Name = "listTypeclb";
+            this.listTypeclb.Size = new System.Drawing.Size(183, 140);
+            this.listTypeclb.TabIndex = 15;
+            this.listTypeclb.Visible = false;
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 386);
+            this.ClientSize = new System.Drawing.Size(934, 450);
             this.Controls.Add(this.txtdesc);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtcode);
@@ -410,5 +421,6 @@
         private System.Windows.Forms.TextBox txtcode;
         private System.Windows.Forms.TextBox txtdesc;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckedListBox listTypeclb;
     }
 }

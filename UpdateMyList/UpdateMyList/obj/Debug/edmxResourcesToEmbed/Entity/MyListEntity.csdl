@@ -3,13 +3,14 @@
   <EntityContainer Name="myListEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="UserProfiles" EntityType="myListModel.UserProfile" />
     <EntitySet Name="ListTypeMasts" EntityType="myListModel.ListTypeMast" />
-    <EntitySet Name="MyListMasts" EntityType="myListModel.MyListMast" />
     <EntitySet Name="GenreGroups" EntityType="myListModel.GenreGroup" />
     <EntitySet Name="MapSetingParams" EntityType="myListModel.MapSetingParam" />
     <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
     <EntitySet Name="GenreMasts" EntityType="myListModel.GenreMast" />
-    <EntitySet Name="ConfigMyLists" EntityType="myListModel.ConfigMyList" />
     <EntitySet Name="SeasonMasts" EntityType="myListModel.SeasonMast" />
+    <EntitySet Name="SeasonGroups" EntityType="myListModel.SeasonGroup" />
+    <EntitySet Name="ConfigMyLists" EntityType="myListModel.ConfigMyList" />
+    <EntitySet Name="MyListMasts" EntityType="myListModel.MyListMast" />
   </EntityContainer>
   <EntityType Name="UserProfile">
     <Key>
@@ -37,25 +38,6 @@
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="sortSeq" Type="Int32" />
-  </EntityType>
-  <EntityType Name="MyListMast">
-    <Key>
-      <PropertyRef Name="listId" />
-    </Key>
-    <Property Name="listId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="listTypeId" Type="Int32" Nullable="false" />
-    <Property Name="listCode" Type="Int32" />
-    <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="listLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="listEP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="listComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="stsId" Type="Int32" Nullable="false" />
-    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-    <Property Name="createDate" Type="DateTime" Precision="3" />
-    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="updateDate" Type="DateTime" Precision="3" />
-    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="seasonId" Type="Int32" />
   </EntityType>
   <EntityType Name="GenreGroup">
     <Key>
@@ -113,15 +95,6 @@
     <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="sortSeq" Type="Int32" />
   </EntityType>
-  <EntityType Name="ConfigMyList">
-    <Key>
-      <PropertyRef Name="ConfigId" />
-    </Key>
-    <Property Name="ConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DataPerPage" Type="Int32" />
-    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
-    <Property Name="sortmode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="SeasonMast">
     <Key>
       <PropertyRef Name="seaId" />
@@ -135,5 +108,49 @@
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="sortSeq" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SeasonGroup">
+    <Key>
+      <PropertyRef Name="seaGroupId" />
+    </Key>
+    <Property Name="seaGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="seaId" Type="Int32" Nullable="false" />
+    <Property Name="lisTypetId" Type="Int32" Nullable="false" />
+    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="updateDate" Type="DateTime" Precision="3" />
+    <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ConfigMyList">
+    <Key>
+      <PropertyRef Name="ConfigId" />
+    </Key>
+    <Property Name="ConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DataPerPage" Type="Int32" />
+    <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="sortmode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsSimilar" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="MyListMast">
+    <Key>
+      <PropertyRef Name="listId" />
+    </Key>
+    <Property Name="listId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="listTypeId" Type="Int32" Nullable="false" />
+    <Property Name="listCode" Type="Int32" />
+    <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="listLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="listEP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="listComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="stsId" Type="Int32" Nullable="false" />
+    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="updateDate" Type="DateTime" Precision="3" />
+    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="seasonId" Type="Int32" />
+    <Property Name="listEPLast" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="stsIdLast" Type="Int32" />
   </EntityType>
 </Schema>

@@ -33,6 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.stslastlb = new System.Windows.Forms.ListBox();
+            this.notincb = new System.Windows.Forms.CheckBox();
             this.labelcountpage = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.lbpage = new System.Windows.Forms.ListBox();
@@ -50,6 +52,14 @@
             this.mainbtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.inserttap = new System.Windows.Forms.TabPage();
+            this.stslastcbb = new System.Windows.Forms.ComboBox();
+            this.minuslastbtn = new System.Windows.Forms.Button();
+            this.pluslastbtn = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.eplasttxt = new System.Windows.Forms.TextBox();
+            this.searchGenTxt = new System.Windows.Forms.TextBox();
+            this.searchSeaTxt = new System.Windows.Forms.TextBox();
+            this.deletebtn = new System.Windows.Forms.Button();
             this.genreclb = new System.Windows.Forms.CheckedListBox();
             this.label8 = new System.Windows.Forms.Label();
             this.seasoncbb = new System.Windows.Forms.ComboBox();
@@ -69,7 +79,6 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.deletebtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -95,7 +104,7 @@
             this.myListtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.myListtap.Name = "myListtap";
             this.myListtap.SelectedIndex = 0;
-            this.myListtap.Size = new System.Drawing.Size(2545, 809);
+            this.myListtap.Size = new System.Drawing.Size(2545, 875);
             this.myListtap.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.myListtap.TabIndex = 2;
             this.myListtap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.myListap_KeyDown);
@@ -103,6 +112,8 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
+            this.listtap.Controls.Add(this.stslastlb);
+            this.listtap.Controls.Add(this.notincb);
             this.listtap.Controls.Add(this.labelcountpage);
             this.listtap.Controls.Add(this.label10);
             this.listtap.Controls.Add(this.lbpage);
@@ -123,10 +134,34 @@
             this.listtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listtap.Name = "listtap";
             this.listtap.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listtap.Size = new System.Drawing.Size(2537, 771);
+            this.listtap.Size = new System.Drawing.Size(2537, 837);
             this.listtap.TabIndex = 0;
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
+            // 
+            // stslastlb
+            // 
+            this.stslastlb.FormattingEnabled = true;
+            this.stslastlb.ItemHeight = 16;
+            this.stslastlb.Location = new System.Drawing.Point(624, 0);
+            this.stslastlb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.stslastlb.Name = "stslastlb";
+            this.stslastlb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.stslastlb.Size = new System.Drawing.Size(295, 116);
+            this.stslastlb.TabIndex = 37;
+            this.stslastlb.SelectedIndexChanged += new System.EventHandler(this.stslastlb_SelectedIndexChanged);
+            this.stslastlb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.stslastlb_KeyDown);
+            // 
+            // notincb
+            // 
+            this.notincb.AutoSize = true;
+            this.notincb.Location = new System.Drawing.Point(1533, 36);
+            this.notincb.Name = "notincb";
+            this.notincb.Size = new System.Drawing.Size(67, 21);
+            this.notincb.TabIndex = 36;
+            this.notincb.Text = "Not In";
+            this.notincb.UseVisualStyleBackColor = true;
+            this.notincb.CheckedChanged += new System.EventHandler(this.notincb_CheckedChanged);
             // 
             // labelcountpage
             // 
@@ -163,7 +198,6 @@
             this.tenrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tenrbtn.Size = new System.Drawing.Size(45, 21);
             this.tenrbtn.TabIndex = 32;
-            this.tenrbtn.TabStop = true;
             this.tenrbtn.Text = "10";
             this.tenrbtn.UseVisualStyleBackColor = true;
             this.tenrbtn.Click += new System.EventHandler(this.tenrbtn_Click);
@@ -176,7 +210,6 @@
             this.hunrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.hunrbtn.Size = new System.Drawing.Size(53, 21);
             this.hunrbtn.TabIndex = 31;
-            this.hunrbtn.TabStop = true;
             this.hunrbtn.Text = "100";
             this.hunrbtn.UseVisualStyleBackColor = true;
             this.hunrbtn.Click += new System.EventHandler(this.hunrbtn_Click);
@@ -189,7 +222,6 @@
             this.fiftyrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.fiftyrbtn.Size = new System.Drawing.Size(45, 21);
             this.fiftyrbtn.TabIndex = 30;
-            this.fiftyrbtn.TabStop = true;
             this.fiftyrbtn.Text = "50";
             this.fiftyrbtn.UseVisualStyleBackColor = true;
             this.fiftyrbtn.Click += new System.EventHandler(this.fiftyrbtn_Click);
@@ -202,7 +234,6 @@
             this.allrbtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.allrbtn.Size = new System.Drawing.Size(44, 21);
             this.allrbtn.TabIndex = 29;
-            this.allrbtn.TabStop = true;
             this.allrbtn.Text = "All";
             this.allrbtn.UseVisualStyleBackColor = true;
             this.allrbtn.Click += new System.EventHandler(this.allrbtn_Click);
@@ -211,7 +242,7 @@
             // 
             this.genrelb.FormattingEnabled = true;
             this.genrelb.ItemHeight = 16;
-            this.genrelb.Location = new System.Drawing.Point(923, 0);
+            this.genrelb.Location = new System.Drawing.Point(1224, 0);
             this.genrelb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.genrelb.Name = "genrelb";
             this.genrelb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
@@ -224,7 +255,7 @@
             // 
             this.seasonlb.FormattingEnabled = true;
             this.seasonlb.ItemHeight = 16;
-            this.seasonlb.Location = new System.Drawing.Point(623, 1);
+            this.seasonlb.Location = new System.Drawing.Point(924, 1);
             this.seasonlb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seasonlb.Name = "seasonlb";
             this.seasonlb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
@@ -248,7 +279,7 @@
             // 
             // searchbtn
             // 
-            this.searchbtn.Location = new System.Drawing.Point(1232, 2);
+            this.searchbtn.Location = new System.Drawing.Point(1533, 2);
             this.searchbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchbtn.Name = "searchbtn";
             this.searchbtn.Size = new System.Drawing.Size(63, 30);
@@ -288,7 +319,7 @@
             // 
             // mainbtn
             // 
-            this.mainbtn.Location = new System.Drawing.Point(1301, 2);
+            this.mainbtn.Location = new System.Drawing.Point(1602, 2);
             this.mainbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mainbtn.Name = "mainbtn";
             this.mainbtn.Size = new System.Drawing.Size(63, 30);
@@ -324,6 +355,13 @@
             // 
             // inserttap
             // 
+            this.inserttap.Controls.Add(this.stslastcbb);
+            this.inserttap.Controls.Add(this.minuslastbtn);
+            this.inserttap.Controls.Add(this.pluslastbtn);
+            this.inserttap.Controls.Add(this.label11);
+            this.inserttap.Controls.Add(this.eplasttxt);
+            this.inserttap.Controls.Add(this.searchGenTxt);
+            this.inserttap.Controls.Add(this.searchSeaTxt);
             this.inserttap.Controls.Add(this.deletebtn);
             this.inserttap.Controls.Add(this.genreclb);
             this.inserttap.Controls.Add(this.label8);
@@ -348,16 +386,101 @@
             this.inserttap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.inserttap.Name = "inserttap";
             this.inserttap.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.inserttap.Size = new System.Drawing.Size(2537, 771);
+            this.inserttap.Size = new System.Drawing.Size(2537, 837);
             this.inserttap.TabIndex = 1;
             this.inserttap.Text = "เพื่ม/แก้ไข";
             this.inserttap.UseVisualStyleBackColor = true;
+            // 
+            // stslastcbb
+            // 
+            this.stslastcbb.DisplayMember = "stsDesc";
+            this.stslastcbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stslastcbb.FormattingEnabled = true;
+            this.stslastcbb.Location = new System.Drawing.Point(460, 215);
+            this.stslastcbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.stslastcbb.Name = "stslastcbb";
+            this.stslastcbb.Size = new System.Drawing.Size(289, 24);
+            this.stslastcbb.TabIndex = 40;
+            this.stslastcbb.ValueMember = "stsId";
+            // 
+            // minuslastbtn
+            // 
+            this.minuslastbtn.Location = new System.Drawing.Point(979, 101);
+            this.minuslastbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.minuslastbtn.Name = "minuslastbtn";
+            this.minuslastbtn.Size = new System.Drawing.Size(27, 23);
+            this.minuslastbtn.TabIndex = 38;
+            this.minuslastbtn.Text = "-";
+            this.minuslastbtn.UseVisualStyleBackColor = true;
+            this.minuslastbtn.Click += new System.EventHandler(this.minuslastbtn_Click);
+            this.minuslastbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.minuslastbtn_KeyDown);
+            // 
+            // pluslastbtn
+            // 
+            this.pluslastbtn.Location = new System.Drawing.Point(946, 101);
+            this.pluslastbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pluslastbtn.Name = "pluslastbtn";
+            this.pluslastbtn.Size = new System.Drawing.Size(27, 23);
+            this.pluslastbtn.TabIndex = 37;
+            this.pluslastbtn.Text = "+";
+            this.pluslastbtn.UseVisualStyleBackColor = true;
+            this.pluslastbtn.Click += new System.EventHandler(this.pluslastbtn_Click);
+            this.pluslastbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pluslastbtn_KeyDown);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(51, 106);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(60, 17);
+            this.label11.TabIndex = 39;
+            this.label11.Text = "ตอนล่าสุด";
+            // 
+            // eplasttxt
+            // 
+            this.eplasttxt.Location = new System.Drawing.Point(151, 102);
+            this.eplasttxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.eplasttxt.Name = "eplasttxt";
+            this.eplasttxt.Size = new System.Drawing.Size(789, 22);
+            this.eplasttxt.TabIndex = 36;
+            this.eplasttxt.TextChanged += new System.EventHandler(this.eplasttxt_TextChanged);
+            this.eplasttxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eplasttxt_KeyDown);
+            this.eplasttxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.eplasttxt_KeyPress);
+            // 
+            // searchGenTxt
+            // 
+            this.searchGenTxt.Location = new System.Drawing.Point(460, 298);
+            this.searchGenTxt.Name = "searchGenTxt";
+            this.searchGenTxt.Size = new System.Drawing.Size(162, 22);
+            this.searchGenTxt.TabIndex = 35;
+            this.searchGenTxt.Visible = false;
+            this.searchGenTxt.TextChanged += new System.EventHandler(this.searchGenTxt_TextChanged);
+            // 
+            // searchSeaTxt
+            // 
+            this.searchSeaTxt.Location = new System.Drawing.Point(460, 257);
+            this.searchSeaTxt.Name = "searchSeaTxt";
+            this.searchSeaTxt.Size = new System.Drawing.Size(162, 22);
+            this.searchSeaTxt.TabIndex = 34;
+            this.searchSeaTxt.TextChanged += new System.EventHandler(this.searchSeaTxt_TextChanged);
+            // 
+            // deletebtn
+            // 
+            this.deletebtn.Location = new System.Drawing.Point(869, 531);
+            this.deletebtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.deletebtn.Name = "deletebtn";
+            this.deletebtn.Size = new System.Drawing.Size(75, 32);
+            this.deletebtn.TabIndex = 33;
+            this.deletebtn.Text = "Delete";
+            this.deletebtn.UseVisualStyleBackColor = true;
+            this.deletebtn.Click += new System.EventHandler(this.deletebtn_Click);
+            this.deletebtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.deletebtn_KeyDown);
             // 
             // genreclb
             // 
             this.genreclb.CheckOnClick = true;
             this.genreclb.FormattingEnabled = true;
-            this.genreclb.Location = new System.Drawing.Point(151, 273);
+            this.genreclb.Location = new System.Drawing.Point(151, 298);
             this.genreclb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.genreclb.Name = "genreclb";
             this.genreclb.Size = new System.Drawing.Size(289, 276);
@@ -366,7 +489,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(51, 273);
+            this.label8.Location = new System.Drawing.Point(51, 298);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(48, 17);
             this.label8.TabIndex = 32;
@@ -379,7 +502,7 @@
             this.seasoncbb.FormattingEnabled = true;
             this.seasoncbb.IntegralHeight = false;
             this.seasoncbb.ItemHeight = 16;
-            this.seasoncbb.Location = new System.Drawing.Point(151, 230);
+            this.seasoncbb.Location = new System.Drawing.Point(151, 255);
             this.seasoncbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seasoncbb.Name = "seasoncbb";
             this.seasoncbb.Size = new System.Drawing.Size(289, 24);
@@ -388,7 +511,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(51, 230);
+            this.label7.Location = new System.Drawing.Point(51, 255);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 17);
             this.label7.TabIndex = 30;
@@ -396,7 +519,7 @@
             // 
             // gobtn
             // 
-            this.gobtn.Location = new System.Drawing.Point(947, 107);
+            this.gobtn.Location = new System.Drawing.Point(947, 135);
             this.gobtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gobtn.Name = "gobtn";
             this.gobtn.Size = new System.Drawing.Size(27, 23);
@@ -408,7 +531,7 @@
             // 
             // minusbtn
             // 
-            this.minusbtn.Location = new System.Drawing.Point(947, 82);
+            this.minusbtn.Location = new System.Drawing.Point(980, 68);
             this.minusbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.minusbtn.Name = "minusbtn";
             this.minusbtn.Size = new System.Drawing.Size(27, 23);
@@ -420,7 +543,7 @@
             // 
             // plusbtn
             // 
-            this.plusbtn.Location = new System.Drawing.Point(947, 55);
+            this.plusbtn.Location = new System.Drawing.Point(947, 68);
             this.plusbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.plusbtn.Name = "plusbtn";
             this.plusbtn.Size = new System.Drawing.Size(27, 23);
@@ -433,7 +556,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(51, 153);
+            this.label9.Location = new System.Drawing.Point(51, 178);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(67, 17);
             this.label9.TabIndex = 28;
@@ -441,7 +564,7 @@
             // 
             // commenttxt
             // 
-            this.commenttxt.Location = new System.Drawing.Point(151, 150);
+            this.commenttxt.Location = new System.Drawing.Point(151, 175);
             this.commenttxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.commenttxt.Name = "commenttxt";
             this.commenttxt.Size = new System.Drawing.Size(789, 22);
@@ -453,7 +576,7 @@
             this.stscbb.DisplayMember = "stsDesc";
             this.stscbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.stscbb.FormattingEnabled = true;
-            this.stscbb.Location = new System.Drawing.Point(151, 190);
+            this.stscbb.Location = new System.Drawing.Point(151, 215);
             this.stscbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.stscbb.Name = "stscbb";
             this.stscbb.Size = new System.Drawing.Size(289, 24);
@@ -464,7 +587,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(51, 190);
+            this.label5.Location = new System.Drawing.Point(51, 215);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 17);
             this.label5.TabIndex = 24;
@@ -472,7 +595,7 @@
             // 
             // claerbtn
             // 
-            this.claerbtn.Location = new System.Drawing.Point(869, 577);
+            this.claerbtn.Location = new System.Drawing.Point(869, 580);
             this.claerbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.claerbtn.Name = "claerbtn";
             this.claerbtn.Size = new System.Drawing.Size(75, 32);
@@ -487,9 +610,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(51, 71);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 17);
+            this.label3.Size = new System.Drawing.Size(71, 17);
             this.label3.TabIndex = 20;
-            this.label3.Text = "ตอนล่าสุด";
+            this.label3.Text = "ตอนปัจจุบัน";
             // 
             // ePtxt
             // 
@@ -504,7 +627,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(787, 577);
+            this.saveBtn.Location = new System.Drawing.Point(787, 580);
             this.saveBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 32);
@@ -517,7 +640,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(51, 110);
+            this.label2.Location = new System.Drawing.Point(51, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 17);
             this.label2.TabIndex = 17;
@@ -525,7 +648,7 @@
             // 
             // linkUrltxt
             // 
-            this.linkUrltxt.Location = new System.Drawing.Point(151, 107);
+            this.linkUrltxt.Location = new System.Drawing.Point(151, 135);
             this.linkUrltxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.linkUrltxt.Name = "linkUrltxt";
             this.linkUrltxt.Size = new System.Drawing.Size(789, 22);
@@ -550,25 +673,13 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
-            // deletebtn
-            // 
-            this.deletebtn.Location = new System.Drawing.Point(869, 528);
-            this.deletebtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.deletebtn.Name = "deletebtn";
-            this.deletebtn.Size = new System.Drawing.Size(75, 32);
-            this.deletebtn.TabIndex = 33;
-            this.deletebtn.Text = "Delete";
-            this.deletebtn.UseVisualStyleBackColor = true;
-            this.deletebtn.Click += new System.EventHandler(this.deletebtn_Click);
-            this.deletebtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.deletebtn_KeyDown);
-            // 
             // MyListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(2040, 691);
+            this.ClientSize = new System.Drawing.Size(2040, 698);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -631,5 +742,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox nametxt;
         private System.Windows.Forms.Button deletebtn;
+        private System.Windows.Forms.CheckBox notincb;
+        private System.Windows.Forms.TextBox searchGenTxt;
+        private System.Windows.Forms.TextBox searchSeaTxt;
+        private System.Windows.Forms.ListBox stslastlb;
+        private System.Windows.Forms.ComboBox stslastcbb;
+        private System.Windows.Forms.Button minuslastbtn;
+        private System.Windows.Forms.Button pluslastbtn;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox eplasttxt;
     }
 }

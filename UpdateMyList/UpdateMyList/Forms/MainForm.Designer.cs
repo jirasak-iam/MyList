@@ -37,12 +37,13 @@
             this.allrbtn = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.idascrbtn = new System.Windows.Forms.RadioButton();
-            this.iddescrbtn = new System.Windows.Forms.RadioButton();
             this.datedescrbtn = new System.Windows.Forms.RadioButton();
             this.dateascrbtn = new System.Windows.Forms.RadioButton();
+            this.iddescrbtn = new System.Windows.Forms.RadioButton();
+            this.idascrbtn = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.similarcb = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -140,50 +141,8 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(242, 200);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(135, 121);
+            this.panel2.Size = new System.Drawing.Size(135, 96);
             this.panel2.TabIndex = 38;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 27);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "ID";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(67, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 27);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Date";
-            // 
-            // idascrbtn
-            // 
-            this.idascrbtn.AutoSize = true;
-            this.idascrbtn.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.idascrbtn.Location = new System.Drawing.Point(4, 35);
-            this.idascrbtn.Name = "idascrbtn";
-            this.idascrbtn.Size = new System.Drawing.Size(58, 23);
-            this.idascrbtn.TabIndex = 2;
-            this.idascrbtn.TabStop = true;
-            this.idascrbtn.Text = "ASC";
-            this.idascrbtn.UseVisualStyleBackColor = true;
-            // 
-            // iddescrbtn
-            // 
-            this.iddescrbtn.AutoSize = true;
-            this.iddescrbtn.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iddescrbtn.Location = new System.Drawing.Point(4, 64);
-            this.iddescrbtn.Name = "iddescrbtn";
-            this.iddescrbtn.Size = new System.Drawing.Size(65, 23);
-            this.iddescrbtn.TabIndex = 3;
-            this.iddescrbtn.TabStop = true;
-            this.iddescrbtn.Text = "DESC";
-            this.iddescrbtn.UseVisualStyleBackColor = true;
             // 
             // datedescrbtn
             // 
@@ -209,11 +168,64 @@
             this.dateascrbtn.Text = "ASC";
             this.dateascrbtn.UseVisualStyleBackColor = true;
             // 
+            // iddescrbtn
+            // 
+            this.iddescrbtn.AutoSize = true;
+            this.iddescrbtn.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iddescrbtn.Location = new System.Drawing.Point(4, 64);
+            this.iddescrbtn.Name = "iddescrbtn";
+            this.iddescrbtn.Size = new System.Drawing.Size(65, 23);
+            this.iddescrbtn.TabIndex = 3;
+            this.iddescrbtn.TabStop = true;
+            this.iddescrbtn.Text = "DESC";
+            this.iddescrbtn.UseVisualStyleBackColor = true;
+            // 
+            // idascrbtn
+            // 
+            this.idascrbtn.AutoSize = true;
+            this.idascrbtn.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.idascrbtn.Location = new System.Drawing.Point(4, 35);
+            this.idascrbtn.Name = "idascrbtn";
+            this.idascrbtn.Size = new System.Drawing.Size(58, 23);
+            this.idascrbtn.TabIndex = 2;
+            this.idascrbtn.TabStop = true;
+            this.idascrbtn.Text = "ASC";
+            this.idascrbtn.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(67, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 27);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Date";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 27);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "ID";
+            // 
+            // similarcb
+            // 
+            this.similarcb.AutoSize = true;
+            this.similarcb.Location = new System.Drawing.Point(242, 302);
+            this.similarcb.Name = "similarcb";
+            this.similarcb.Size = new System.Drawing.Size(116, 31);
+            this.similarcb.TabIndex = 39;
+            this.similarcb.Text = "IsSimilar";
+            this.similarcb.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 334);
+            this.ClientSize = new System.Drawing.Size(389, 338);
+            this.Controls.Add(this.similarcb);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.settingbtn);
@@ -231,6 +243,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -250,5 +263,6 @@
         private System.Windows.Forms.RadioButton idascrbtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox similarcb;
     }
 }

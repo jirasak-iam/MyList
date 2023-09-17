@@ -27,12 +27,13 @@ namespace UpdateMyList.Entity
     
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<ListTypeMast> ListTypeMasts { get; set; }
-        public virtual DbSet<MyListMast> MyListMasts { get; set; }
         public virtual DbSet<GenreGroup> GenreGroups { get; set; }
         public virtual DbSet<MapSetingParam> MapSetingParams { get; set; }
         public virtual DbSet<StsMast> StsMasts { get; set; }
         public virtual DbSet<GenreMast> GenreMasts { get; set; }
-        public virtual DbSet<ConfigMyList> ConfigMyLists { get; set; }
         public virtual DbSet<SeasonMast> SeasonMasts { get; set; }
+        public virtual DbSet<SeasonGroup> SeasonGroups { get; set; }
+        public virtual DbSet<ConfigMyList> ConfigMyLists { get; set; }
+        public virtual DbSet<MyListMast> MyListMasts { get; set; }
     }
 }

@@ -20,5 +20,8 @@ namespace UpdateMyList.Entity.Model
         public int? seasonId { get; set; }
         public string seasonDesc { get; set; }
         public string genDesc { get; set; }
+        public string listEPLast { get; set; }
+        public int? stsIdLast { get; set; }
+        public string stsDescLast { get; set; }
     }
 }

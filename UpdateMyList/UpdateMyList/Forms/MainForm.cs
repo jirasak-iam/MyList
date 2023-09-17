@@ -34,6 +34,8 @@ namespace UpdateMyList.Forms
             var sortcolumn = sortmode.Length == 2 ? sortmode[0] : "";
             var sortorder = sortmode.Length == 2 ? sortmode[1] : "";
 
+            this.similarcb.Checked = (config.IsSimilar ?? false); 
+
             if (dataPerPage == 0)
             {
                 this.allrbtn.PerformClick();
@@ -107,24 +109,28 @@ namespace UpdateMyList.Forms
             {
                 config.DataPerPage = null;
                 config.sortmode = StringSortMode();
+                config.IsSimilar = this.similarcb.Checked;
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.tenrbtn.Checked)
             {
                 config.DataPerPage = 10;
                 config.sortmode = StringSortMode();
+                config.IsSimilar = this.similarcb.Checked;
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.fiftyrbtn.Checked)
             {
                 config.DataPerPage = 50;
                 config.sortmode = StringSortMode();
+                config.IsSimilar = this.similarcb.Checked;
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.hunrbtn.Checked)
             {
                 config.DataPerPage = 100;
                 config.sortmode = StringSortMode();
+                config.IsSimilar = this.similarcb.Checked;
                 _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             openForm();
@@ -138,23 +144,21 @@ namespace UpdateMyList.Forms
                 if (this.allrbtn.Checked)
                 {
                     config.DataPerPage = null;
-                    _uow.Save();
                 }
                 else if (this.tenrbtn.Checked)
                 {
                     config.DataPerPage = 10;
-                    _uow.Save();
                 }
                 else if (this.fiftyrbtn.Checked)
                 {
-                    config.DataPerPage = 50;
-                    _uow.Save();
+                    config.DataPerPage = 50;;
                 }
                 else if (this.hunrbtn.Checked)
                 {
                     config.DataPerPage = 100;
-                    _uow.Save();
                 }
+                config.IsSimilar = this.similarcb.Checked;
+                _uow.Save();
                 openForm();
             }
             if (e.KeyCode == Keys.Escape)

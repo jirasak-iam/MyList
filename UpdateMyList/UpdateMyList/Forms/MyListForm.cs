@@ -25,7 +25,7 @@ namespace UpdateMyList.Forms
         private bool? clear { get; set; }
         private string similar { get; set; }
         private int? takeData { get; set; }
-        private string  sortCode { get; set; } = "Descending";
+        private string sortCode { get; set; } = "Descending";
         private string sortName { get; set; } = "Descending";
         private string sortUpdateDate { get; set; } = "Descending";
         private int pageCount { get; set; } = 1;
@@ -33,6 +33,10 @@ namespace UpdateMyList.Forms
         private int totalCountAfterFilter { get; set; }
         private int pageSelect { get; set; } = 1;
         private int countData { get; set; } = 0;
+        private List<GenreModel> genres { get; set; }
+        private List<SeasonMastModel> seasons { get; set; }
+        private List<MyListModel> myLists { get; set; }
+        private ConfigMyList config { get; set; }
         public void ClearPage(bool allData)
         {
             var reFlag = this.rePageFlag ?? true;
@@ -44,10 +48,14 @@ namespace UpdateMyList.Forms
                 this.IU_Flag = "";
                 this.nametxt.Text = "";
                 this.ePtxt.Text = "";
+                this.eplasttxt.Text = "";
                 this.linkUrltxt.Text = "";
                 this.commenttxt.Text = "";
                 this.stscbb.SelectedIndex = 0;
+                this.stslastcbb.SelectedIndex = 0;
                 this.similar = "";
+                this.searchGenTxt.Text = "";
+                this.searchSeaTxt.Text = "";
                 this.gobtn.Enabled = false;
                 this.deletebtn.Enabled = false;
                 this.seasoncbb.SelectedIndex = 0;
@@ -73,6 +81,7 @@ namespace UpdateMyList.Forms
             }
             if (allData)
             {
+                this.myLists = _uow.MyListRepository.SelectByType(_model);
                 search();
             }
             this.rePageFlag = true;
@@ -97,13 +106,15 @@ namespace UpdateMyList.Forms
                     listName = this.nametxt.Text,
                     listLink = this.linkUrltxt.Text,
                     listEP = this.ePtxt.Text,
+                    listEPLast = this.eplasttxt.Text,
                     listComment = this.commenttxt.Text,
                     stsId = Convert.ToInt32(this.stscbb.SelectedValue),
+                    stsIdLast = Convert.ToInt32(this.stslastcbb.SelectedValue),
                     seasonId = Convert.ToInt32(this.seasoncbb.SelectedValue),
                     updateBy = Constants.UserApp,
                     updateDate = DateTime.Now
                 };
-                rs= _uow.MyListRepository.UpdateByApp(data);
+                rs = _uow.MyListRepository.UpdateByApp(data);
             }
             else
             {
@@ -113,8 +124,10 @@ namespace UpdateMyList.Forms
                     listName = this.nametxt.Text,
                     listLink = this.linkUrltxt.Text,
                     listEP = this.ePtxt.Text,
+                    listEPLast = this.eplasttxt.Text,
                     listComment = this.commenttxt.Text,
                     stsId = Convert.ToInt32(this.stscbb.SelectedValue),
+                    stsIdLast = Convert.ToInt32(this.stslastcbb.SelectedValue),
                     seasonId = Convert.ToInt32(this.seasoncbb.SelectedValue),
                     recStatus = RecStatus.Active,
                     createBy = Constants.UserApp,
@@ -178,7 +191,7 @@ namespace UpdateMyList.Forms
                         _uow.GenreGroupRepository.UpdateGenGroup(genGroup);
                     }
                 }
-                
+
             }
             return rs;
         }
@@ -191,13 +204,23 @@ namespace UpdateMyList.Forms
                     if (!string.IsNullOrEmpty(this.linkUrltxt.Text))
                     {
                         var result = 0;
-                        var chkContain = CheckContainByName(this.nametxt.Text);
-                        
-                        
                         this.IU_Flag = this.IU_Flag ?? "I";
-                        if (chkContain && !this.IU_Flag.Equals("U"))
+
+                        if (this.config?.IsSimilar ?? false)
                         {
-                            if (MessageBox.Show("มีชื่อเรื่องที่คล้ายกันอยู่คือ " + this.similar + "ต้องการทำรายการต่อหรือไม่ ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            var chkContain = CheckContainByName(this.nametxt.Text);
+                            if (chkContain && !this.IU_Flag.Equals("U"))
+                            {
+                                if (MessageBox.Show("มีชื่อเรื่องที่คล้ายกันอยู่คือ " + this.similar + "ต้องการทำรายการต่อหรือไม่ ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                {
+                                    result = saveData();
+                                    if (result > 0)
+                                    {
+                                        ClearPage(true);
+                                    }
+                                }
+                            }
+                            else
                             {
                                 result = saveData();
                                 if (result > 0)
@@ -236,13 +259,13 @@ namespace UpdateMyList.Forms
         {
             //this.editbtn.Visible = false;
             //this.reloadbtn.Visible = false;
-            var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
-            var dataPerPage = config.DataPerPage ?? 0;
-            if (dataPerPage == 0 )
+            this.config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+            var dataPerPage = this.config.DataPerPage ?? 0;
+            if (dataPerPage == 0)
             {
                 this.allrbtn.PerformClick();
             }
-            else if(dataPerPage == 10)
+            else if (dataPerPage == 10)
             {
                 this.tenrbtn.PerformClick();
             }
@@ -263,11 +286,20 @@ namespace UpdateMyList.Forms
             this.stslb.DisplayMember = "stsDesc";
             this.stslb.ValueMember = "stsId";
 
+            this.stslastlb.DataSource = _uow.StsMastRepository.SelectAll();
+            this.stslastlb.DisplayMember = "stsDesc";
+            this.stslastlb.ValueMember = "stsId";
+
             this.stscbb.DataSource = _uow.StsMastRepository.Select();
             this.stscbb.DisplayMember = "stsDesc";
             this.stscbb.ValueMember = "stsId";
 
-            this.genreclb.DataSource = _uow.GenreMastRepository.Select();
+            this.stslastcbb.DataSource = _uow.StsMastRepository.Select();
+            this.stslastcbb.DisplayMember = "stsDesc";
+            this.stslastcbb.ValueMember = "stsId";
+
+            this.genres = _uow.GenreMastRepository.Select();
+            this.genreclb.DataSource = this.genres;
             this.genreclb.DisplayMember = "genreDisplay";
             this.genreclb.ValueMember = "genreId";
 
@@ -275,14 +307,17 @@ namespace UpdateMyList.Forms
             this.genrelb.DisplayMember = "genreDisplay";
             this.genrelb.ValueMember = "genreId";
 
-            this.seasoncbb.DataSource = _uow.SeasonMastRepository.Select();
+            this.seasons = _uow.SeasonMastRepository.Select(this._model.listTypeId);
+            this.seasoncbb.DataSource = this.seasons;
             this.seasoncbb.DisplayMember = "seasonDesc";
             this.seasoncbb.ValueMember = "seasonId";
 
-            this.seasonlb.DataSource = _uow.SeasonMastRepository.SelectAll();
+            this.seasonlb.DataSource = _uow.SeasonMastRepository.SelectAll(this._model.listTypeId);
             this.seasonlb.DisplayMember = "seasonDesc";
             this.seasonlb.ValueMember = "seasonId";
 
+            this.myLists = _uow.MyListRepository.SelectByType(_model);
+            search();
             CalPage();
         }
         private void search()
@@ -290,7 +325,12 @@ namespace UpdateMyList.Forms
             this.dataGridView1.DataSource = null;
             var stsLb = this.stslb.SelectedItems.Cast<StsMastModel>().ToList();
             var stsLbSelect = stsLb?.Select(p => p.stsId).ToList();
+
+            var stsLbLast = this.stslastlb.SelectedItems.Cast<StsMastModel>().ToList();
+            var stsLbLastSelect = stsLbLast?.Select(p => p.stsId).ToList();
+
             var chkSelectSts = stsLbSelect?.Sum() ?? 0;
+            var chkSelectStsLast = stsLbLastSelect?.Sum() ?? 0;
 
             var seasonLb = this.seasonlb.SelectedItems.Cast<SeasonMastModel>().ToList();
             var seasonLbSelect = seasonLb?.Select(p => p.seasonId).ToList();
@@ -300,88 +340,104 @@ namespace UpdateMyList.Forms
             var genreLbSelect = genreLb?.Select(p => p.genreId).ToList();
             var chkSelectGen = genreLbSelect?.Sum() ?? 0;
 
+            var notincb = this.notincb.Checked;
+
             var searchName = this.searchtxt.Text.ToUpper();
             if (_model != null)
             {
-                var getByType = _uow.MyListRepository.SelectByType(_model);
-                var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
-                var sortmode = config.sortmode.Split(',');
+                var getByType = this.myLists;
+                //var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+                var sortmode = this.config.sortmode.Split(',');
                 var sortcolumn = sortmode.Length == 2 ? sortmode[0] : "";
                 var sortorder = sortmode.Length == 2 ? sortmode[1] : "";
-                if (sortcolumn.Contains("ID"))
+                if (getByType != null)
                 {
-                    if (sortorder.Contains("ASC"))
+                    if (sortcolumn.Contains("ID"))
                     {
-                        getByType = getByType.OrderBy(o => o.listId).ToList();
+                        if (sortorder.Contains("ASC"))
+                        {
+                            getByType = getByType.OrderBy(o => o.listId).ToList();
+                        }
+                        else if (sortorder.Contains("DESC"))
+                        {
+                            getByType = getByType.OrderByDescending(o => o.listId).ToList();
+                        }
                     }
-                    else if (sortorder.Contains("DESC"))
+                    else if (sortcolumn.Contains("DATE"))
                     {
-                        getByType = getByType.OrderByDescending(o => o.listId).ToList();
+                        if (sortorder.Contains("ASC"))
+                        {
+                            getByType = getByType.OrderBy(o => o.updateDate).ToList();
+                        }
+                        else if (sortorder.Contains("DESC"))
+                        {
+                            getByType = getByType.OrderByDescending(o => o.updateDate).ToList();
+                        }
                     }
-                }
-                else if (sortcolumn.Contains("DATE"))
-                {
-                    if (sortorder.Contains("ASC"))
+                    this.totalCount = getByType.Count;
+                    if (chkSelectSts > 0)
                     {
-                        getByType = getByType.OrderBy(o => o.updateDate).ToList();
+                        getByType = getByType.Where(p => stsLbSelect.Contains(p.stsId)).ToList();
                     }
-                    else if (sortorder.Contains("DESC"))
+                    if (chkSelectStsLast > 0)
                     {
-                        getByType = getByType.OrderByDescending(o => o.updateDate).ToList();
+                        getByType = getByType.Where(p => stsLbLastSelect.Contains(p.stsIdLast ?? 0)).ToList();
                     }
-                }
-                this.totalCount = getByType.Count;
-                if (chkSelectSts > 0)
-                {
-                    getByType = getByType.Where(p => stsLbSelect.Contains(p.stsId)).ToList();
-                }
-                if (chkSelectSeason > 0)
-                {
-                    getByType = getByType.Where(p => seasonLbSelect.Contains(p.seasonId ?? 0)).ToList();
-                }
-                if (chkSelectGen > 0)
-                {
-                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupBygenIdMany(genreLbSelect).Select(a => a.listId).ToList();
-                    getByType = getByType.Where(p => genreGroup.Contains(p.listId)).ToList();
-                }
-                if (!string.IsNullOrEmpty(searchName))
-                {
-                    var splitSearchName = searchName.Split(Constants.delimiterChars).ToList();
-                    if (splitSearchName.Count > 0)
+                    if (chkSelectSeason > 0)
                     {
-                        splitSearchName = splitSearchName.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
+                        getByType = getByType.Where(p => seasonLbSelect.Contains(p.seasonId ?? 0)).ToList();
+                    }
+                    if (chkSelectGen > 0)
+                    {
+                        var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupBygenIdMany(genreLbSelect).Select(a => a.listId).ToList();
+                        if (notincb)
+                        {
+                            getByType = getByType.Where(p => !genreGroup.Contains(p.listId)).ToList();
+                        }
+                        else
+                        {
+                            getByType = getByType.Where(p => genreGroup.Contains(p.listId)).ToList();
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(searchName))
+                    {
+                        var splitSearchName = searchName.Split(Constants.delimiterChars).ToList();
                         if (splitSearchName.Count > 0)
                         {
-                            var tempData = new List<MyListModel>();
-                            splitSearchName.ForEach(item => tempData.AddRange(getByType.Where(p => p.listName.ToUpper().Contains(item.ToUpper())).ToList()));
-                            getByType = tempData;
+                            splitSearchName = splitSearchName.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
+                            if (splitSearchName.Count > 0)
+                            {
+                                var tempData = new List<MyListModel>();
+                                splitSearchName.ForEach(item => tempData.AddRange(getByType.Where(p => p.listName.ToUpper().Contains(item.ToUpper())).ToList()));
+                                getByType = tempData;
+                            }
+                            else
+                            {
+                                getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                            }
                         }
                         else
                         {
                             getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
                         }
                     }
-                    else
+                    this.totalCountAfterFilter = getByType.Count;
+                    if (this.pageSelect > 1)
                     {
-                        getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                        var skip = (this.takeData ?? 0) * (pageSelect - 1);
+                        getByType = getByType.Skip(skip).ToList();
                     }
-                }
-                this.totalCountAfterFilter = getByType.Count;
-                if (this.pageSelect > 1)
-                {
-                    var skip = (this.takeData ?? 0) * (pageSelect - 1);
-                    getByType = getByType.Skip(skip).ToList();
-                }
-                this.countData = getByType.Count;
-                if (this.takeData != null)
-                {
-                    if (this.takeData > 0)
+                    this.countData = getByType.Count;
+                    if (this.takeData != null)
                     {
-                        getByType = getByType.Take(this.takeData.Value).ToList();
+                        if (this.takeData > 0)
+                        {
+                            getByType = getByType.Take(this.takeData.Value).ToList();
+                        }
                     }
+
+                    this.setDataGrid(getByType);
                 }
-                
-                this.setDataGrid(getByType);
             }
         }
         private void setDataGrid(List<MyListModel> lstModel)
@@ -395,8 +451,11 @@ namespace UpdateMyList.Forms
                                    listCode = a.listCode,
                                    listName = a.listName,
                                    listLink = a.listLink,
-                                   stsDesc = a.stsDesc,
-                                   listEP = a.listEP,
+                                   stsDesc = 
+                                    !string.IsNullOrEmpty(a.stsDescLast) ? 
+                                    $"{(a.stsDesc.Length > 10 ? $"{a.stsDesc.Split('/')[0]}....." : a.stsDesc)}//{(a.stsDescLast.Length > 10 ? $"{a.stsDescLast.Split('/')[0]}....." : a.stsDescLast)}" 
+                                    : a.stsDesc,
+                                   listEP = !string.IsNullOrEmpty(a.listEPLast) ? $"{a.listEP}/{a.listEPLast}" : a.listEP,
                                    seasonDesc = a.seasonDesc,
                                    genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).OrderBy(o => o).ToList()),
                                    updateDateStr = a.updateDateStr
@@ -407,19 +466,37 @@ namespace UpdateMyList.Forms
                 this.dataGridView1.Columns[0].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[1].HeaderText = "ชื่อเรื่อง";
-                this.dataGridView1.Columns[1].Width = 350;
+                this.dataGridView1.Columns[1].Width = 320;
                 this.dataGridView1.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[2].HeaderText = "Link";
-                this.dataGridView1.Columns[2].Width = 350;
+                this.dataGridView1.Columns[2].Width = 335;
                 this.dataGridView1.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[3].HeaderText = "สถานะ";
-                this.dataGridView1.Columns[3].Width = 125;
+                this.dataGridView1.Columns[3].Width = 150;
                 this.dataGridView1.Columns[3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[4].HeaderText = "EP";
-                this.dataGridView1.Columns[4].Width = 80;
+                this.dataGridView1.Columns[4].Width = 100;
                 this.dataGridView1.Columns[4].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                this.dataGridView1.Columns[5].HeaderText = "Seasonal";
+                if (this._model.listTypeCode.Equals(TypeValue.Manga))
+                {
+                    this.dataGridView1.Columns[5].HeaderText = "Comic Group";
+                    this.label7.Text = "Comic Group";
+                }
+                else if (this._model.listTypeCode.Equals(TypeValue.Serie))
+                {
+                    this.dataGridView1.Columns[5].HeaderText = "Serie Group";
+                    this.label7.Text = "Serie Group";
+                }
+                else if (this._model.listTypeCode.Equals(TypeValue.Anime))
+                {
+                    this.dataGridView1.Columns[5].HeaderText = "Seasonal";
+                }
+                else
+                {
+                    this.dataGridView1.Columns[5].HeaderText = "Release";
+                    this.label7.Text = "Release";
+                }
                 this.dataGridView1.Columns[5].Width = 125;
                 this.dataGridView1.Columns[5].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[6].HeaderText = "Genre";
@@ -614,8 +691,10 @@ namespace UpdateMyList.Forms
 
                 this.nametxt.Text = data.listName;
                 this.ePtxt.Text = data.listEP;
+                this.eplasttxt.Text = data.listEPLast;
                 this.linkUrltxt.Text = data.listLink;
                 this.stscbb.SelectedValue = data.stsId;
+                this.stslastcbb.SelectedValue = (data.stsIdLast ?? 5);
                 this.commenttxt.Text = data.listComment;
                 this.myListId = data.listId;
                 this.seasoncbb.SelectedValue = (data.seasonId ?? 0);
@@ -672,6 +751,13 @@ namespace UpdateMyList.Forms
             List<MyListModel> model = new List<MyListModel>();
             if (!string.IsNullOrEmpty(name))
             {
+                var contains = this.myLists.Where(o => o.listName.Contains(name.Replace(" ", ""))).ToList();
+                var listIds = new List<int>();
+                if (contains != null && contains.Count > 0)
+                {
+                    model.AddRange(contains);
+                    listIds = model.Select(s => s.listId).ToList();
+                }
                 var nameSeparator = name.Split(' ').ToList();
                 if (nameSeparator.Count > 0)
                 {
@@ -679,8 +765,13 @@ namespace UpdateMyList.Forms
                     {
                         if (!Constants.badWord.ToList().Where(p => p.ToUpper().Equals(item.ToUpper())).ToList().Any())
                         {
-                            var listData = _uow.MyListRepository.SelectByType(_model);
+                            var listData = this.myLists.ToList();
+                            if (contains != null && contains.Count > 0)
+                            {
+                                listData = listData.Where(o => !listIds.Contains(o.listId)).ToList();
+                            }
                             var list = listData.Where(p => p.listName.Contains(item.Replace(" ", ""))).ToList();
+
                             if (list.Count > 0)
                             {
                                 model.AddRange(list);
@@ -778,7 +869,17 @@ namespace UpdateMyList.Forms
         private void plusbtn_Click(object sender, EventArgs e)
         {
             var epVal = !string.IsNullOrEmpty(this.ePtxt.Text) ? Convert.ToDecimal(this.ePtxt.Text) + 1 : 1;
+            int eplast = 0, ep = 0;
+            int.TryParse(this.eplasttxt.Text, out eplast);
+            //int.TryParse(this.ePtxt.Text, out ep);
             this.ePtxt.Text = "";
+
+            if (eplast <= epVal)
+            {
+                this.eplasttxt.Text = "";
+                this.eplasttxt.Text = ((int)epVal).ToString();
+            }
+
             this.ePtxt.Text = ((int)epVal).ToString();
             this.rePageFlag = false;
             if (!string.IsNullOrEmpty(this.IU_Flag))
@@ -795,7 +896,15 @@ namespace UpdateMyList.Forms
         private void minusbtn_Click(object sender, EventArgs e)
         {
             var epVal = !string.IsNullOrEmpty(this.ePtxt.Text) ? Convert.ToDecimal(this.ePtxt.Text) - 1 : 1;
+            //int eplast = 0, ep = 0;
+            //int.TryParse(this.eplasttxt.Text, out eplast);
+            //int.TryParse(this.ePtxt.Text, out ep);
             this.ePtxt.Text = "";
+            if ((int)epVal == 0)
+            {
+                this.eplasttxt.Text = "";
+                this.eplasttxt.Text = ((int)epVal).ToString();
+            }
             this.ePtxt.Text = ((int)epVal).ToString();
             this.rePageFlag = false;
             if (!string.IsNullOrEmpty(this.IU_Flag))
@@ -978,7 +1087,18 @@ namespace UpdateMyList.Forms
                 this.stscbb.SelectedValue = 1;
             }
         }
-
+        private void changeStsLastByEp()
+        {
+            var epDec = string.IsNullOrEmpty(this.eplasttxt.Text) ? 0 : Convert.ToDecimal(this.eplasttxt.Text);
+            if (epDec == 0)
+            {
+                this.stslastcbb.SelectedValue = 5;
+            }
+            else
+            {
+                this.stslastcbb.SelectedValue = 1;
+            }
+        }
         private void ePtxt_TextChanged(object sender, EventArgs e)
         {
             changeStsByEp();
@@ -1039,7 +1159,7 @@ namespace UpdateMyList.Forms
         }
 
         private void CalPage()
-         {
+        {
             this.pageCount = 0;
             this.lbpage.DataSource = null;
             if (this.countData > 0)
@@ -1063,12 +1183,12 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        this.pageCount = (dataCount / this.takeData.Value) +1;
+                        this.pageCount = (dataCount / this.takeData.Value) + 1;
                     }
                 }
                 else
                 {
-                    this.pageCount =1;
+                    this.pageCount = 1;
                 }
 
                 if (pageCount > 0)
@@ -1155,6 +1275,179 @@ namespace UpdateMyList.Forms
             if (e.KeyCode == Keys.Escape)
             {
                 ClearPage(true);
+            }
+        }
+
+        private void notincb_CheckedChanged(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        private void searchSeaTxt_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(this.searchSeaTxt.Text))
+            {
+                this.seasoncbb.DataSource = this.seasons.Where(p => p.seasonDesc.ToUpper().Trim().Contains(this.searchSeaTxt.Text.ToUpper().Trim())).ToList();
+                this.seasoncbb.DisplayMember = "seasonDesc";
+                this.seasoncbb.ValueMember = "seasonId";
+            }
+            else
+            {
+                this.seasoncbb.DataSource = this.seasons.ToList();
+                this.seasoncbb.DisplayMember = "seasonDesc";
+                this.seasoncbb.ValueMember = "seasonId";
+            }
+        }
+
+        private void searchGenTxt_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(this.searchGenTxt.Text))
+            {
+                this.genreclb.DataSource = this.genres.Where(p => p.genreDisplay.ToUpper().Trim().Contains(this.searchGenTxt.Text.ToUpper().Trim())).ToList();
+                this.genreclb.DisplayMember = "genreDisplay";
+                this.genreclb.ValueMember = "genreId";
+            }
+            else
+            {
+                this.genreclb.DataSource = this.genres.ToList();
+                this.genreclb.DisplayMember = "genreDisplay";
+                this.genreclb.ValueMember = "genreId";
+            }
+        }
+
+        private void pluslastbtn_Click(object sender, EventArgs e)
+        {
+            var epLastVal = !string.IsNullOrEmpty(this.eplasttxt.Text) ? Convert.ToDecimal(this.eplasttxt.Text) + 1 : 1;
+            int epVal = 0;
+            int.TryParse(this.ePtxt.Text, out epVal);
+            if ((int)epLastVal <= epVal)
+            {
+                epLastVal = epVal;
+            }
+            this.eplasttxt.Text = "";
+            this.eplasttxt.Text = ((int)epLastVal).ToString();
+            this.rePageFlag = false;
+            if (!string.IsNullOrEmpty(this.IU_Flag))
+            {
+                changeStsByEp();
+                if (this.IU_Flag.Equals("U"))
+                {
+                    saveBtn.PerformClick();
+                    this.rePageFlag = true;
+                }
+            }
+        }
+
+        private void pluslastbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                pluslastbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void minuslastbtn_Click(object sender, EventArgs e)
+        {
+            var epLastVal = !string.IsNullOrEmpty(this.eplasttxt.Text) ? Convert.ToDecimal(this.eplasttxt.Text) - 1 : 1;
+            var epVal = 0;
+            int.TryParse(this.ePtxt.Text, out epVal);
+            this.eplasttxt.Text = "";
+            this.eplasttxt.Text = (((int)epLastVal) <= 0 ? 0 : (int)epLastVal).ToString();
+            if (epVal >= epLastVal)
+            {
+                this.ePtxt.Text = "";
+                this.ePtxt.Text = ((int)epLastVal).ToString();
+            }
+            this.rePageFlag = false;
+            if (!string.IsNullOrEmpty(this.IU_Flag))
+            {
+                changeStsByEp();
+                if (this.IU_Flag.Equals("U"))
+                {
+                    saveBtn.PerformClick();
+                    this.rePageFlag = true;
+                }
+            }
+        }
+
+        private void minuslastbtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                minuslastbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void eplasttxt_TextChanged(object sender, EventArgs e)
+        {
+            changeStsLastByEp();
+        }
+
+        private void eplasttxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+               (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void eplasttxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                saveBtn.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.Add)
+            {
+                pluslastbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Subtract)
+            {
+                minuslastbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void stslastlb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            search();
+            CalPage();
+        }
+
+        private void stslastlb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                search();
+                CalPage();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                escapeToMain();
+            }
+            if (e.KeyCode == Keys.F5)
+            {
+                reload();
             }
         }
     }

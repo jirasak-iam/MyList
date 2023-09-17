@@ -24,6 +24,9 @@ namespace UpdateMyList.Entity.Repository
         {
             var rs = (from a in _context.MyListMasts
                       join b in _context.StsMasts on a.stsId equals b.stsId
+                      //join bb in _context.StsMasts on a.stsIdLast equals bb.stsId
+                      join bab in _context.StsMasts on a.stsIdLast equals bab.stsId into p
+                      from bb in p.DefaultIfEmpty()
                       join c in _context.SeasonMasts on a.seasonId equals c.seaId  into c2
                       from cc in c2.DefaultIfEmpty()
                       where a.listTypeId == model.listTypeId
@@ -34,14 +37,17 @@ namespace UpdateMyList.Entity.Repository
                           listCode = a.listCode,
                           listName = a.listName,
                           listEP = a.listEP,
+                          listEPLast = a.listEPLast,
                           listTypeId = a.listTypeId,
                           listLink = a.listLink,
                           stsId = a.stsId,
+                          stsIdLast = a.stsIdLast,
                           listComment = a.listComment,
                           createBy = a.createBy,
                           createDate = a.createDate,
                           recStatus = a.recStatus,
                           stsDesc = b.stsDesc,
+                          stsDescLast = bb.stsDesc,
                           updateBy = a.updateBy,
                           updateDate = a.updateDate,
                           seasonId = cc.seaId,
@@ -58,8 +64,10 @@ namespace UpdateMyList.Entity.Repository
                 data.listName = model.listName;
                 data.listLink = model.listLink;
                 data.listEP = model.listEP;
+                data.listEPLast = model.listEPLast;
                 data.listComment = model.listComment;
                 data.stsId = model.stsId;
+                data.stsIdLast = model.stsIdLast;
                 data.seasonId = model.seasonId;
                 data.updateBy = model.updateBy;
                 data.updateDate = model.updateDate;
@@ -81,8 +89,10 @@ namespace UpdateMyList.Entity.Repository
                     listName = model.listName,
                     listLink = model.listLink,
                     listEP = model.listEP,
+                    listEPLast = model.listEPLast,
                     listComment = model.listComment,
                     stsId = model.stsId,
+                    stsIdLast = model.stsIdLast,
                     seasonId = model.seasonId,
                     recStatus = model.recStatus,
                     createBy = model.createBy,

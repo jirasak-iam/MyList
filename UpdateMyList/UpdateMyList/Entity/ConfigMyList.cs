@@ -18,5 +18,6 @@ namespace UpdateMyList.Entity
         public Nullable<int> DataPerPage { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public string sortmode { get; set; }
+        public Nullable<bool> IsSimilar { get; set; }
     }
 }

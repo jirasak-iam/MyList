@@ -26,6 +26,7 @@ namespace UpdateMyList.Entity.Repository
                 config.UpdateDate = DateTime.Now;
                 config.DataPerPage = data.DataPerPage;
                 config.sortmode = data.sortmode;
+                config.IsSimilar = data.IsSimilar;
                 _context.SaveChanges();
             }
         }

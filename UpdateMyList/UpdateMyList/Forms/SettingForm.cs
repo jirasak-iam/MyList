@@ -33,9 +33,10 @@ namespace UpdateMyList.Forms
             this.recstatuscbb.SelectedIndex = 0;
             this.sortseqnb.Value = 0;
             this.settingtap.SelectedTab = tabPage1;
-            this._mapCode = "";
+            //this._mapCode = "";
             this._code = "";
             this.id = 0;
+            ClearSelection();
             if (loadGrid)
             {
                 SearchOption();
@@ -52,6 +53,11 @@ namespace UpdateMyList.Forms
             this.recstatuscbb.DataSource = Utility.GetRecStatus();
             this.recstatuscbb.DisplayMember = "recDesc";
             this.recstatuscbb.ValueMember = "recStatus";
+
+            this.listTypeclb.DataSource = _uow.ListTypeMastRepository.SelectAllType();
+            this.listTypeclb.DisplayMember = "listTypeDesc";
+            this.listTypeclb.ValueMember = "listTypeId";
+
         }
 
         private void SearchOption()
@@ -180,18 +186,21 @@ namespace UpdateMyList.Forms
             SearchOption();
             this.settingtap.SelectedTab = tabPage1;
             var selectItem = (MapSettingParamModel)this.mapcbb.SelectedItem;
+            this._mapCode = selectItem.mapCode;
             if (MappingParam.MapSetingParameter.Equals(selectItem.mapCode))
             {
                 label6.Visible = true;
                 tablenametxt.Visible = true;
                 this.seasonlistlb.Visible = false;
                 this.gencodebtn.Visible = false;
+                this.listTypeclb.Visible = false;
             }
             else if (MappingParam.Season.Equals(selectItem.mapCode))
             {
                 label6.Visible = false;
                 tablenametxt.Visible = false;
                 this.seasonlistlb.Visible = true;
+                this.listTypeclb.Visible = true;
                 this.seasonlistlb.DataSource = Utility.GetSeasonalList();
                 this.seasonlistlb.DisplayMember = "seasonDisplay";
                 this.seasonlistlb.ValueMember = "seasonCode";
@@ -203,6 +212,7 @@ namespace UpdateMyList.Forms
                 tablenametxt.Visible = false;
                 this.seasonlistlb.Visible = false;
                 this.gencodebtn.Visible = false;
+                this.listTypeclb.Visible = false;
             }
         }
 
@@ -265,6 +275,20 @@ namespace UpdateMyList.Forms
                     this.id = data.seasonId;
                     this.recstatuscbb.SelectedValue = data.recStatus;
                     this.sortseqnb.Value = data.sortSeq ?? 0;
+                    ClearSelection();
+                    var seasonGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(data.seasonId);
+                    if (seasonGroup.Count > 0)
+                    {
+                        for (int i = 0; i < this.listTypeclb.Items.Count; i++)
+                        {
+                            var listType = (ListTypeModel)this.listTypeclb.Items[i];
+                            var chkData = seasonGroup.FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                            if (chkData != null)
+                            {
+                                this.listTypeclb.SetItemChecked(i, true);
+                            }
+                        }
+                    }
                 }
                 else if (MappingParam.MapSetingParameter.Equals(this._mapCode))
                 {
@@ -274,6 +298,7 @@ namespace UpdateMyList.Forms
                     this.id = data.mapId;
                     this.recstatuscbb.SelectedValue = data.recStatus;
                     this.sortseqnb.Value = data.sortSeq ?? 0;
+                    this.tablenametxt.Text = data.mapTbName ?? string.Empty;
                 }
             }
         }
@@ -284,7 +309,14 @@ namespace UpdateMyList.Forms
             Clear(true);
             
         }
-
+        private void ClearSelection()
+        {
+            this.listTypeclb.DataSource = _uow.ListTypeMastRepository.SelectAllType();
+            for (int i = 0; i < this.listTypeclb.Items.Count; i++)
+            {
+                this.listTypeclb.SetItemChecked(i, false);
+            }
+        }
         private void mainbtn_Click(object sender, EventArgs e)
         {
             escapeToMain();
@@ -446,9 +478,10 @@ namespace UpdateMyList.Forms
                         createDate = DateTime.Now,
                         createBy = Constants.UserApp,
                     };
+                    var rs = 0;
                     if (("U").Equals(this.IU_Flag))
                     {
-                        var rs = _uow.SeasonMastRepository.UpdateById(data);
+                        rs = _uow.SeasonMastRepository.UpdateById(data);
                         if (rs > 0)
                         {
                             Clear(true);
@@ -459,7 +492,7 @@ namespace UpdateMyList.Forms
                         var chqdup = _uow.SeasonMastRepository.Read().FirstOrDefault(p => p.seaCode.ToUpper().Equals(data.seasonCode.ToUpper()));
                         if (chqdup is null)
                         {
-                            var rs = _uow.SeasonMastRepository.Insert(data);
+                            rs = _uow.SeasonMastRepository.Insert(data);
                             if (rs > 0)
                             {
                                 Clear(true);
@@ -469,6 +502,63 @@ namespace UpdateMyList.Forms
                         {
                             MessageBox.Show($"{chqdup.seaCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
+                    }
+                    var listTypeList = this.listTypeclb.Items;
+                    for (int i = 0; i < this.listTypeclb.Items.Count; i++)
+                    {
+                        if (this.listTypeclb.GetItemCheckState(i) == CheckState.Checked)
+                        {
+                            var listType = (ListTypeModel)this.listTypeclb.Items[i];
+                            var seaGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(this.id).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                            if (seaGroup == null)
+                            {
+                                var seaGroupClose = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaIdButClose(this.id).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                                if (seaGroupClose is null)
+                                {
+                                    var seasonGroup = new SeasonGroupModel
+                                    {
+                                        listTypeId = listType.listTypeId,
+                                        seaId = rs,
+                                        recStatus = RecStatus.Active,
+                                        createBy = Constants.UserApp,
+                                        createDate = DateTime.Now
+                                    };
+                                    _uow.SeasonGroupRepository.Insert(seasonGroup);
+                                }
+                                else
+                                {
+                                    var seasonGroup = new SeasonGroupModel
+                                    {
+                                        seagroupId = seaGroupClose.seagroupId,
+                                        seaId = seaGroupClose.seaId,
+                                        listTypeId = seaGroupClose.listTypeId,
+                                        recStatus = RecStatus.Active,
+                                        updateBy = Constants.UserApp,
+                                        updateDate = DateTime.Now
+                                    };
+                                    _uow.SeasonGroupRepository.UpdateSeaGroup(seasonGroup);
+                                }
+                            }
+                        }
+                        else if (this.listTypeclb.GetItemCheckState(i) == CheckState.Unchecked)
+                        {
+                            var listType = (ListTypeModel)this.listTypeclb.Items[i];
+                            var seaGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(this.id).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                            if (seaGroup != null)
+                            {
+                                var seasonGroup = new SeasonGroupModel
+                                {
+                                    seagroupId = seaGroup.seagroupId,
+                                    listTypeId = seaGroup.listTypeId,
+                                    seaId = rs,
+                                    recStatus = RecStatus.Close,
+                                    updateBy = Constants.UserApp,
+                                    updateDate = DateTime.Now
+                                };
+                                _uow.SeasonGroupRepository.UpdateSeaGroup(seasonGroup);
+                            }
+                        }
+
                     }
                 }
                 else if (MappingParam.MapSetingParameter.Equals(this._mapCode))

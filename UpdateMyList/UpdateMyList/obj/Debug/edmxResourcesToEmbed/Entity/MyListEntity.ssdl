@@ -8,6 +8,7 @@
     <Property Name="DataPerPage" Type="int" />
     <Property Name="UpdateDate" Type="datetime" />
     <Property Name="sortmode" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsSimilar" Type="bit" />
   </EntityType>
   <EntityType Name="GenreGroup">
     <Key>
@@ -83,6 +84,21 @@
     <Property Name="updateDate" Type="datetime" />
     <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
     <Property Name="seasonId" Type="int" />
+    <Property Name="listEPLast" Type="nvarchar(max)" />
+    <Property Name="stsIdLast" Type="int" />
+  </EntityType>
+  <EntityType Name="SeasonGroup">
+    <Key>
+      <PropertyRef Name="seaGroupId" />
+    </Key>
+    <Property Name="seaGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="seaId" Type="int" Nullable="false" />
+    <Property Name="lisTypetId" Type="int" Nullable="false" />
+    <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+    <Property Name="createDate" Type="datetime" />
+    <Property Name="createBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="updateDate" Type="datetime" />
+    <Property Name="updateBy" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="SeasonMast">
     <Key>
@@ -132,6 +148,7 @@
     <EntitySet Name="ListTypeMast" EntityType="Self.ListTypeMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MapSetingParam" EntityType="Self.MapSetingParam" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MyListMast" EntityType="Self.MyListMast" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SeasonGroup" EntityType="Self.SeasonGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SeasonMast" EntityType="Self.SeasonMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StsMast" EntityType="Self.StsMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
