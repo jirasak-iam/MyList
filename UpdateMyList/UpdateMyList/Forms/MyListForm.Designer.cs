@@ -79,6 +79,7 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
+            this.stsenoteqsb = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -112,6 +113,7 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
+            this.listtap.Controls.Add(this.stsenoteqsb);
             this.listtap.Controls.Add(this.stslastlb);
             this.listtap.Controls.Add(this.notincb);
             this.listtap.Controls.Add(this.labelcountpage);
@@ -157,9 +159,9 @@
             this.notincb.AutoSize = true;
             this.notincb.Location = new System.Drawing.Point(1533, 36);
             this.notincb.Name = "notincb";
-            this.notincb.Size = new System.Drawing.Size(67, 21);
+            this.notincb.Size = new System.Drawing.Size(111, 21);
             this.notincb.TabIndex = 36;
-            this.notincb.Text = "Not In";
+            this.notincb.Text = "Genre Not In";
             this.notincb.UseVisualStyleBackColor = true;
             this.notincb.CheckedChanged += new System.EventHandler(this.notincb_CheckedChanged);
             // 
@@ -255,7 +257,7 @@
             // 
             this.seasonlb.FormattingEnabled = true;
             this.seasonlb.ItemHeight = 16;
-            this.seasonlb.Location = new System.Drawing.Point(924, 1);
+            this.seasonlb.Location = new System.Drawing.Point(924, 0);
             this.seasonlb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seasonlb.Name = "seasonlb";
             this.seasonlb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
@@ -673,6 +675,17 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
+            // stsenoteqsb
+            // 
+            this.stsenoteqsb.AutoSize = true;
+            this.stsenoteqsb.Location = new System.Drawing.Point(1533, 63);
+            this.stsenoteqsb.Name = "stsenoteqsb";
+            this.stsenoteqsb.Size = new System.Drawing.Size(148, 21);
+            this.stsenoteqsb.TabIndex = 38;
+            this.stsenoteqsb.Text = "Status is not Equal";
+            this.stsenoteqsb.UseVisualStyleBackColor = true;
+            this.stsenoteqsb.CheckedChanged += new System.EventHandler(this.stseqsb_CheckedChanged);
+            // 
             // MyListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -751,5 +764,6 @@
         private System.Windows.Forms.Button pluslastbtn;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox eplasttxt;
+        private System.Windows.Forms.CheckBox stsenoteqsb;
     }
 }

@@ -341,6 +341,7 @@ namespace UpdateMyList.Forms
             var chkSelectGen = genreLbSelect?.Sum() ?? 0;
 
             var notincb = this.notincb.Checked;
+            var stsNotEqcb = this.stsenoteqsb.Checked;
 
             var searchName = this.searchtxt.Text.ToUpper();
             if (_model != null)
@@ -399,6 +400,10 @@ namespace UpdateMyList.Forms
                             getByType = getByType.Where(p => genreGroup.Contains(p.listId)).ToList();
                         }
                     }
+                    if (stsNotEqcb)
+                    {
+                        getByType = getByType.Where(p => p.listEP != (p.listEPLast ?? string.Empty)).ToList();
+                    }
                     if (!string.IsNullOrEmpty(searchName))
                     {
                         var splitSearchName = searchName.Split(Constants.delimiterChars).ToList();
@@ -451,11 +456,11 @@ namespace UpdateMyList.Forms
                                    listCode = a.listCode,
                                    listName = a.listName,
                                    listLink = a.listLink,
-                                   stsDesc = 
-                                    !string.IsNullOrEmpty(a.stsDescLast) ? 
-                                    $"{(a.stsDesc.Length > 10 ? $"{a.stsDesc.Split('/')[0]}....." : a.stsDesc)}//{(a.stsDescLast.Length > 10 ? $"{a.stsDescLast.Split('/')[0]}....." : a.stsDescLast)}" 
+                                   stsDesc =
+                                    !string.IsNullOrEmpty(a.stsDescLast) ?
+                                    $"{(a.stsDesc.Length > 10 ? $"{a.stsDesc.Split('/')[0]}..." : a.stsDesc)} / {(a.stsDescLast.Length > 10 ? $"{a.stsDescLast.Split('/')[0]}..." : a.stsDescLast)}"
                                     : a.stsDesc,
-                                   listEP = !string.IsNullOrEmpty(a.listEPLast) ? $"{a.listEP}/{a.listEPLast}" : a.listEP,
+                                   listEP = !string.IsNullOrEmpty(a.listEPLast) ? $"{a.listEP.PadLeft(7,' ')}  {a.listEPLast.PadLeft(10, ' ')}" : a.listEP,
                                    seasonDesc = a.seasonDesc,
                                    genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).OrderBy(o => o).ToList()),
                                    updateDateStr = a.updateDateStr
@@ -469,15 +474,15 @@ namespace UpdateMyList.Forms
                 this.dataGridView1.Columns[1].Width = 320;
                 this.dataGridView1.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[2].HeaderText = "Link";
-                this.dataGridView1.Columns[2].Width = 335;
+                this.dataGridView1.Columns[2].Width = 355;
                 this.dataGridView1.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[3].HeaderText = "สถานะ";
-                this.dataGridView1.Columns[3].Width = 150;
+                this.dataGridView1.Columns[3].Width = 130;
                 this.dataGridView1.Columns[3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dataGridView1.Columns[4].HeaderText = "EP";
                 this.dataGridView1.Columns[4].Width = 100;
                 this.dataGridView1.Columns[4].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                this.dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridView1.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 if (this._model.listTypeCode.Equals(TypeValue.Manga))
                 {
                     this.dataGridView1.Columns[5].HeaderText = "Comic Group";
@@ -1137,6 +1142,16 @@ namespace UpdateMyList.Forms
 
         private void genrelb_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var genLb = this.genrelb.SelectedItems.Cast<GenreModel>().ToList();
+            if (genLb.FirstOrDefault(p => p.genreId == 0) != null)
+            {
+                notincb.Checked = false;
+                notincb.Enabled = false;
+            }
+            else
+            {
+                notincb.Enabled = true;
+            }
             search();
             CalPage();
         }
@@ -1449,6 +1464,11 @@ namespace UpdateMyList.Forms
             {
                 reload();
             }
+        }
+
+        private void stseqsb_CheckedChanged(object sender, EventArgs e)
+        {
+            search();
         }
     }
 }
