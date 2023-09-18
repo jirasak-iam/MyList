@@ -37,6 +37,7 @@ namespace UpdateMyList.Forms
         private List<SeasonMastModel> seasons { get; set; }
         private List<MyListModel> myLists { get; set; }
         private ConfigMyList config { get; set; }
+        private List<int> selectGen { get; set; } = new List<int>();
         public void ClearPage(bool allData)
         {
             var reFlag = this.rePageFlag ?? true;
@@ -59,6 +60,7 @@ namespace UpdateMyList.Forms
                 this.gobtn.Enabled = false;
                 this.deletebtn.Enabled = false;
                 this.seasoncbb.SelectedIndex = 0;
+                this.selectGen = new List<int>();
                 ClearSelection();
                 this.myListtap.SelectedTab = listtap;
             }
@@ -139,10 +141,11 @@ namespace UpdateMyList.Forms
             var genreList = this.genreclb.Items;
             for (int i = 0; i < this.genreclb.Items.Count; i++)
             {
-                if (this.genreclb.GetItemCheckState(i) == CheckState.Checked)
+                var genre = (GenreModel)this.genreclb.Items[i];
+                var genreGroup = new GenreGroupModel();
+                if (this.selectGen.Contains(genre.genreId))
                 {
-                    var genre = (GenreModel)this.genreclb.Items[i];
-                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
+                    genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
                     if (genreGroup == null)
                     {
                         var genGroupClose = _uow.GenreGroupRepository.SelectGenreGroupByListIdButClose(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
@@ -173,10 +176,9 @@ namespace UpdateMyList.Forms
                         }
                     }
                 }
-                else if (this.genreclb.GetItemCheckState(i) == CheckState.Unchecked)
+                else
                 {
-                    var genre = (GenreModel)this.genreclb.Items[i];
-                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
+                    genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(this.myListId).FirstOrDefault(p => p.genId == genre.genreId);
                     if (genreGroup != null)
                     {
                         var genGroup = new GenreGroupModel
@@ -191,7 +193,6 @@ namespace UpdateMyList.Forms
                         _uow.GenreGroupRepository.UpdateGenGroup(genGroup);
                     }
                 }
-
             }
             return rs;
         }
@@ -709,6 +710,7 @@ namespace UpdateMyList.Forms
                 var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(data.listId);
                 if (genreGroup.Count > 0)
                 {
+                    selectGen.AddRange(genreGroup.Select(p => p.genId).ToList());
                     for (int i = 0; i < this.genreclb.Items.Count; i++)
                     {
                         var genre = (GenreModel)this.genreclb.Items[i];
@@ -716,6 +718,10 @@ namespace UpdateMyList.Forms
                         if (chkData != null)
                         {
                             this.genreclb.SetItemChecked(i, true);
+                        }
+                        else
+                        {
+                            this.genreclb.SetItemChecked(i, false);
                         }
                     }
                 }
@@ -1110,7 +1116,7 @@ namespace UpdateMyList.Forms
         }
         private void ClearSelection()
         {
-            this.genreclb.DataSource = _uow.GenreMastRepository.Select();
+            this.genreclb.DataSource = this.genres;
             for (int i = 0; i < this.genreclb.Items.Count; i++)
             {
                 this.genreclb.SetItemChecked(i, false);
@@ -1328,6 +1334,20 @@ namespace UpdateMyList.Forms
                 this.genreclb.DisplayMember = "genreDisplay";
                 this.genreclb.ValueMember = "genreId";
             }
+
+            for (int i = 0; i < this.genreclb.Items.Count; i++)
+            {
+                var genre = (GenreModel)this.genreclb.Items[i];
+                int chkData = this.selectGen.FirstOrDefault(p => p == genre.genreId);
+                if (chkData > 0)
+                {
+                    this.genreclb.SetItemChecked(i, true);
+                }
+                else
+                {
+                    this.genreclb.SetItemChecked(i, false);
+                }
+            }
         }
 
         private void pluslastbtn_Click(object sender, EventArgs e)
@@ -1469,6 +1489,48 @@ namespace UpdateMyList.Forms
         private void stseqsb_CheckedChanged(object sender, EventArgs e)
         {
             search();
+        }
+
+        private void genreclb_Click(object sender, EventArgs e)
+        {
+            var item = (GenreModel)this.genreclb.SelectedItem;
+            if (!this.selectGen.Contains(item.genreId))
+            {
+                this.selectGen.Add(item.genreId);
+            }
+            else
+            {
+                this.selectGen.Remove(item.genreId);
+            }
+
+        }
+
+        private void searchSeaTxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                saveBtn.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
+        }
+
+        private void searchGenTxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                saveBtn.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                ClearPage(true);
+            }
         }
     }
 }

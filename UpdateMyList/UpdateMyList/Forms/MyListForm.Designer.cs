@@ -33,6 +33,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.stsenoteqsb = new System.Windows.Forms.CheckBox();
             this.stslastlb = new System.Windows.Forms.ListBox();
             this.notincb = new System.Windows.Forms.CheckBox();
             this.labelcountpage = new System.Windows.Forms.Label();
@@ -79,7 +80,6 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.stsenoteqsb = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -140,6 +140,17 @@
             this.listtap.TabIndex = 0;
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
+            // 
+            // stsenoteqsb
+            // 
+            this.stsenoteqsb.AutoSize = true;
+            this.stsenoteqsb.Location = new System.Drawing.Point(1533, 63);
+            this.stsenoteqsb.Name = "stsenoteqsb";
+            this.stsenoteqsb.Size = new System.Drawing.Size(148, 21);
+            this.stsenoteqsb.TabIndex = 38;
+            this.stsenoteqsb.Text = "Status is not Equal";
+            this.stsenoteqsb.UseVisualStyleBackColor = true;
+            this.stsenoteqsb.CheckedChanged += new System.EventHandler(this.stseqsb_CheckedChanged);
             // 
             // stslastlb
             // 
@@ -455,8 +466,8 @@
             this.searchGenTxt.Name = "searchGenTxt";
             this.searchGenTxt.Size = new System.Drawing.Size(162, 22);
             this.searchGenTxt.TabIndex = 35;
-            this.searchGenTxt.Visible = false;
             this.searchGenTxt.TextChanged += new System.EventHandler(this.searchGenTxt_TextChanged);
+            this.searchGenTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchGenTxt_KeyDown);
             // 
             // searchSeaTxt
             // 
@@ -465,6 +476,7 @@
             this.searchSeaTxt.Size = new System.Drawing.Size(162, 22);
             this.searchSeaTxt.TabIndex = 34;
             this.searchSeaTxt.TextChanged += new System.EventHandler(this.searchSeaTxt_TextChanged);
+            this.searchSeaTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchSeaTxt_KeyDown);
             // 
             // deletebtn
             // 
@@ -487,6 +499,7 @@
             this.genreclb.Name = "genreclb";
             this.genreclb.Size = new System.Drawing.Size(289, 276);
             this.genreclb.TabIndex = 19;
+            this.genreclb.Click += new System.EventHandler(this.genreclb_Click);
             // 
             // label8
             // 
@@ -674,17 +687,6 @@
             this.nametxt.Size = new System.Drawing.Size(789, 22);
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
-            // 
-            // stsenoteqsb
-            // 
-            this.stsenoteqsb.AutoSize = true;
-            this.stsenoteqsb.Location = new System.Drawing.Point(1533, 63);
-            this.stsenoteqsb.Name = "stsenoteqsb";
-            this.stsenoteqsb.Size = new System.Drawing.Size(148, 21);
-            this.stsenoteqsb.TabIndex = 38;
-            this.stsenoteqsb.Text = "Status is not Equal";
-            this.stsenoteqsb.UseVisualStyleBackColor = true;
-            this.stsenoteqsb.CheckedChanged += new System.EventHandler(this.stseqsb_CheckedChanged);
             // 
             // MyListForm
             // 

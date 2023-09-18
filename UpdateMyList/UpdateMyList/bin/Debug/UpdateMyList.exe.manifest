@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateMyList.exe" size="431072">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateMyList.exe" size="432096">
       <assemblyIdentity name="UpdateMyList" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Z9JBGjtsGu0J9+MI02hG8uMTgomuxajpm20w7Nk6GRY=</dsig:DigestValue>
+        <dsig:DigestValue>matwN4oueVlCFCyevNHbfaySsCdX7fKDS6kezud24x8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
