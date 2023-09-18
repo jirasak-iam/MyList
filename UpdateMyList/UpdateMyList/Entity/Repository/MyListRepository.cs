@@ -37,7 +37,7 @@ namespace UpdateMyList.Entity.Repository
                           listCode = a.listCode,
                           listName = a.listName,
                           listEP = a.listEP,
-                          listEPLast = a.listEPLast,
+                          listEPLast = (a.listEPLast ?? string.Empty),
                           listTypeId = a.listTypeId,
                           listLink = a.listLink,
                           stsId = a.stsId,

@@ -460,7 +460,7 @@ namespace UpdateMyList.Forms
                                     !string.IsNullOrEmpty(a.stsDescLast) ?
                                     $"{(a.stsDesc.Length > 10 ? $"{a.stsDesc.Split('/')[0]}..." : a.stsDesc)} / {(a.stsDescLast.Length > 10 ? $"{a.stsDescLast.Split('/')[0]}..." : a.stsDescLast)}"
                                     : a.stsDesc,
-                                   listEP = !string.IsNullOrEmpty(a.listEPLast) ? $"{a.listEP.PadLeft(7,' ')}  {a.listEPLast.PadLeft(10, ' ')}" : a.listEP,
+                                   listEP = $"{a.listEP.PadLeft(7,' ')}  {a.listEPLast.PadLeft(10, ' ')}",
                                    seasonDesc = a.seasonDesc,
                                    genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).OrderBy(o => o).ToList()),
                                    updateDateStr = a.updateDateStr
