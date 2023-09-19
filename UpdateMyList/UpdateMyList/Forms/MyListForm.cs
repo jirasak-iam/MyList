@@ -283,6 +283,8 @@ namespace UpdateMyList.Forms
 
             this.dataGridView1.ReadOnly = true;
 
+            this.nonrdb.Checked = true;
+
             this.stslb.DataSource = _uow.StsMastRepository.SelectAll();
             this.stslb.DisplayMember = "stsDesc";
             this.stslb.ValueMember = "stsId";
@@ -342,7 +344,9 @@ namespace UpdateMyList.Forms
             var chkSelectGen = genreLbSelect?.Sum() ?? 0;
 
             var notincb = this.notincb.Checked;
-            var stsNotEqcb = this.stsenoteqsb.Checked;
+
+            var stsNotEqrdb = this.stsnoteqrdb.Checked;
+            var stsEqrdb = this.stseqrdb.Checked;
 
             var searchName = this.searchtxt.Text.ToUpper();
             if (_model != null)
@@ -401,9 +405,13 @@ namespace UpdateMyList.Forms
                             getByType = getByType.Where(p => genreGroup.Contains(p.listId)).ToList();
                         }
                     }
-                    if (stsNotEqcb)
+                    if (stsNotEqrdb)
                     {
                         getByType = getByType.Where(p => p.listEP != (p.listEPLast ?? string.Empty)).ToList();
+                    }
+                    if (stsEqrdb)
+                    {
+                        getByType = getByType.Where(p => p.listEP == (p.listEPLast ?? string.Empty)).ToList();
                     }
                     if (!string.IsNullOrEmpty(searchName))
                     {
@@ -459,9 +467,9 @@ namespace UpdateMyList.Forms
                                    listLink = a.listLink,
                                    stsDesc =
                                     !string.IsNullOrEmpty(a.stsDescLast) ?
-                                    $"{(a.stsDesc.Length > 10 ? $"{a.stsDesc.Split('/')[0]}..." : a.stsDesc)} / {(a.stsDescLast.Length > 10 ? $"{a.stsDescLast.Split('/')[0]}..." : a.stsDescLast)}"
+                                    $"{(a.stsDesc.Length > 10 ? $"{a.stsDesc.Substring(0,10).Split('/')[0]}..." : a.stsDesc)} / {(a.stsDescLast.Length > 10 ? $"{a.stsDescLast.Substring(0, 10).Split('/')[0]}..." : a.stsDescLast)}"
                                     : a.stsDesc,
-                                   listEP = $"{a.listEP.PadLeft(7,' ')}  {a.listEPLast.PadLeft(10, ' ')}",
+                                   listEP = $"{a.listEP.PadLeft(7, ' ')}  {a.listEPLast.PadLeft(10, ' ')}",
                                    seasonDesc = a.seasonDesc,
                                    genreDesc = string.Join(",", genreGroup.Where(p => p.listId == a.listId).Select(o => o.genCode).OrderBy(o => o).ToList()),
                                    updateDateStr = a.updateDateStr
@@ -880,7 +888,7 @@ namespace UpdateMyList.Forms
         private void plusbtn_Click(object sender, EventArgs e)
         {
             var epVal = !string.IsNullOrEmpty(this.ePtxt.Text) ? Convert.ToDecimal(this.ePtxt.Text) + 1 : 1;
-            int eplast = 0, ep = 0;
+            int eplast = 0;
             int.TryParse(this.eplasttxt.Text, out eplast);
             //int.TryParse(this.ePtxt.Text, out ep);
             this.ePtxt.Text = "";
@@ -1113,6 +1121,19 @@ namespace UpdateMyList.Forms
         private void ePtxt_TextChanged(object sender, EventArgs e)
         {
             changeStsByEp();
+            if (!string.IsNullOrEmpty(this.ePtxt.Text))
+            {
+                decimal ep = 0;
+                decimal epLast = 0;
+
+                decimal.TryParse(this.ePtxt.Text, out ep);
+                decimal.TryParse(this.eplasttxt.Text, out epLast);
+
+                if (ep >= epLast)
+                {
+                    this.eplasttxt.Text = this.ePtxt.Text;
+                }
+            }
         }
         private void ClearSelection()
         {
@@ -1530,6 +1551,63 @@ namespace UpdateMyList.Forms
             if (e.KeyCode == Keys.Escape)
             {
                 ClearPage(true);
+            }
+        }
+
+        private void nonrdb_CheckedChanged(object sender, EventArgs e)
+        {
+            search();
+            CalPage();
+        }
+
+        private void stseqrdb_CheckedChanged(object sender, EventArgs e)
+        {
+            search();
+            CalPage();
+        }
+
+        private void stsnoteqrdb_CheckedChanged(object sender, EventArgs e)
+        {
+            search();
+            CalPage();
+        }
+
+        private void genreclb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                //var item = (GenreModel)this.genreclb.SelectedItem;
+                var state = this.genreclb.GetItemCheckState(this.genreclb.SelectedIndex);
+                if (state == CheckState.Checked)
+                {
+                    this.genreclb.SetItemChecked(this.genreclb.SelectedIndex, false);
+                }
+                else if (state == CheckState.Unchecked)
+                {
+                    this.genreclb.SetItemChecked(this.genreclb.SelectedIndex, true);
+                }
+
+                var item = (GenreModel)this.genreclb.SelectedItem;
+                if (!this.selectGen.Contains(item.genreId))
+                {
+                    this.selectGen.Add(item.genreId);
+                }
+                else
+                {
+                    this.selectGen.Remove(item.genreId);
+                }
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void stscbb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var stsval = 0;
+            int.TryParse(this.stscbb.SelectedValue.ToString(), out stsval);
+            if (stsval == 3)
+            {
+                this.stslastcbb.SelectedValue = this.stscbb.SelectedValue;
             }
         }
     }

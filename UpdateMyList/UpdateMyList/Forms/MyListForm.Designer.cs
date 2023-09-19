@@ -33,7 +33,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
-            this.stsenoteqsb = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.stsnoteqrdb = new System.Windows.Forms.RadioButton();
+            this.stseqrdb = new System.Windows.Forms.RadioButton();
+            this.nonrdb = new System.Windows.Forms.RadioButton();
             this.stslastlb = new System.Windows.Forms.ListBox();
             this.notincb = new System.Windows.Forms.CheckBox();
             this.labelcountpage = new System.Windows.Forms.Label();
@@ -83,6 +86,7 @@
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.inserttap.SuspendLayout();
             this.SuspendLayout();
@@ -113,7 +117,7 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
-            this.listtap.Controls.Add(this.stsenoteqsb);
+            this.listtap.Controls.Add(this.panel2);
             this.listtap.Controls.Add(this.stslastlb);
             this.listtap.Controls.Add(this.notincb);
             this.listtap.Controls.Add(this.labelcountpage);
@@ -141,16 +145,51 @@
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
             // 
-            // stsenoteqsb
+            // panel2
             // 
-            this.stsenoteqsb.AutoSize = true;
-            this.stsenoteqsb.Location = new System.Drawing.Point(1533, 63);
-            this.stsenoteqsb.Name = "stsenoteqsb";
-            this.stsenoteqsb.Size = new System.Drawing.Size(148, 21);
-            this.stsenoteqsb.TabIndex = 38;
-            this.stsenoteqsb.Text = "Status is not Equal";
-            this.stsenoteqsb.UseVisualStyleBackColor = true;
-            this.stsenoteqsb.CheckedChanged += new System.EventHandler(this.stseqsb_CheckedChanged);
+            this.panel2.Controls.Add(this.stsnoteqrdb);
+            this.panel2.Controls.Add(this.stseqrdb);
+            this.panel2.Controls.Add(this.nonrdb);
+            this.panel2.Location = new System.Drawing.Point(1533, 54);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(286, 65);
+            this.panel2.TabIndex = 38;
+            // 
+            // stsnoteqrdb
+            // 
+            this.stsnoteqrdb.AutoSize = true;
+            this.stsnoteqrdb.Location = new System.Drawing.Point(116, 36);
+            this.stsnoteqrdb.Name = "stsnoteqrdb";
+            this.stsnoteqrdb.Size = new System.Drawing.Size(100, 21);
+            this.stsnoteqrdb.TabIndex = 2;
+            this.stsnoteqrdb.TabStop = true;
+            this.stsnoteqrdb.Text = "Ep ไม่เท่ากัน";
+            this.stsnoteqrdb.UseVisualStyleBackColor = true;
+            this.stsnoteqrdb.CheckedChanged += new System.EventHandler(this.stsnoteqrdb_CheckedChanged);
+            // 
+            // stseqrdb
+            // 
+            this.stseqrdb.AutoSize = true;
+            this.stseqrdb.Location = new System.Drawing.Point(116, 9);
+            this.stseqrdb.Name = "stseqrdb";
+            this.stseqrdb.Size = new System.Drawing.Size(85, 21);
+            this.stseqrdb.TabIndex = 1;
+            this.stseqrdb.TabStop = true;
+            this.stseqrdb.Text = "Ep เท่ากัน";
+            this.stseqrdb.UseVisualStyleBackColor = true;
+            this.stseqrdb.CheckedChanged += new System.EventHandler(this.stseqrdb_CheckedChanged);
+            // 
+            // nonrdb
+            // 
+            this.nonrdb.AutoSize = true;
+            this.nonrdb.Location = new System.Drawing.Point(0, 9);
+            this.nonrdb.Name = "nonrdb";
+            this.nonrdb.Size = new System.Drawing.Size(63, 21);
+            this.nonrdb.TabIndex = 0;
+            this.nonrdb.TabStop = true;
+            this.nonrdb.Text = "None";
+            this.nonrdb.UseVisualStyleBackColor = true;
+            this.nonrdb.CheckedChanged += new System.EventHandler(this.nonrdb_CheckedChanged);
             // 
             // stslastlb
             // 
@@ -409,11 +448,11 @@
             this.stslastcbb.DisplayMember = "stsDesc";
             this.stslastcbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.stslastcbb.FormattingEnabled = true;
-            this.stslastcbb.Location = new System.Drawing.Point(460, 215);
+            this.stslastcbb.Location = new System.Drawing.Point(418, 215);
             this.stslastcbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.stslastcbb.Name = "stslastcbb";
-            this.stslastcbb.Size = new System.Drawing.Size(289, 24);
-            this.stslastcbb.TabIndex = 40;
+            this.stslastcbb.Size = new System.Drawing.Size(250, 24);
+            this.stslastcbb.TabIndex = 20;
             this.stslastcbb.ValueMember = "stsId";
             // 
             // minuslastbtn
@@ -422,7 +461,7 @@
             this.minuslastbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.minuslastbtn.Name = "minuslastbtn";
             this.minuslastbtn.Size = new System.Drawing.Size(27, 23);
-            this.minuslastbtn.TabIndex = 38;
+            this.minuslastbtn.TabIndex = 15;
             this.minuslastbtn.Text = "-";
             this.minuslastbtn.UseVisualStyleBackColor = true;
             this.minuslastbtn.Click += new System.EventHandler(this.minuslastbtn_Click);
@@ -434,7 +473,7 @@
             this.pluslastbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pluslastbtn.Name = "pluslastbtn";
             this.pluslastbtn.Size = new System.Drawing.Size(27, 23);
-            this.pluslastbtn.TabIndex = 37;
+            this.pluslastbtn.TabIndex = 14;
             this.pluslastbtn.Text = "+";
             this.pluslastbtn.UseVisualStyleBackColor = true;
             this.pluslastbtn.Click += new System.EventHandler(this.pluslastbtn_Click);
@@ -455,37 +494,38 @@
             this.eplasttxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eplasttxt.Name = "eplasttxt";
             this.eplasttxt.Size = new System.Drawing.Size(789, 22);
-            this.eplasttxt.TabIndex = 36;
+            this.eplasttxt.TabIndex = 13;
             this.eplasttxt.TextChanged += new System.EventHandler(this.eplasttxt_TextChanged);
             this.eplasttxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.eplasttxt_KeyDown);
             this.eplasttxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.eplasttxt_KeyPress);
             // 
             // searchGenTxt
             // 
-            this.searchGenTxt.Location = new System.Drawing.Point(460, 298);
+            this.searchGenTxt.Location = new System.Drawing.Point(151, 295);
             this.searchGenTxt.Name = "searchGenTxt";
-            this.searchGenTxt.Size = new System.Drawing.Size(162, 22);
-            this.searchGenTxt.TabIndex = 35;
+            this.searchGenTxt.Size = new System.Drawing.Size(250, 22);
+            this.searchGenTxt.TabIndex = 23;
             this.searchGenTxt.TextChanged += new System.EventHandler(this.searchGenTxt_TextChanged);
             this.searchGenTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchGenTxt_KeyDown);
             // 
             // searchSeaTxt
             // 
-            this.searchSeaTxt.Location = new System.Drawing.Point(460, 257);
+            this.searchSeaTxt.Location = new System.Drawing.Point(151, 252);
             this.searchSeaTxt.Name = "searchSeaTxt";
-            this.searchSeaTxt.Size = new System.Drawing.Size(162, 22);
-            this.searchSeaTxt.TabIndex = 34;
+            this.searchSeaTxt.Size = new System.Drawing.Size(250, 22);
+            this.searchSeaTxt.TabIndex = 21;
             this.searchSeaTxt.TextChanged += new System.EventHandler(this.searchSeaTxt_TextChanged);
             this.searchSeaTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchSeaTxt_KeyDown);
             // 
             // deletebtn
             // 
+            this.deletebtn.Font = new System.Drawing.Font("Cloud", 12F, System.Drawing.FontStyle.Bold);
             this.deletebtn.Location = new System.Drawing.Point(869, 531);
             this.deletebtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deletebtn.Name = "deletebtn";
             this.deletebtn.Size = new System.Drawing.Size(75, 32);
-            this.deletebtn.TabIndex = 33;
-            this.deletebtn.Text = "Delete";
+            this.deletebtn.TabIndex = 27;
+            this.deletebtn.Text = "ลบ";
             this.deletebtn.UseVisualStyleBackColor = true;
             this.deletebtn.Click += new System.EventHandler(this.deletebtn_Click);
             this.deletebtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.deletebtn_KeyDown);
@@ -494,12 +534,13 @@
             // 
             this.genreclb.CheckOnClick = true;
             this.genreclb.FormattingEnabled = true;
-            this.genreclb.Location = new System.Drawing.Point(151, 298);
+            this.genreclb.Location = new System.Drawing.Point(418, 295);
             this.genreclb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.genreclb.Name = "genreclb";
-            this.genreclb.Size = new System.Drawing.Size(289, 276);
-            this.genreclb.TabIndex = 19;
+            this.genreclb.Size = new System.Drawing.Size(300, 259);
+            this.genreclb.TabIndex = 24;
             this.genreclb.Click += new System.EventHandler(this.genreclb_Click);
+            this.genreclb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.genreclb_KeyDown);
             // 
             // label8
             // 
@@ -517,11 +558,11 @@
             this.seasoncbb.FormattingEnabled = true;
             this.seasoncbb.IntegralHeight = false;
             this.seasoncbb.ItemHeight = 16;
-            this.seasoncbb.Location = new System.Drawing.Point(151, 255);
+            this.seasoncbb.Location = new System.Drawing.Point(418, 252);
             this.seasoncbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seasoncbb.Name = "seasoncbb";
-            this.seasoncbb.Size = new System.Drawing.Size(289, 24);
-            this.seasoncbb.TabIndex = 18;
+            this.seasoncbb.Size = new System.Drawing.Size(250, 24);
+            this.seasoncbb.TabIndex = 22;
             // 
             // label7
             // 
@@ -538,7 +579,7 @@
             this.gobtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gobtn.Name = "gobtn";
             this.gobtn.Size = new System.Drawing.Size(27, 23);
-            this.gobtn.TabIndex = 14;
+            this.gobtn.TabIndex = 17;
             this.gobtn.Text = "G";
             this.gobtn.UseVisualStyleBackColor = true;
             this.gobtn.Click += new System.EventHandler(this.gobtn_Click);
@@ -579,11 +620,11 @@
             // 
             // commenttxt
             // 
-            this.commenttxt.Location = new System.Drawing.Point(151, 175);
+            this.commenttxt.Location = new System.Drawing.Point(151, 178);
             this.commenttxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.commenttxt.Name = "commenttxt";
             this.commenttxt.Size = new System.Drawing.Size(789, 22);
-            this.commenttxt.TabIndex = 15;
+            this.commenttxt.TabIndex = 18;
             this.commenttxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.commenttxt_KeyDown);
             // 
             // stscbb
@@ -591,12 +632,14 @@
             this.stscbb.DisplayMember = "stsDesc";
             this.stscbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.stscbb.FormattingEnabled = true;
+            this.stscbb.ItemHeight = 16;
             this.stscbb.Location = new System.Drawing.Point(151, 215);
             this.stscbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.stscbb.Name = "stscbb";
-            this.stscbb.Size = new System.Drawing.Size(289, 24);
-            this.stscbb.TabIndex = 17;
+            this.stscbb.Size = new System.Drawing.Size(250, 24);
+            this.stscbb.TabIndex = 19;
             this.stscbb.ValueMember = "stsId";
+            this.stscbb.SelectedIndexChanged += new System.EventHandler(this.stscbb_SelectedIndexChanged);
             this.stscbb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.stscbb_KeyDown);
             // 
             // label5
@@ -610,12 +653,13 @@
             // 
             // claerbtn
             // 
+            this.claerbtn.Font = new System.Drawing.Font("Cloud", 12F, System.Drawing.FontStyle.Bold);
             this.claerbtn.Location = new System.Drawing.Point(869, 580);
             this.claerbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.claerbtn.Name = "claerbtn";
             this.claerbtn.Size = new System.Drawing.Size(75, 32);
-            this.claerbtn.TabIndex = 21;
-            this.claerbtn.Text = "Clear";
+            this.claerbtn.TabIndex = 26;
+            this.claerbtn.Text = "เคลียร์";
             this.claerbtn.UseVisualStyleBackColor = true;
             this.claerbtn.Click += new System.EventHandler(this.claerbtn_Click);
             this.claerbtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.claerbtn_KeyDown);
@@ -642,11 +686,12 @@
             // 
             // saveBtn
             // 
+            this.saveBtn.Font = new System.Drawing.Font("Cloud", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveBtn.Location = new System.Drawing.Point(787, 580);
             this.saveBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 32);
-            this.saveBtn.TabIndex = 20;
+            this.saveBtn.TabIndex = 25;
             this.saveBtn.Text = "บันทึก";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
@@ -667,7 +712,7 @@
             this.linkUrltxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.linkUrltxt.Name = "linkUrltxt";
             this.linkUrltxt.Size = new System.Drawing.Size(789, 22);
-            this.linkUrltxt.TabIndex = 13;
+            this.linkUrltxt.TabIndex = 16;
             this.linkUrltxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.linkUrltxt_KeyDown);
             // 
             // label1
@@ -708,6 +753,8 @@
             this.myListtap.ResumeLayout(false);
             this.listtap.ResumeLayout(false);
             this.listtap.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.inserttap.ResumeLayout(false);
             this.inserttap.PerformLayout();
@@ -766,6 +813,9 @@
         private System.Windows.Forms.Button pluslastbtn;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox eplasttxt;
-        private System.Windows.Forms.CheckBox stsenoteqsb;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.RadioButton stsnoteqrdb;
+        private System.Windows.Forms.RadioButton stseqrdb;
+        private System.Windows.Forms.RadioButton nonrdb;
     }
 }
