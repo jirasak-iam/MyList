@@ -33,6 +33,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.clearTxtSea = new System.Windows.Forms.Button();
+            this.seasearchtxt = new System.Windows.Forms.TextBox();
+            this.clearTxt = new System.Windows.Forms.Button();
+            this.reloadbtn = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.stsnoteqrdb = new System.Windows.Forms.RadioButton();
             this.stseqrdb = new System.Windows.Forms.RadioButton();
@@ -56,6 +60,7 @@
             this.mainbtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.inserttap = new System.Windows.Forms.TabPage();
+            this.maxbtn = new System.Windows.Forms.Button();
             this.stslastcbb = new System.Windows.Forms.ComboBox();
             this.minuslastbtn = new System.Windows.Forms.Button();
             this.pluslastbtn = new System.Windows.Forms.Button();
@@ -83,6 +88,8 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
+            this.clearTxtGen = new System.Windows.Forms.Button();
+            this.gensearchtxt = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -117,6 +124,12 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
+            this.listtap.Controls.Add(this.clearTxtGen);
+            this.listtap.Controls.Add(this.gensearchtxt);
+            this.listtap.Controls.Add(this.clearTxtSea);
+            this.listtap.Controls.Add(this.seasearchtxt);
+            this.listtap.Controls.Add(this.clearTxt);
+            this.listtap.Controls.Add(this.reloadbtn);
             this.listtap.Controls.Add(this.panel2);
             this.listtap.Controls.Add(this.stslastlb);
             this.listtap.Controls.Add(this.notincb);
@@ -145,44 +158,91 @@
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
             // 
+            // clearTxtSea
+            // 
+            this.clearTxtSea.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.clearTxtSea.ForeColor = System.Drawing.Color.Red;
+            this.clearTxtSea.Location = new System.Drawing.Point(1195, -1);
+            this.clearTxtSea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.clearTxtSea.Name = "clearTxtSea";
+            this.clearTxtSea.Size = new System.Drawing.Size(24, 23);
+            this.clearTxtSea.TabIndex = 42;
+            this.clearTxtSea.Text = "X";
+            this.clearTxtSea.UseVisualStyleBackColor = true;
+            this.clearTxtSea.Click += new System.EventHandler(this.clearTxtSea_Click);
+            // 
+            // seasearchtxt
+            // 
+            this.seasearchtxt.Location = new System.Drawing.Point(924, 0);
+            this.seasearchtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.seasearchtxt.Name = "seasearchtxt";
+            this.seasearchtxt.Size = new System.Drawing.Size(271, 22);
+            this.seasearchtxt.TabIndex = 41;
+            this.seasearchtxt.TextChanged += new System.EventHandler(this.seasearchtxt_TextChanged);
+            this.seasearchtxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.seasearchtxt_KeyDown);
+            // 
+            // clearTxt
+            // 
+            this.clearTxt.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.clearTxt.ForeColor = System.Drawing.Color.Red;
+            this.clearTxt.Location = new System.Drawing.Point(227, 7);
+            this.clearTxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.clearTxt.Name = "clearTxt";
+            this.clearTxt.Size = new System.Drawing.Size(24, 23);
+            this.clearTxt.TabIndex = 40;
+            this.clearTxt.Text = "X";
+            this.clearTxt.UseVisualStyleBackColor = true;
+            this.clearTxt.Click += new System.EventHandler(this.clearTxt_Click);
+            // 
+            // reloadbtn
+            // 
+            this.reloadbtn.Location = new System.Drawing.Point(1671, 2);
+            this.reloadbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reloadbtn.Name = "reloadbtn";
+            this.reloadbtn.Size = new System.Drawing.Size(71, 30);
+            this.reloadbtn.TabIndex = 39;
+            this.reloadbtn.Text = "Reload";
+            this.reloadbtn.UseVisualStyleBackColor = true;
+            this.reloadbtn.Click += new System.EventHandler(this.reloadbtn_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.stsnoteqrdb);
             this.panel2.Controls.Add(this.stseqrdb);
             this.panel2.Controls.Add(this.nonrdb);
-            this.panel2.Location = new System.Drawing.Point(1533, 54);
+            this.panel2.Location = new System.Drawing.Point(1650, 37);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(286, 65);
+            this.panel2.Size = new System.Drawing.Size(167, 89);
             this.panel2.TabIndex = 38;
             // 
             // stsnoteqrdb
             // 
             this.stsnoteqrdb.AutoSize = true;
-            this.stsnoteqrdb.Location = new System.Drawing.Point(116, 36);
+            this.stsnoteqrdb.Location = new System.Drawing.Point(3, 57);
             this.stsnoteqrdb.Name = "stsnoteqrdb";
-            this.stsnoteqrdb.Size = new System.Drawing.Size(100, 21);
+            this.stsnoteqrdb.Size = new System.Drawing.Size(137, 21);
             this.stsnoteqrdb.TabIndex = 2;
             this.stsnoteqrdb.TabStop = true;
-            this.stsnoteqrdb.Text = "Ep ไม่เท่ากัน";
+            this.stsnoteqrdb.Text = "อ่าน/ดู ยังไม่ถึงล่าสุด";
             this.stsnoteqrdb.UseVisualStyleBackColor = true;
             this.stsnoteqrdb.CheckedChanged += new System.EventHandler(this.stsnoteqrdb_CheckedChanged);
             // 
             // stseqrdb
             // 
             this.stseqrdb.AutoSize = true;
-            this.stseqrdb.Location = new System.Drawing.Point(116, 9);
+            this.stseqrdb.Location = new System.Drawing.Point(3, 30);
             this.stseqrdb.Name = "stseqrdb";
-            this.stseqrdb.Size = new System.Drawing.Size(85, 21);
+            this.stseqrdb.Size = new System.Drawing.Size(109, 21);
             this.stseqrdb.TabIndex = 1;
             this.stseqrdb.TabStop = true;
-            this.stseqrdb.Text = "Ep เท่ากัน";
+            this.stseqrdb.Text = "อ่าน/ดู ถึงล่าสุด";
             this.stseqrdb.UseVisualStyleBackColor = true;
             this.stseqrdb.CheckedChanged += new System.EventHandler(this.stseqrdb_CheckedChanged);
             // 
             // nonrdb
             // 
             this.nonrdb.AutoSize = true;
-            this.nonrdb.Location = new System.Drawing.Point(0, 9);
+            this.nonrdb.Location = new System.Drawing.Point(3, 3);
             this.nonrdb.Name = "nonrdb";
             this.nonrdb.Size = new System.Drawing.Size(63, 21);
             this.nonrdb.TabIndex = 0;
@@ -200,18 +260,18 @@
             this.stslastlb.Name = "stslastlb";
             this.stslastlb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.stslastlb.Size = new System.Drawing.Size(295, 116);
-            this.stslastlb.TabIndex = 37;
+            this.stslastlb.TabIndex = 5;
             this.stslastlb.SelectedIndexChanged += new System.EventHandler(this.stslastlb_SelectedIndexChanged);
             this.stslastlb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.stslastlb_KeyDown);
             // 
             // notincb
             // 
             this.notincb.AutoSize = true;
-            this.notincb.Location = new System.Drawing.Point(1533, 36);
+            this.notincb.Location = new System.Drawing.Point(1533, 37);
             this.notincb.Name = "notincb";
             this.notincb.Size = new System.Drawing.Size(111, 21);
             this.notincb.TabIndex = 36;
-            this.notincb.Text = "Genre Not In";
+            this.notincb.Text = "Not In Genre";
             this.notincb.UseVisualStyleBackColor = true;
             this.notincb.CheckedChanged += new System.EventHandler(this.notincb_CheckedChanged);
             // 
@@ -294,12 +354,12 @@
             // 
             this.genrelb.FormattingEnabled = true;
             this.genrelb.ItemHeight = 16;
-            this.genrelb.Location = new System.Drawing.Point(1224, 0);
+            this.genrelb.Location = new System.Drawing.Point(1224, 32);
             this.genrelb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.genrelb.Name = "genrelb";
             this.genrelb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.genrelb.Size = new System.Drawing.Size(295, 116);
-            this.genrelb.TabIndex = 28;
+            this.genrelb.Size = new System.Drawing.Size(295, 84);
+            this.genrelb.TabIndex = 7;
             this.genrelb.SelectedIndexChanged += new System.EventHandler(this.genrelb_SelectedIndexChanged);
             this.genrelb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.genrelb_KeyDown);
             // 
@@ -307,12 +367,12 @@
             // 
             this.seasonlb.FormattingEnabled = true;
             this.seasonlb.ItemHeight = 16;
-            this.seasonlb.Location = new System.Drawing.Point(924, 0);
+            this.seasonlb.Location = new System.Drawing.Point(924, 32);
             this.seasonlb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seasonlb.Name = "seasonlb";
             this.seasonlb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.seasonlb.Size = new System.Drawing.Size(295, 116);
-            this.seasonlb.TabIndex = 27;
+            this.seasonlb.Size = new System.Drawing.Size(295, 84);
+            this.seasonlb.TabIndex = 6;
             this.seasonlb.SelectedIndexChanged += new System.EventHandler(this.seasonlb_SelectedIndexChanged);
             this.seasonlb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.seasonlb_KeyDown);
             // 
@@ -325,7 +385,7 @@
             this.stslb.Name = "stslb";
             this.stslb.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.stslb.Size = new System.Drawing.Size(295, 116);
-            this.stslb.TabIndex = 3;
+            this.stslb.TabIndex = 4;
             this.stslb.SelectedIndexChanged += new System.EventHandler(this.stslb_SelectedIndexChanged);
             this.stslb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.stslb_KeyDown);
             // 
@@ -355,7 +415,7 @@
             this.searchtxt.Location = new System.Drawing.Point(59, 7);
             this.searchtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchtxt.Name = "searchtxt";
-            this.searchtxt.Size = new System.Drawing.Size(192, 22);
+            this.searchtxt.Size = new System.Drawing.Size(171, 22);
             this.searchtxt.TabIndex = 2;
             this.searchtxt.TextChanged += new System.EventHandler(this.searchtxt_TextChanged);
             this.searchtxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchtxt_KeyDown);
@@ -399,7 +459,7 @@
             this.dataGridView1.RowHeadersWidth = 25;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(2017, 469);
-            this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
@@ -407,6 +467,7 @@
             // 
             // inserttap
             // 
+            this.inserttap.Controls.Add(this.maxbtn);
             this.inserttap.Controls.Add(this.stslastcbb);
             this.inserttap.Controls.Add(this.minuslastbtn);
             this.inserttap.Controls.Add(this.pluslastbtn);
@@ -442,6 +503,17 @@
             this.inserttap.TabIndex = 1;
             this.inserttap.Text = "เพื่ม/แก้ไข";
             this.inserttap.UseVisualStyleBackColor = true;
+            // 
+            // maxbtn
+            // 
+            this.maxbtn.Location = new System.Drawing.Point(1013, 69);
+            this.maxbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.maxbtn.Name = "maxbtn";
+            this.maxbtn.Size = new System.Drawing.Size(27, 23);
+            this.maxbtn.TabIndex = 40;
+            this.maxbtn.Text = "M";
+            this.maxbtn.UseVisualStyleBackColor = true;
+            this.maxbtn.Click += new System.EventHandler(this.maxbtn_Click);
             // 
             // stslastcbb
             // 
@@ -733,6 +805,28 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
+            // clearTxtGen
+            // 
+            this.clearTxtGen.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.clearTxtGen.ForeColor = System.Drawing.Color.Red;
+            this.clearTxtGen.Location = new System.Drawing.Point(1496, -1);
+            this.clearTxtGen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.clearTxtGen.Name = "clearTxtGen";
+            this.clearTxtGen.Size = new System.Drawing.Size(24, 23);
+            this.clearTxtGen.TabIndex = 44;
+            this.clearTxtGen.Text = "X";
+            this.clearTxtGen.UseVisualStyleBackColor = true;
+            this.clearTxtGen.Click += new System.EventHandler(this.clearTxtGen_Click);
+            // 
+            // gensearchtxt
+            // 
+            this.gensearchtxt.Location = new System.Drawing.Point(1225, 0);
+            this.gensearchtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gensearchtxt.Name = "gensearchtxt";
+            this.gensearchtxt.Size = new System.Drawing.Size(271, 22);
+            this.gensearchtxt.TabIndex = 43;
+            this.gensearchtxt.TextChanged += new System.EventHandler(this.gensearchtxt_TextChanged);
+            // 
             // MyListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -817,5 +911,12 @@
         private System.Windows.Forms.RadioButton stsnoteqrdb;
         private System.Windows.Forms.RadioButton stseqrdb;
         private System.Windows.Forms.RadioButton nonrdb;
+        private System.Windows.Forms.Button maxbtn;
+        private System.Windows.Forms.Button reloadbtn;
+        private System.Windows.Forms.Button clearTxt;
+        private System.Windows.Forms.Button clearTxtSea;
+        private System.Windows.Forms.TextBox seasearchtxt;
+        private System.Windows.Forms.Button clearTxtGen;
+        private System.Windows.Forms.TextBox gensearchtxt;
     }
 }

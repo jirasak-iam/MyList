@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UpdateMyList.Common;
 using UpdateMyList.Entity.Model;
 
 namespace UpdateMyList.Entity.Repository
@@ -10,9 +11,13 @@ namespace UpdateMyList.Entity.Repository
     public interface IMyListRepository : IBaseRepository<MyListMast>
     {
         List<MyListModel> SelectByType(ListTypeModel model);
-        int UpdateByApp(MyListModel model);
-        int Insert(MyListModel model);
-        int DeleteMyList(int listId);
+        int GetMaxCodeByType(int typeId);
+        #region temp
+        //int UpdateByApp(MyListModel model);
+        //int Insert(MyListModel model);
+        //int DeleteMyList(int listId);
+        #endregion
+
     }
     public class MyListRepository : BaseRepository<MyListMast>, IMyListRepository
     {
@@ -23,14 +28,12 @@ namespace UpdateMyList.Entity.Repository
         public List<MyListModel> SelectByType(ListTypeModel model)
         {
             var rs = (from a in _context.MyListMasts
-                      join b in _context.StsMasts on a.stsId equals b.stsId
-                      //join bb in _context.StsMasts on a.stsIdLast equals bb.stsId
-                      join bab in _context.StsMasts on a.stsIdLast equals bab.stsId into p
+                      join b in _context.StsMasts.Where(p => p.recStatus == RecStatus.Active) on a.stsId equals b.stsId
+                      join bab in _context.StsMasts.Where(p => p.recStatus == RecStatus.Active) on a.stsIdLast equals bab.stsId into p
                       from bb in p.DefaultIfEmpty()
-                      join c in _context.SeasonMasts on a.seasonId equals c.seaId  into c2
+                      join c in _context.SeasonMasts.Where(p => p.recStatus == RecStatus.Active) on a.seaId equals c.seaId  into c2
                       from cc in c2.DefaultIfEmpty()
                       where a.listTypeId == model.listTypeId
-                      //orderby a.listId descending
                       select new MyListModel
                       {
                           listId = a.listId,
@@ -50,63 +53,13 @@ namespace UpdateMyList.Entity.Repository
                           stsDescLast = bb.stsDesc,
                           updateBy = a.updateBy,
                           updateDate = a.updateDate,
-                          seasonId = cc.seaId,
-                          seasonDesc = cc.seaDesc,
+                          seaId = cc.seaId,
+                          seaDesc = cc.seaDesc,
                       }).ToList();
             return rs;
         }
-        public int UpdateByApp(MyListModel model)
-        {
-            var rs = 0;
-            if (model.listId > 0)
-            {
-                var data = Read().FirstOrDefault(p => p.listId == model.listId);
-                data.listName = model.listName;
-                data.listLink = model.listLink;
-                data.listEP = model.listEP;
-                data.listEPLast = model.listEPLast;
-                data.listComment = model.listComment;
-                data.stsId = model.stsId;
-                data.stsIdLast = model.stsIdLast;
-                data.seasonId = model.seasonId;
-                data.updateBy = model.updateBy;
-                data.updateDate = model.updateDate;
-                _context.SaveChanges();
-                rs = data.listId;
-            }
-            
-            return rs;
-        }
-        public int Insert(MyListModel model)
-        {
-            var rs = 0;
-            if (model != null)
-            {
-                var data = new MyListMast
-                {
-                    listTypeId = model.listTypeId,
-                    listCode = GetMaxCodeByType(model.listTypeId),
-                    listName = model.listName,
-                    listLink = model.listLink,
-                    listEP = model.listEP,
-                    listEPLast = model.listEPLast,
-                    listComment = model.listComment,
-                    stsId = model.stsId,
-                    stsIdLast = model.stsIdLast,
-                    seasonId = model.seasonId,
-                    recStatus = model.recStatus,
-                    createBy = model.createBy,
-                    createDate = model.createDate,
-                    updateDate = model.updateDate
-                };
-                _context.MyListMasts.Add(data);
-                _context.SaveChanges();
-                rs = data.listId;
-            }
-            
-            return rs;
-        }
-        private int GetMaxCodeByType(int typeId)
+        
+        public int GetMaxCodeByType(int typeId)
         {
             var rs = 0;
             if (typeId > 0)
@@ -116,13 +69,66 @@ namespace UpdateMyList.Entity.Repository
             }
             return rs;
         }
+        #region temp 
+        //public int UpdateByApp(MyListModel model)
+        //{
+        //    var rs = 0;
+        //    if (model.listId > 0)
+        //    {
+        //        var data = Read().FirstOrDefault(p => p.listId == model.listId);
+        //        data.listName = model.listName;
+        //        data.listLink = model.listLink;
+        //        data.listEP = model.listEP;
+        //        data.listEPLast = model.listEPLast;
+        //        data.listComment = model.listComment;
+        //        data.stsId = model.stsId;
+        //        data.stsIdLast = model.stsIdLast;
+        //        data.seaId = model.seaId;
+        //        data.updateBy = model.updateBy;
+        //        data.updateDate = model.updateDate;
+        //        _context.SaveChanges();
+        //        rs = data.listId;
+        //    }
 
-        public int DeleteMyList(int listId)
-        {
-            var myList = _context.MyListMasts.FirstOrDefault(p => p.listId == listId);
-            _context.MyListMasts.Remove(myList);
-            var rs = _context.SaveChanges();
-            return rs;
-        }
+        //    return rs;
+        //}
+        //public int Insert(MyListModel model)
+        //{
+        //    var rs = 0;
+        //    if (model != null)
+        //    {
+        //        var data = new MyListMast
+        //        {
+        //            listTypeId = model.listTypeId,
+        //            listCode = GetMaxCodeByType(model.listTypeId),
+        //            listName = model.listName,
+        //            listLink = model.listLink,
+        //            listEP = model.listEP,
+        //            listEPLast = model.listEPLast,
+        //            listComment = model.listComment,
+        //            stsId = model.stsId,
+        //            stsIdLast = model.stsIdLast,
+        //            seaId = model.seaId,
+        //            recStatus = model.recStatus,
+        //            createBy = model.createBy,
+        //            createDate = model.createDate,
+        //            updateDate = model.updateDate
+        //        };
+        //        _context.MyListMasts.Add(data);
+        //        _context.SaveChanges();
+        //        rs = data.listId;
+        //    }
+
+        //    return rs;
+        //}
+        //public int DeleteMyList(int listId)
+        //{
+        //    var myList = _context.MyListMasts.FirstOrDefault(p => p.listId == listId);
+        //    _context.MyListMasts.Remove(myList);
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        #endregion
+
     }
 }

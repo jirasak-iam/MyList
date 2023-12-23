@@ -16,6 +16,7 @@ namespace UpdateMyList.Entity.Repository
         void Create(T t);
         void Update(T t);
         void Delete(T t);
+        void DeleteRange(List<T> t);
         void Delete(int id);
     }
     public class BaseRepository<T> : IBaseRepository<T> where T : class
@@ -92,7 +93,15 @@ namespace UpdateMyList.Entity.Repository
             }
             DbSet.Remove(t);
         }
-
+        public virtual void DeleteRange(List<T> t)
+        {
+            if (t == null) throw new ArgumentNullException("t");
+            //if (_context.Entry(t).State == EntityState.Detached)
+            //{
+            //    DbSet.Attach(t);
+            //}
+            DbSet.RemoveRange(t);
+        }
         public virtual void Delete(int id)
         {
             var t = ReadById(id);

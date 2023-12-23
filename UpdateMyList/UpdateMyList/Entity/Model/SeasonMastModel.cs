@@ -8,9 +8,9 @@ namespace UpdateMyList.Entity.Model
 {
     public class SeasonMastModel : BaseModel
     {
-        public int seasonId { get; set; }
-        public string seasonCode { get; set; }
-        public string seasonDesc { get; set; }
-        public string seasonDisplay { get { return !string.IsNullOrEmpty(seasonCode) ? $"{seasonCode} - {seasonDesc}" : "--------Select--------" ; } }
+        public int seaId { get; set; }
+        public string seaCode { get; set; }
+        public string seaDesc { get; set; }
+        public string seasonDisplay { get { return !string.IsNullOrEmpty(seaCode) ? $"{seaCode} - {seaDesc}" : "--------Select--------" ; } }
     }
 }

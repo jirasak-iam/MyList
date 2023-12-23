@@ -5,12 +5,14 @@
     <EntitySet Name="ListTypeMasts" EntityType="myListModel.ListTypeMast" />
     <EntitySet Name="GenreGroups" EntityType="myListModel.GenreGroup" />
     <EntitySet Name="MapSetingParams" EntityType="myListModel.MapSetingParam" />
-    <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
     <EntitySet Name="GenreMasts" EntityType="myListModel.GenreMast" />
     <EntitySet Name="SeasonMasts" EntityType="myListModel.SeasonMast" />
     <EntitySet Name="SeasonGroups" EntityType="myListModel.SeasonGroup" />
     <EntitySet Name="ConfigMyLists" EntityType="myListModel.ConfigMyList" />
     <EntitySet Name="MyListMasts" EntityType="myListModel.MyListMast" />
+    <EntitySet Name="ConsumeTypeMasts" EntityType="myListModel.ConsumeTypeMast" />
+    <EntitySet Name="StsMasts" EntityType="myListModel.StsMast" />
+    <EntitySet Name="StsDatails" EntityType="myListModel.StsDatail" />
   </EntityContainer>
   <EntityType Name="UserProfile">
     <Key>
@@ -38,6 +40,7 @@
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="sortSeq" Type="Int32" />
+    <Property Name="consumeTypeId" Type="Int32" />
   </EntityType>
   <EntityType Name="GenreGroup">
     <Key>
@@ -65,20 +68,6 @@
     <Property Name="createBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="sortSeq" Type="Int32" />
-  </EntityType>
-  <EntityType Name="StsMast">
-    <Key>
-      <PropertyRef Name="stsId" />
-    </Key>
-    <Property Name="stsId" Type="Int32" Nullable="false" />
-    <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-    <Property Name="createDate" Type="DateTime" Precision="3" />
-    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="updateDate" Type="DateTime" Precision="3" />
-    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="sortSeq" Type="Int32" />
   </EntityType>
   <EntityType Name="GenreMast">
@@ -149,8 +138,51 @@
     <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="updateDate" Type="DateTime" Precision="3" />
     <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="seasonId" Type="Int32" />
+    <Property Name="seaId" Type="Int32" />
     <Property Name="listEPLast" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="stsIdLast" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ConsumeTypeMast">
+    <Key>
+      <PropertyRef Name="consumeTypeId" />
+    </Key>
+    <Property Name="consumeTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="consumeTypeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="consumeTypeDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="updateDate" Type="DateTime" Precision="3" />
+    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sortSeq" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StsMast">
+    <Key>
+      <PropertyRef Name="stsId" />
+    </Key>
+    <Property Name="stsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="stsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="updateDate" Type="DateTime" Precision="3" />
+    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sortSeq" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StsDatail">
+    <Key>
+      <PropertyRef Name="stsDetailId" />
+    </Key>
+    <Property Name="stsDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="stsId" Type="Int32" />
+    <Property Name="consumeTypeId" Type="Int32" />
+    <Property Name="stsDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="recStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="3" />
+    <Property Name="createBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="updateDate" Type="DateTime" Precision="3" />
+    <Property Name="updateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sortSeq" Type="Int32" />
   </EntityType>
 </Schema>

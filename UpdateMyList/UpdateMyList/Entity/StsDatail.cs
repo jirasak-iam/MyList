@@ -12,23 +12,17 @@ namespace UpdateMyList.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class MyListMast
+    public partial class StsDatail
     {
-        public int listId { get; set; }
-        public int listTypeId { get; set; }
-        public Nullable<int> listCode { get; set; }
-        public string listName { get; set; }
-        public string listLink { get; set; }
-        public string listEP { get; set; }
-        public string listComment { get; set; }
-        public int stsId { get; set; }
+        public int stsDetailId { get; set; }
+        public Nullable<int> stsId { get; set; }
+        public Nullable<int> consumeTypeId { get; set; }
+        public string stsDesc { get; set; }
         public string recStatus { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public string createBy { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public string updateBy { get; set; }
-        public Nullable<int> seaId { get; set; }
-        public string listEPLast { get; set; }
-        public Nullable<int> stsIdLast { get; set; }
+        public Nullable<int> sortSeq { get; set; }
     }
 }

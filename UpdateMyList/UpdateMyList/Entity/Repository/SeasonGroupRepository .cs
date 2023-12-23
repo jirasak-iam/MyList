@@ -12,8 +12,10 @@ namespace UpdateMyList.Entity.Repository
     {
         List<SeasonGroupModel> SelectSeasonGroupBySeaId(int seaId);
         List<SeasonGroupModel> SelectSeasonGroupBySeaIdButClose(int seaId);
-        int Insert(SeasonGroupModel data);
-        int UpdateSeaGroup(SeasonGroupModel data);
+        #region temp
+        //int Insert(SeasonGroupModel data);
+        //int UpdateSeaGroup(SeasonGroupModel data);
+        #endregion
     }
     public class SeasonGroupRepository : BaseRepository<SeasonGroup>, ISeasonGroupRepository
     {
@@ -57,32 +59,35 @@ namespace UpdateMyList.Entity.Repository
                       }).ToList();
             return rs;
         }
-        public int Insert(SeasonGroupModel data)
-        {
-            if (data != null)
-            {
-                var model = new SeasonGroup();
-                model.seaId = data.seaId;
-                model.lisTypetId = data.listTypeId;
-                model.recStatus = data.recStatus;
-                model.createBy = data.createBy;
-                model.createDate = data.createDate;
-                _context.SeasonGroups.Add(model);
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
-        public int UpdateSeaGroup(SeasonGroupModel data)
-        {
-            var model = _context.SeasonGroups.FirstOrDefault(p => p.seaGroupId == data.seagroupId);
-            if (model != null)
-            {
-                model.recStatus = data.recStatus;
-                model.updateBy = data.updateBy;
-                model.updateDate = data.updateDate;
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
+        #region temp
+        //public int Insert(SeasonGroupModel data)
+        //{
+        //    if (data != null)
+        //    {
+        //        var model = new SeasonGroup();
+        //        model.seaId = data.seaId;
+        //        model.lisTypetId = data.listTypeId;
+        //        model.recStatus = data.recStatus;
+        //        model.createBy = data.createBy;
+        //        model.createDate = data.createDate;
+        //        _context.SeasonGroups.Add(model);
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        //public int UpdateSeaGroup(SeasonGroupModel data)
+        //{
+        //    var model = _context.SeasonGroups.FirstOrDefault(p => p.seaGroupId == data.seagroupId);
+        //    if (model != null)
+        //    {
+        //        model.recStatus = data.recStatus;
+        //        model.updateBy = data.updateBy;
+        //        model.updateDate = data.updateDate;
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        #endregion
+
     }
 }

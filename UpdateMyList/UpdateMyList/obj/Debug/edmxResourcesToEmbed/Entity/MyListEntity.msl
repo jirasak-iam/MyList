@@ -18,6 +18,7 @@
     <EntitySetMapping Name="ListTypeMasts">
       <EntityTypeMapping TypeName="myListModel.ListTypeMast">
         <MappingFragment StoreEntitySet="ListTypeMast">
+          <ScalarProperty Name="consumeTypeId" ColumnName="consumeTypeId" />
           <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
           <ScalarProperty Name="updateBy" ColumnName="updateBy" />
           <ScalarProperty Name="updateDate" ColumnName="updateDate" />
@@ -57,21 +58,6 @@
           <ScalarProperty Name="mapDesc" ColumnName="mapDesc" />
           <ScalarProperty Name="mapCode" ColumnName="mapCode" />
           <ScalarProperty Name="mapId" ColumnName="mapId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StsMasts">
-      <EntityTypeMapping TypeName="myListModel.StsMast">
-        <MappingFragment StoreEntitySet="StsMast">
-          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
-          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
-          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-          <ScalarProperty Name="createBy" ColumnName="createBy" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
-          <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
-          <ScalarProperty Name="stsCode" ColumnName="stsCode" />
-          <ScalarProperty Name="stsId" ColumnName="stsId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -135,7 +121,7 @@
         <MappingFragment StoreEntitySet="MyListMast">
           <ScalarProperty Name="stsIdLast" ColumnName="stsIdLast" />
           <ScalarProperty Name="listEPLast" ColumnName="listEPLast" />
-          <ScalarProperty Name="seasonId" ColumnName="seasonId" />
+          <ScalarProperty Name="seaId" ColumnName="seaId" />
           <ScalarProperty Name="updateBy" ColumnName="updateBy" />
           <ScalarProperty Name="updateDate" ColumnName="updateDate" />
           <ScalarProperty Name="createBy" ColumnName="createBy" />
@@ -149,6 +135,52 @@
           <ScalarProperty Name="listCode" ColumnName="listCode" />
           <ScalarProperty Name="listTypeId" ColumnName="listTypeId" />
           <ScalarProperty Name="listId" ColumnName="listId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConsumeTypeMasts">
+      <EntityTypeMapping TypeName="myListModel.ConsumeTypeMast">
+        <MappingFragment StoreEntitySet="ConsumeTypeMast">
+          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="consumeTypeDesc" ColumnName="consumeTypeDesc" />
+          <ScalarProperty Name="consumeTypeCode" ColumnName="consumeTypeCode" />
+          <ScalarProperty Name="consumeTypeId" ColumnName="consumeTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StsMasts">
+      <EntityTypeMapping TypeName="myListModel.StsMast">
+        <MappingFragment StoreEntitySet="StsMast">
+          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
+          <ScalarProperty Name="stsCode" ColumnName="stsCode" />
+          <ScalarProperty Name="stsId" ColumnName="stsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StsDatails">
+      <EntityTypeMapping TypeName="myListModel.StsDatail">
+        <MappingFragment StoreEntitySet="StsDatail">
+          <ScalarProperty Name="sortSeq" ColumnName="sortSeq" />
+          <ScalarProperty Name="updateBy" ColumnName="updateBy" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createBy" ColumnName="createBy" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="recStatus" ColumnName="recStatus" />
+          <ScalarProperty Name="stsDesc" ColumnName="stsDesc" />
+          <ScalarProperty Name="consumeTypeId" ColumnName="consumeTypeId" />
+          <ScalarProperty Name="stsId" ColumnName="stsId" />
+          <ScalarProperty Name="stsDetailId" ColumnName="stsDetailId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

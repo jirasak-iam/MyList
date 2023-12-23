@@ -14,9 +14,11 @@ namespace UpdateMyList.Entity.Repository
         List<GenreGroupModel> SelectGenreGroupByListIdButClose(int listId);
         List<GenreGroupModel> SelectGenreGroupBygenIdMany(List<int> genId);
         List<GenreGroupModel> SelectGenreGroupByListIdMany(List<int> listId);
-        int Insert(GenreGroupModel data);
-        int UpdateGenGroup(GenreGroupModel data);
-        int DeleteGenGroup(int listId);
+        #region temp 
+        //int Insert(GenreGroupModel data);
+        //int UpdateGenGroup(GenreGroupModel data);
+        //int DeleteGenGroup(int listId);
+        #endregion
     }
     public class GenreGroupRepository : BaseRepository<GenreGroup>, IGenreGroupRepository
     {
@@ -107,39 +109,42 @@ namespace UpdateMyList.Entity.Repository
                       }).ToList();
             return rs;
         }
-        public int UpdateGenGroup(GenreGroupModel data)
-        {
-            var model = _context.GenreGroups.FirstOrDefault(p => p.gengroupId == data.gengroupId);
-            if (model != null)
-            {
-                model.recStatus = data.recStatus;
-                model.updateBy = data.updateBy;
-                model.updateDate = data.updateDate;
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
-        public int Insert(GenreGroupModel data)
-        {
-            if (data != null)
-            {
-                var model = new GenreGroup();
-                model.genId = data.genId;
-                model.listId = data.listId;
-                model.recStatus = data.recStatus;
-                model.createBy = data.createBy;
-                model.createDate = data.createDate;
-                _context.GenreGroups.Add(model);
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
-        public int DeleteGenGroup(int listId)
-        {
-            var genGroup = _context.GenreGroups.Where(p => p.listId == listId);
-            _context.GenreGroups.RemoveRange(genGroup);
-            var rs = _context.SaveChanges();
-            return rs;
-        }
+        #region temp
+        //public int UpdateGenGroup(GenreGroupModel data)
+        //{
+        //    var model = _context.GenreGroups.FirstOrDefault(p => p.gengroupId == data.gengroupId);
+        //    if (model != null)
+        //    {
+        //        model.recStatus = data.recStatus;
+        //        model.updateBy = data.updateBy;
+        //        model.updateDate = data.updateDate;
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        //public int Insert(GenreGroupModel data)
+        //{
+        //    if (data != null)
+        //    {
+        //        var model = new GenreGroup();
+        //        model.genId = data.genId;
+        //        model.listId = data.listId;
+        //        model.recStatus = data.recStatus;
+        //        model.createBy = data.createBy;
+        //        model.createDate = data.createDate;
+        //        _context.GenreGroups.Add(model);
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        //public int DeleteGenGroup(int listId)
+        //{
+        //    var genGroup = _context.GenreGroups.Where(p => p.listId == listId);
+        //    _context.GenreGroups.RemoveRange(genGroup);
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        #endregion
+
     }
 }

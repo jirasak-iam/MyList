@@ -63,6 +63,11 @@ namespace UpdateMyList.Common
         /// </summary>
         [Description("MAP - Mapping Setting Parameters")]
         public const string MapSetingParameter = "MAP";
+        /// <summary>
+        /// CONS - Consume Type
+        /// </summary>
+        [Description("CONS - Consume Type")]
+        public const string ConsumeType = "CONS";
     }
     public class SeasonValue
     {

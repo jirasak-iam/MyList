@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,7 @@ namespace UpdateMyList.Forms
 {
     public partial class SettingForm : Form
     {
+        private IMapper _mapper;
         private readonly IUnitOfWork _uow;
         private string IU_Flag = "I";
         private string _mapCode = "";
@@ -24,6 +27,8 @@ namespace UpdateMyList.Forms
         {
             InitializeComponent();
             _uow = uow;
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
+            _mapper = config.CreateMapper();
         }
         private void Clear(bool loadGrid)
         {
@@ -54,10 +59,13 @@ namespace UpdateMyList.Forms
             this.recstatuscbb.DisplayMember = "recDesc";
             this.recstatuscbb.ValueMember = "recStatus";
 
-            this.listTypeclb.DataSource = _uow.ListTypeMastRepository.SelectAllType();
+            this.listTypeclb.DataSource = _uow.ListTypeMastRepository.Select();
             this.listTypeclb.DisplayMember = "listTypeDesc";
             this.listTypeclb.ValueMember = "listTypeId";
 
+            this.consumecbb.DataSource = _uow.ConsumeTypeRepository.Select();
+            this.consumecbb.DisplayMember = "consumeTypDisplay";
+            this.consumecbb.ValueMember = "consumeTypeId";
         }
 
         private void SearchOption()
@@ -70,15 +78,15 @@ namespace UpdateMyList.Forms
                 if (MappingParam.Status.Equals(data.mapCode))
                 {
                     var rawData = _uow.StsMastRepository.SelectAllType();
-                    preData = rawData.Select( a =>
-                        new DataGridViewSettingModel 
-                        { 
-                            code = a.stsCode,
-                            desc = a.stsDesc,
-                            recStatus = Utility.SetRecDesc(a.recStatus),
-                            sortSeq = a.sortSeq,
-                            updateDate = a.updateDateStr
-                        }).ToList();
+                    preData = rawData.Select(a =>
+                       new DataGridViewSettingModel
+                       {
+                           code = a.stsCode,
+                           desc = a.stsDesc,
+                           recStatus = Utility.SetRecDesc(a.recStatus),
+                           sortSeq = a.sortSeq,
+                           updateDate = a.updateDateStr
+                       }).ToList();
                 }
                 else if (MappingParam.ListType.Equals(data.mapCode))
                 {
@@ -112,8 +120,8 @@ namespace UpdateMyList.Forms
                     preData = rawData.Select(a =>
                        new DataGridViewSettingModel
                        {
-                           code = a.seasonCode,
-                           desc = a.seasonDesc,
+                           code = a.seaCode,
+                           desc = a.seaDesc,
                            recStatus = Utility.SetRecDesc(a.recStatus),
                            sortSeq = a.sortSeq,
                            updateDate = a.updateDateStr
@@ -127,6 +135,19 @@ namespace UpdateMyList.Forms
                        {
                            code = a.mapCode,
                            desc = a.mapDesc,
+                           recStatus = Utility.SetRecDesc(a.recStatus),
+                           sortSeq = a.sortSeq,
+                           updateDate = a.updateDateStr
+                       }).ToList();
+                }
+                else if (MappingParam.ConsumeType.Equals(data.mapCode))
+                {
+                    var rawData = _uow.ConsumeTypeRepository.SelectAll();
+                    preData = rawData.Select(a =>
+                       new DataGridViewSettingModel
+                       {
+                           code = a.consumeTypeCode,
+                           desc = a.consumeTypeDesc,
                            recStatus = Utility.SetRecDesc(a.recStatus),
                            sortSeq = a.sortSeq,
                            updateDate = a.updateDateStr
@@ -189,6 +210,8 @@ namespace UpdateMyList.Forms
             this._mapCode = selectItem.mapCode;
             if (MappingParam.MapSetingParameter.Equals(selectItem.mapCode))
             {
+                this.label9.Visible = false;
+                this.consumecbb.Visible = false;
                 label6.Visible = true;
                 tablenametxt.Visible = true;
                 this.seasonlistlb.Visible = false;
@@ -197,17 +220,31 @@ namespace UpdateMyList.Forms
             }
             else if (MappingParam.Season.Equals(selectItem.mapCode))
             {
+                this.label9.Visible = false;
+                this.consumecbb.Visible = false;
                 label6.Visible = false;
                 tablenametxt.Visible = false;
                 this.seasonlistlb.Visible = true;
                 this.listTypeclb.Visible = true;
                 this.seasonlistlb.DataSource = Utility.GetSeasonalList();
                 this.seasonlistlb.DisplayMember = "seasonDisplay";
-                this.seasonlistlb.ValueMember = "seasonCode";
+                this.seasonlistlb.ValueMember = "seaCode";
                 this.gencodebtn.Visible = true;
+            }
+            else if(MappingParam.ListType.Equals(selectItem.mapCode))
+            {
+                this.label9.Visible = true;
+                this.consumecbb.Visible = true;
+                label6.Visible = false;
+                tablenametxt.Visible = false;
+                this.seasonlistlb.Visible = false;
+                this.gencodebtn.Visible = false;
+                this.listTypeclb.Visible = false;
             }
             else
             {
+                this.label9.Visible = false;
+                this.consumecbb.Visible = false;
                 label6.Visible = false;
                 tablenametxt.Visible = false;
                 this.seasonlistlb.Visible = false;
@@ -269,14 +306,14 @@ namespace UpdateMyList.Forms
                 }
                 else if (MappingParam.Season.Equals(this._mapCode))
                 {
-                    var data = _uow.SeasonMastRepository.SelectAllType().FirstOrDefault(p => code.Equals(p.seasonCode));
-                    this.codetxt.Text = data.seasonCode;
-                    this.desctxt.Text = data.seasonDesc;
-                    this.id = data.seasonId;
+                    var data = _uow.SeasonMastRepository.SelectAllType().FirstOrDefault(p => code.Equals(p.seaCode));
+                    this.codetxt.Text = data.seaCode;
+                    this.desctxt.Text = data.seaDesc;
+                    this.id = data.seaId;
                     this.recstatuscbb.SelectedValue = data.recStatus;
                     this.sortseqnb.Value = data.sortSeq ?? 0;
                     ClearSelection();
-                    var seasonGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(data.seasonId);
+                    var seasonGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(data.seaId);
                     if (seasonGroup.Count > 0)
                     {
                         for (int i = 0; i < this.listTypeclb.Items.Count; i++)
@@ -300,6 +337,15 @@ namespace UpdateMyList.Forms
                     this.sortseqnb.Value = data.sortSeq ?? 0;
                     this.tablenametxt.Text = data.mapTbName ?? string.Empty;
                 }
+                else if (MappingParam.ConsumeType.Equals(this._mapCode))
+                {
+                    var data = _uow.ConsumeTypeRepository.SelectAll().FirstOrDefault(p => code.Equals(p.consumeTypeCode));
+                    this.codetxt.Text = data.consumeTypeCode;
+                    this.desctxt.Text = data.consumeTypeDesc;
+                    this.id = data.consumeTypeId;
+                    this.recstatuscbb.SelectedValue = data.recStatus;
+                    this.sortseqnb.Value = data.sortSeq ?? 0;
+                }
             }
         }
 
@@ -307,7 +353,7 @@ namespace UpdateMyList.Forms
         {
             this.mapcbb.SelectedIndex = 0;
             Clear(true);
-            
+
         }
         private void ClearSelection()
         {
@@ -348,21 +394,19 @@ namespace UpdateMyList.Forms
             {
                 if (MappingParam.Status.Equals(this._mapCode))
                 {
-                    var data = new StsMastModel
-                    {
-                        stsId = this.id,
-                        stsCode = this.codetxt.Text,
-                        stsDesc = this.desctxt.Text,
-                        recStatus = this.recstatuscbb.SelectedValue.ToString(),
-                        sortSeq = Convert.ToInt32(this.sortseqnb.Value),
-                        updateBy = Constants.UserApp,
-                        updateDate = DateTime.Now,
-                        createDate = DateTime.Now,
-                        createBy = Constants.UserApp,
-                    };
                     if (("U").Equals(this.IU_Flag))
                     {
-                        var rs = _uow.StsMastRepository.UpdateById(data);
+                        var data = _uow.StsMastRepository.ReadById(this.id);
+                        if (data != null)
+                        {
+                            data.stsCode = this.codetxt.Text;
+                            data.stsDesc = this.desctxt.Text;
+                            data.recStatus = this.recstatuscbb.SelectedValue.ToString();
+                            data.sortSeq = Convert.ToInt32(this.sortseqnb.Value);
+                            data.updateBy = Constants.UserApp;
+                            data.updateDate = DateTime.Now;
+                        }
+                        var rs = _uow.Save();
                         if (rs > 0)
                         {
                             Clear(true);
@@ -370,10 +414,23 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.StsMastRepository.Read().FirstOrDefault(p => p.stsCode.ToUpper().Equals(data.stsCode.ToUpper()));
+                        var chqdup = _uow.StsMastRepository.Read().FirstOrDefault(p => p.stsCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
-                            var rs = _uow.StsMastRepository.Insert(data);
+                            var data = new StsMast
+                            {
+                                stsId = this.id,
+                                stsCode = this.codetxt.Text,
+                                stsDesc = this.desctxt.Text,
+                                recStatus = this.recstatuscbb.SelectedValue.ToString(),
+                                sortSeq = Convert.ToInt32(this.sortseqnb.Value),
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now,
+                                createDate = DateTime.Now,
+                                createBy = Constants.UserApp,
+                            };
+                            _uow.StsMastRepository.Create(data);
+                            var rs = _uow.Save();
                             if (rs > 0)
                             {
                                 Clear(true);
@@ -388,21 +445,17 @@ namespace UpdateMyList.Forms
                 }
                 else if (MappingParam.ListType.Equals(this._mapCode))
                 {
-                    var data = new ListTypeModel
-                    {
-                        listTypeId = this.id,
-                        listTypeCode = this.codetxt.Text,
-                        listTypeDesc = this.desctxt.Text,
-                        recStatus = this.recstatuscbb.SelectedValue.ToString(),
-                        sortSeq = Convert.ToInt32(this.sortseqnb.Value),
-                        updateBy = Constants.UserApp,
-                        updateDate = DateTime.Now,
-                        createDate = DateTime.Now,
-                        createBy = Constants.UserApp,
-                    };
+
                     if (("U").Equals(this.IU_Flag))
                     {
-                        var rs = _uow.ListTypeMastRepository.UpdateById(data);
+                        var data = _uow.ListTypeMastRepository.ReadById(this.id);
+                        data.listTypeCode = this.codetxt.Text;
+                        data.listTypeDesc = this.desctxt.Text;
+                        data.recStatus = this.recstatuscbb.SelectedValue.ToString();
+                        data.sortSeq = Convert.ToInt32(this.sortseqnb.Value);
+                        data.updateBy = Constants.UserApp;
+                        data.updateDate = DateTime.Now;
+                        var rs = _uow.Save();
                         if (rs > 0)
                         {
                             Clear(true);
@@ -410,10 +463,23 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.ListTypeMastRepository.Read().FirstOrDefault(p => p.listTypeCode.ToUpper().Equals(data.listTypeCode.ToUpper()));
+                        var chqdup = _uow.ListTypeMastRepository.Read().FirstOrDefault(p => p.listTypeCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
-                            var rs = _uow.ListTypeMastRepository.Insert(data);
+                            var data = new ListTypeMast
+                            {
+                                listTypeId = this.id,
+                                listTypeCode = this.codetxt.Text,
+                                listTypeDesc = this.desctxt.Text,
+                                recStatus = this.recstatuscbb.SelectedValue.ToString(),
+                                sortSeq = Convert.ToInt32(this.sortseqnb.Value),
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now,
+                                createDate = DateTime.Now,
+                                createBy = Constants.UserApp,
+                            };
+                            _uow.ListTypeMastRepository.Create(data);
+                            var rs = _uow.Save();
                             if (rs > 0)
                             {
                                 Clear(true);
@@ -427,21 +493,16 @@ namespace UpdateMyList.Forms
                 }
                 else if (MappingParam.Genre.Equals(this._mapCode))
                 {
-                    var data = new GenreModel
-                    {
-                        genreId = this.id,
-                        genreCode = this.codetxt.Text,
-                        genreDesc = this.desctxt.Text,
-                        recStatus = this.recstatuscbb.SelectedValue.ToString(),
-                        sortSeq = Convert.ToInt32(this.sortseqnb.Value),
-                        updateBy = Constants.UserApp,
-                        updateDate = DateTime.Now,
-                        createDate = DateTime.Now,
-                        createBy = Constants.UserApp,
-                    };
                     if (("U").Equals(this.IU_Flag))
                     {
-                        var rs = _uow.GenreMastRepository.UpdateById(data);
+                        var data = _uow.GenreMastRepository.ReadById(this.id);
+                        data.genCode = this.codetxt.Text;
+                        data.genDesc = this.desctxt.Text;
+                        data.recStatus = this.recstatuscbb.SelectedValue.ToString();
+                        data.sortSeq = Convert.ToInt32(this.sortseqnb.Value);
+                        data.updateBy = Constants.UserApp;
+                        data.updateDate = DateTime.Now;
+                        var rs = _uow.Save();
                         if (rs > 0)
                         {
                             Clear(true);
@@ -449,10 +510,23 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.GenreMastRepository.Read().FirstOrDefault(p => p.genCode.ToUpper().Equals(data.genreCode.ToUpper()));
+                        var chqdup = _uow.GenreMastRepository.Read().FirstOrDefault(p => p.genCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
-                            var rs = _uow.GenreMastRepository.Insert(data);
+                            var data = new GenreMast
+                            {
+                                genId = this.id,
+                                genCode = this.codetxt.Text,
+                                genDesc = this.desctxt.Text,
+                                recStatus = this.recstatuscbb.SelectedValue.ToString(),
+                                sortSeq = Convert.ToInt32(this.sortseqnb.Value),
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now,
+                                createDate = DateTime.Now,
+                                createBy = Constants.UserApp,
+                            };
+                            _uow.GenreMastRepository.Create(data);
+                            var rs = _uow.Save();
                             if (rs > 0)
                             {
                                 Clear(true);
@@ -461,42 +535,48 @@ namespace UpdateMyList.Forms
                         else
                         {
                             MessageBox.Show($"{chqdup.genCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        } 
+                        }
                     }
                 }
                 else if (MappingParam.Season.Equals(this._mapCode))
                 {
-                    var data = new SeasonMastModel
-                    {
-                        seasonId = this.id,
-                        seasonCode = this.codetxt.Text,
-                        seasonDesc = this.desctxt.Text,
-                        recStatus = this.recstatuscbb.SelectedValue.ToString(),
-                        sortSeq = Convert.ToInt32(this.sortseqnb.Value),
-                        updateBy = Constants.UserApp,
-                        updateDate = DateTime.Now,
-                        createDate = DateTime.Now,
-                        createBy = Constants.UserApp,
-                    };
                     var rs = 0;
                     if (("U").Equals(this.IU_Flag))
                     {
-                        rs = _uow.SeasonMastRepository.UpdateById(data);
-                        if (rs > 0)
-                        {
-                            Clear(true);
-                        }
+                        var data = _uow.SeasonMastRepository.ReadById(this.id);
+                        data.seaCode = this.codetxt.Text;
+                        data.seaDesc = this.desctxt.Text;
+                        data.recStatus = this.recstatuscbb.SelectedValue.ToString();
+                        data.sortSeq = Convert.ToInt32(this.sortseqnb.Value);
+                        data.updateBy = Constants.UserApp;
+                        data.updateDate = DateTime.Now;
+                        rs = data.seaId;
+                        _uow.Save();
+
                     }
                     else
                     {
-                        var chqdup = _uow.SeasonMastRepository.Read().FirstOrDefault(p => p.seaCode.ToUpper().Equals(data.seasonCode.ToUpper()));
+                        var chqdup = _uow.SeasonMastRepository.Read().FirstOrDefault(p => p.seaCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
-                            rs = _uow.SeasonMastRepository.Insert(data);
-                            if (rs > 0)
+                            var data = new SeasonMast
                             {
-                                Clear(true);
-                            }
+                                seaId = this.id,
+                                seaCode = this.codetxt.Text,
+                                seaDesc = this.desctxt.Text,
+                                recStatus = this.recstatuscbb.SelectedValue.ToString(),
+                                sortSeq = Convert.ToInt32(this.sortseqnb.Value),
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now,
+                                createDate = DateTime.Now,
+                                createBy = Constants.UserApp,
+                            };
+                            var model = _uow.SeasonMastRepository.ReadByCreate(data);
+                            rs = model.seaId;
+                            //if (rs > 0)
+                            //{
+                            //    Clear(true);
+                            //}
                         }
                         else
                         {
@@ -504,81 +584,75 @@ namespace UpdateMyList.Forms
                         }
                     }
                     var listTypeList = this.listTypeclb.Items;
-                    for (int i = 0; i < this.listTypeclb.Items.Count; i++)
+                    for (int i = 0; i <= this.listTypeclb.Items.Count -1; i++)
                     {
                         if (this.listTypeclb.GetItemCheckState(i) == CheckState.Checked)
                         {
                             var listType = (ListTypeModel)this.listTypeclb.Items[i];
-                            var seaGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(this.id).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                            var seaGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(rs).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
                             if (seaGroup == null)
                             {
-                                var seaGroupClose = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaIdButClose(this.id).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                                var seaGroupClose = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaIdButClose(rs).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
                                 if (seaGroupClose is null)
                                 {
-                                    var seasonGroup = new SeasonGroupModel
+                                    var seasonGroup = new SeasonGroup
                                     {
-                                        listTypeId = listType.listTypeId,
+                                        lisTypetId = listType.listTypeId,
                                         seaId = rs,
                                         recStatus = RecStatus.Active,
                                         createBy = Constants.UserApp,
                                         createDate = DateTime.Now
                                     };
-                                    _uow.SeasonGroupRepository.Insert(seasonGroup);
+                                    _uow.SeasonGroupRepository.Create(seasonGroup);
+                                    _uow.Save();
                                 }
                                 else
                                 {
-                                    var seasonGroup = new SeasonGroupModel
-                                    {
-                                        seagroupId = seaGroupClose.seagroupId,
-                                        seaId = seaGroupClose.seaId,
-                                        listTypeId = seaGroupClose.listTypeId,
-                                        recStatus = RecStatus.Active,
-                                        updateBy = Constants.UserApp,
-                                        updateDate = DateTime.Now
-                                    };
-                                    _uow.SeasonGroupRepository.UpdateSeaGroup(seasonGroup);
+                                    var seasonGroup = _uow.SeasonGroupRepository.ReadById(seaGroupClose.seagroupId);
+                                    seasonGroup.seaId = seaGroupClose.seaId;
+                                    seasonGroup.lisTypetId = seaGroupClose.listTypeId;
+                                    seasonGroup.recStatus = RecStatus.Active;
+                                    seasonGroup.updateBy = Constants.UserApp;
+                                    seasonGroup.updateDate = DateTime.Now;
+                                    _uow.Save();
                                 }
                             }
                         }
                         else if (this.listTypeclb.GetItemCheckState(i) == CheckState.Unchecked)
                         {
                             var listType = (ListTypeModel)this.listTypeclb.Items[i];
-                            var seaGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(this.id).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
+                            var seaGroup = _uow.SeasonGroupRepository.SelectSeasonGroupBySeaId(rs).FirstOrDefault(p => p.listTypeId == listType.listTypeId);
                             if (seaGroup != null)
                             {
-                                var seasonGroup = new SeasonGroupModel
-                                {
-                                    seagroupId = seaGroup.seagroupId,
-                                    listTypeId = seaGroup.listTypeId,
-                                    seaId = rs,
-                                    recStatus = RecStatus.Close,
-                                    updateBy = Constants.UserApp,
-                                    updateDate = DateTime.Now
-                                };
-                                _uow.SeasonGroupRepository.UpdateSeaGroup(seasonGroup);
+                                var seasonGroup = _uow.SeasonGroupRepository.ReadById(seaGroup.seagroupId);
+                                seasonGroup.lisTypetId = seaGroup.listTypeId;
+                                seasonGroup.seaId = rs;
+                                seasonGroup.recStatus = RecStatus.Close;
+                                seasonGroup.updateBy = Constants.UserApp;
+                                seasonGroup.updateDate = DateTime.Now;
+                                _uow.Save();
                             }
                         }
 
                     }
+                    if (rs > 0)
+                    {
+                        Clear(true);
+                    }
                 }
                 else if (MappingParam.MapSetingParameter.Equals(this._mapCode))
                 {
-                    var data = new MapSettingParamModel
-                    {
-                        mapId = this.id,
-                        mapCode = this.codetxt.Text,
-                        mapDesc = this.desctxt.Text,
-                        recStatus = this.recstatuscbb.SelectedValue.ToString(),
-                        mapTbName = this.tablenametxt.Text,
-                        sortSeq = Convert.ToInt32(this.sortseqnb.Value),
-                        updateBy = Constants.UserApp,
-                        updateDate = DateTime.Now,
-                        createDate = DateTime.Now,
-                        createBy = Constants.UserApp,
-                    };
                     if (("U").Equals(this.IU_Flag))
                     {
-                        var rs = _uow.MapSetingParamRepository.UpdateById(data);
+                        var data = _uow.MapSetingParamRepository.ReadById(this.id);
+                        data.mapCode = this.codetxt.Text;
+                        data.mapDesc = this.desctxt.Text;
+                        data.recStatus = this.recstatuscbb.SelectedValue.ToString();
+                        data.mapTbName = this.tablenametxt.Text;
+                        data.sortSeq = Convert.ToInt32(this.sortseqnb.Value);
+                        data.updateBy = Constants.UserApp;
+                        data.updateDate = DateTime.Now;
+                        var rs = _uow.Save();
                         if (rs > 0)
                         {
                             Clear(true);
@@ -586,10 +660,72 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.MapSetingParamRepository.Read().FirstOrDefault(p => p.mapCode.ToUpper().Equals(data.mapCode.ToUpper()));
+                        var chqdup = _uow.MapSetingParamRepository.Read().FirstOrDefault(p => p.mapCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
-                            var rs = _uow.MapSetingParamRepository.Insert(data);
+                            var data = new MapSetingParam
+                            {
+                                mapId = this.id,
+                                mapCode = this.codetxt.Text,
+                                mapDesc = this.desctxt.Text,
+                                recStatus = this.recstatuscbb.SelectedValue.ToString(),
+                                mapTbName = this.tablenametxt.Text,
+                                sortSeq = Convert.ToInt32(this.sortseqnb.Value),
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now,
+                                createDate = DateTime.Now,
+                                createBy = Constants.UserApp,
+                            };
+                            _uow.MapSetingParamRepository.Create(data);
+                            var rs = _uow.Save();
+                            if (rs > 0)
+                            {
+                                Clear(true);
+                                this.mapcbb.DataSource = _uow.MapSetingParamRepository.SelectAll();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{chqdup.mapCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                else if (MappingParam.ConsumeType.Equals(this._mapCode))
+                {
+                    if (("U").Equals(this.IU_Flag))
+                    {
+                        var data = _uow.ConsumeTypeRepository.ReadById(this.id);
+                        data.consumeTypeCode = this.codetxt.Text;
+                        data.consumeTypeDesc = this.desctxt.Text;
+                        data.recStatus = this.recstatuscbb.SelectedValue.ToString();
+                        data.sortSeq = Convert.ToInt32(this.sortseqnb.Value);
+                        data.updateBy = Constants.UserApp;
+                        data.updateDate = DateTime.Now;
+                        var rs = _uow.Save();
+                        if (rs > 0)
+                        {
+                            Clear(true);
+                        }
+                    }
+                    else
+                    {
+                        var chqdup = _uow.ConsumeTypeRepository.Read().FirstOrDefault(p => p.consumeTypeCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        if (chqdup is null)
+                        {
+                            var data = new ConsumeTypeMast
+                            {
+                                consumeTypeId = this.id,
+                                consumeTypeCode = this.codetxt.Text,
+                                consumeTypeDesc = this.desctxt.Text,
+                                recStatus = this.recstatuscbb.SelectedValue.ToString(),
+                                sortSeq = Convert.ToInt32(this.sortseqnb.Value),
+                                updateBy = Constants.UserApp,
+                                updateDate = DateTime.Now,
+                                createDate = DateTime.Now,
+                                createBy = Constants.UserApp,
+                            };
+                            _uow.ConsumeTypeRepository.Create(data);
+                            var rs = _uow.Save();
                             if (rs > 0)
                             {
                                 Clear(true);
@@ -597,7 +733,7 @@ namespace UpdateMyList.Forms
                         }
                         else
                         {
-                            MessageBox.Show($"{chqdup.mapCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show($"{chqdup.consumeTypeCode} มีอยู่แล้ว", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
@@ -681,7 +817,7 @@ namespace UpdateMyList.Forms
             if (MappingParam.Status.Equals(this._mapCode))
             {
                 var maxseq = _uow.StsMastRepository.Read().Max(p => p.sortSeq) ?? 0;
-                this.sortseqnb.Value = maxseq +1;
+                this.sortseqnb.Value = maxseq + 1;
 
             }
             else if (MappingParam.ListType.Equals(this._mapCode))
@@ -704,6 +840,11 @@ namespace UpdateMyList.Forms
                 var maxseq = _uow.MapSetingParamRepository.Read().Max(p => p.sortSeq) ?? 0;
                 this.sortseqnb.Value = maxseq + 1;
             }
+            else if (MappingParam.ConsumeType.Equals(this._mapCode))
+            {
+                var maxseq = _uow.ConsumeTypeRepository.Read().Max(p => p.sortSeq) ?? 0;
+                this.sortseqnb.Value = maxseq + 1;
+            }
         }
 
         private void gencodebtn_Click(object sender, EventArgs e)
@@ -713,7 +854,7 @@ namespace UpdateMyList.Forms
             {
                 var year = textArray[1];
                 var season = textArray[0].ToUpper();
-                this.codetxt.Text = $"{year}{Utility.GetSeasonalList().FirstOrDefault(p => p.seasonDesc.ToUpper().Equals(season)).seasonCode}";
+                this.codetxt.Text = $"{year}{Utility.GetSeasonalList().FirstOrDefault(p => p.seaDesc.ToUpper().Equals(season)).seaCode}";
             }
         }
 
@@ -725,6 +866,19 @@ namespace UpdateMyList.Forms
         private void txtdesc_TextChanged(object sender, EventArgs e)
         {
             Search();
+        }
+
+        private void listTypeclb_Click(object sender, EventArgs e)
+        {
+            var state = this.listTypeclb.GetItemCheckState(this.listTypeclb.SelectedIndex);
+            if (state == CheckState.Checked)
+            {
+                this.listTypeclb.SetItemChecked(this.listTypeclb.SelectedIndex, false);
+            }
+            else if (state == CheckState.Unchecked)
+            {
+                this.listTypeclb.SetItemChecked(this.listTypeclb.SelectedIndex, true);
+            }
         }
     }
 }

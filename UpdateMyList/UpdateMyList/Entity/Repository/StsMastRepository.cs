@@ -10,8 +10,11 @@ namespace UpdateMyList.Entity.Repository
         List<StsMastModel> Select();
         List<StsMastModel> SelectAll();
         List<StsMastModel> SelectAllType();
-        int UpdateById(StsMastModel data);
-        int Insert(StsMastModel model);
+        #region temp
+        //int UpdateById(StsMastModel data);
+        //int Insert(StsMastModel model);
+        #endregion
+
     }
     public class StsMastRepository : BaseRepository<StsMast>, IStsMastRepository
     {
@@ -78,36 +81,39 @@ namespace UpdateMyList.Entity.Repository
 
             return rs;
         }
-        public int UpdateById(StsMastModel data)
-        {
-            var stsmast = _context.StsMasts.FirstOrDefault(p => p.stsId == data.stsId);
-            if (stsmast != null)
-            {
-                stsmast.stsCode = data.stsCode;
-                stsmast.stsDesc = data.stsDesc;
-                stsmast.recStatus = data.recStatus;
-                stsmast.sortSeq = data.sortSeq;
-                stsmast.updateBy = data.updateBy;
-                stsmast.updateDate = data.updateDate;
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
-        public int Insert(StsMastModel model)
-        {
-            if (model != null)
-            {
-                var stsmast = new StsMast();
-                stsmast.stsCode = model.stsCode;
-                stsmast.stsDesc = model.stsDesc;
-                stsmast.recStatus = model.recStatus;
-                stsmast.sortSeq = model.sortSeq;
-                stsmast.createBy = model.createBy;
-                stsmast.createDate = model.createDate;
-                _context.StsMasts.Add(stsmast);
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
+        #region temp
+        //public int UpdateById(StsMastModel data)
+        //{
+        //    var stsmast = _context.StsMasts.FirstOrDefault(p => p.stsId == data.stsId);
+        //    if (stsmast != null)
+        //    {
+        //        stsmast.stsCode = data.stsCode;
+        //        stsmast.stsDesc = data.stsDesc;
+        //        stsmast.recStatus = data.recStatus;
+        //        stsmast.sortSeq = data.sortSeq;
+        //        stsmast.updateBy = data.updateBy;
+        //        stsmast.updateDate = data.updateDate;
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        //public int Insert(StsMastModel model)
+        //{
+        //    if (model != null)
+        //    {
+        //        var stsmast = new StsMast();
+        //        stsmast.stsCode = model.stsCode;
+        //        stsmast.stsDesc = model.stsDesc;
+        //        stsmast.recStatus = model.recStatus;
+        //        stsmast.sortSeq = model.sortSeq;
+        //        stsmast.createBy = model.createBy;
+        //        stsmast.createDate = model.createDate;
+        //        _context.StsMasts.Add(stsmast);
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        #endregion
+
     }
 }

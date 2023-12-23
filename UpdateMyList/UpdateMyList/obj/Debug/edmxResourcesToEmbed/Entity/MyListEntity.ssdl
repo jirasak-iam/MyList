@@ -10,6 +10,20 @@
     <Property Name="sortmode" Type="nvarchar" MaxLength="100" />
     <Property Name="IsSimilar" Type="bit" />
   </EntityType>
+  <EntityType Name="ConsumeTypeMast">
+    <Key>
+      <PropertyRef Name="consumeTypeId" />
+    </Key>
+    <Property Name="consumeTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="consumeTypeCode" Type="nvarchar" MaxLength="3" />
+    <Property Name="consumeTypeDesc" Type="nvarchar" MaxLength="500" />
+    <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+    <Property Name="createDate" Type="datetime" />
+    <Property Name="createBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="updateDate" Type="datetime" />
+    <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="sortSeq" Type="int" />
+  </EntityType>
   <EntityType Name="GenreGroup">
     <Key>
       <PropertyRef Name="gengroupId" />
@@ -50,6 +64,7 @@
     <Property Name="updateDate" Type="datetime" />
     <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
     <Property Name="sortSeq" Type="int" />
+    <Property Name="consumeTypeId" Type="int" />
   </EntityType>
   <EntityType Name="MapSetingParam">
     <Key>
@@ -83,7 +98,7 @@
     <Property Name="createBy" Type="nvarchar" MaxLength="50" />
     <Property Name="updateDate" Type="datetime" />
     <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
-    <Property Name="seasonId" Type="int" />
+    <Property Name="seaId" Type="int" />
     <Property Name="listEPLast" Type="nvarchar(max)" />
     <Property Name="stsIdLast" Type="int" />
   </EntityType>
@@ -114,11 +129,26 @@
     <Property Name="updateBy" Type="nvarchar" MaxLength="255" />
     <Property Name="sortSeq" Type="int" />
   </EntityType>
+  <EntityType Name="StsDatail">
+    <Key>
+      <PropertyRef Name="stsDetailId" />
+    </Key>
+    <Property Name="stsDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="stsId" Type="int" />
+    <Property Name="consumeTypeId" Type="int" />
+    <Property Name="stsDesc" Type="nvarchar" MaxLength="50" />
+    <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
+    <Property Name="createDate" Type="datetime" />
+    <Property Name="createBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="updateDate" Type="datetime" />
+    <Property Name="updateBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="sortSeq" Type="int" />
+  </EntityType>
   <EntityType Name="StsMast">
     <Key>
       <PropertyRef Name="stsId" />
     </Key>
-    <Property Name="stsId" Type="int" Nullable="false" />
+    <Property Name="stsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="stsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="stsDesc" Type="nvarchar" MaxLength="50" />
     <Property Name="recStatus" Type="nvarchar" MaxLength="1" />
@@ -143,6 +173,7 @@
   </EntityType>
   <EntityContainer Name="myListModelStoreContainer">
     <EntitySet Name="ConfigMyList" EntityType="Self.ConfigMyList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConsumeTypeMast" EntityType="Self.ConsumeTypeMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GenreGroup" EntityType="Self.GenreGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GenreMast" EntityType="Self.GenreMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ListTypeMast" EntityType="Self.ListTypeMast" Schema="dbo" store:Type="Tables" />
@@ -150,6 +181,7 @@
     <EntitySet Name="MyListMast" EntityType="Self.MyListMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SeasonGroup" EntityType="Self.SeasonGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SeasonMast" EntityType="Self.SeasonMast" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StsDatail" EntityType="Self.StsDatail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StsMast" EntityType="Self.StsMast" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

@@ -10,8 +10,11 @@ namespace UpdateMyList.Entity.Repository
         List<SeasonMastModel> Select(int listTypeId);
         List<SeasonMastModel> SelectAll(int listTypeId);
         List<SeasonMastModel> SelectAllType();
-        int UpdateById(SeasonMastModel data);
-        int Insert(SeasonMastModel model);
+        #region temp
+        //int UpdateById(SeasonMastModel data);
+        //int Insert(SeasonMastModel model);
+        #endregion
+
     }
     public class SeasonMastRepository : BaseRepository<SeasonMast>, ISeasonMastRepository
     {
@@ -30,9 +33,9 @@ namespace UpdateMyList.Entity.Repository
             var rs = new List<SeasonMastModel>();
             rs.Add(new SeasonMastModel
             {
-                seasonId = 0,
-                seasonCode = null,
-                seasonDesc = string.Empty
+                seaId = 0,
+                seaCode = null,
+                seaDesc = string.Empty
             });
             if (groups.Count > 0)
             {
@@ -41,9 +44,9 @@ namespace UpdateMyList.Entity.Repository
                             where a.recStatus == RecStatus.Active && groups.Contains(a.seaId)
                             select new SeasonMastModel
                             {
-                                seasonId = a.seaId,
-                                seasonCode = a.seaCode,
-                                seasonDesc = a.seaDesc,
+                                seaId = a.seaId,
+                                seaCode = a.seaCode,
+                                seaDesc = a.seaDesc,
                                 recStatus = a.recStatus,
                                 createBy = a.createBy,
                                 createDate = a.createDate,
@@ -59,9 +62,9 @@ namespace UpdateMyList.Entity.Repository
                             where a.recStatus == RecStatus.Active
                             select new SeasonMastModel
                             {
-                                seasonId = a.seaId,
-                                seasonCode = a.seaCode,
-                                seasonDesc = a.seaDesc,
+                                seaId = a.seaId,
+                                seaCode = a.seaCode,
+                                seaDesc = a.seaDesc,
                                 recStatus = a.recStatus,
                                 createBy = a.createBy,
                                 createDate = a.createDate,
@@ -85,9 +88,9 @@ namespace UpdateMyList.Entity.Repository
             rs.Add(new SeasonMastModel
             {
                 sortSeq = 0,
-                seasonId = 0,
-                seasonCode = "0",
-                seasonDesc = "All"
+                seaId = 0,
+                seaCode = "0",
+                seaDesc = "All"
             });
             if (groups.Count > 0)
             {
@@ -96,9 +99,9 @@ namespace UpdateMyList.Entity.Repository
                             where a.recStatus == RecStatus.Active && groups.Contains(a.seaId)
                             select new SeasonMastModel
                             {
-                                seasonId = a.seaId,
-                                seasonCode = a.seaCode,
-                                seasonDesc = a.seaDesc,
+                                seaId = a.seaId,
+                                seaCode = a.seaCode,
+                                seaDesc = a.seaDesc,
                                 recStatus = a.recStatus,
                                 createBy = a.createBy,
                                 createDate = a.createDate,
@@ -114,9 +117,9 @@ namespace UpdateMyList.Entity.Repository
                             where a.recStatus == RecStatus.Active
                             select new SeasonMastModel
                             {
-                                seasonId = a.seaId,
-                                seasonCode = a.seaCode,
-                                seasonDesc = a.seaDesc,
+                                seaId = a.seaId,
+                                seaCode = a.seaCode,
+                                seaDesc = a.seaDesc,
                                 recStatus = a.recStatus,
                                 createBy = a.createBy,
                                 createDate = a.createDate,
@@ -134,9 +137,9 @@ namespace UpdateMyList.Entity.Repository
                       orderby a.seaCode
                       select new SeasonMastModel
                       {
-                          seasonId = a.seaId,
-                          seasonCode = a.seaCode,
-                          seasonDesc = a.seaDesc,
+                          seaId = a.seaId,
+                          seaCode = a.seaCode,
+                          seaDesc = a.seaDesc,
                           recStatus = a.recStatus,
                           createBy = a.createBy,
                           createDate = a.createDate,
@@ -147,36 +150,39 @@ namespace UpdateMyList.Entity.Repository
 
             return rs;
         }
-        public int UpdateById(SeasonMastModel data)
-        {
-            var model = _context.SeasonMasts.FirstOrDefault(p => p.seaId == data.seasonId);
-            if (model != null)
-            {
-                model.seaCode = data.seasonCode;
-                model.seaDesc = data.seasonDesc;
-                model.recStatus = data.recStatus;
-                model.sortSeq = data.sortSeq;
-                model.updateBy = data.updateBy;
-                model.updateDate = data.updateDate;
-            }
-            _context.SaveChanges();
-            return model.seaId;
-        }
-        public int Insert(SeasonMastModel data)
-        {
-            var model = new SeasonMast();
-            if (data != null)
-            {
-                model.seaCode = data.seasonCode;
-                model.seaDesc = data.seasonDesc;
-                model.recStatus = data.recStatus;
-                model.sortSeq = data.sortSeq;
-                model.createBy = data.createBy;
-                model.createDate = data.createDate;
-                _context.SeasonMasts.Add(model);
-            }
-            _context.SaveChanges();
-            return model.seaId;
-        }
+        #region temp
+        //public int UpdateById(SeasonMastModel data)
+        //{
+        //    var model = _context.SeasonMasts.FirstOrDefault(p => p.seaId == data.seaId);
+        //    if (model != null)
+        //    {
+        //        model.seaCode = data.seaCode;
+        //        model.seaDesc = data.seaDesc;
+        //        model.recStatus = data.recStatus;
+        //        model.sortSeq = data.sortSeq;
+        //        model.updateBy = data.updateBy;
+        //        model.updateDate = data.updateDate;
+        //    }
+        //    _context.SaveChanges();
+        //    return model.seaId;
+        //}
+        //public int Insert(SeasonMastModel data)
+        //{
+        //    var model = new SeasonMast();
+        //    if (data != null)
+        //    {
+        //        model.seaCode = data.seaCode;
+        //        model.seaDesc = data.seaDesc;
+        //        model.recStatus = data.recStatus;
+        //        model.sortSeq = data.sortSeq;
+        //        model.createBy = data.createBy;
+        //        model.createDate = data.createDate;
+        //        _context.SeasonMasts.Add(model);
+        //    }
+        //    _context.SaveChanges();
+        //    return model.seaId;
+        //}
+        #endregion
+
     }
 }

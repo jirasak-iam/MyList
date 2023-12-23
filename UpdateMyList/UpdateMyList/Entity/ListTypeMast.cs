@@ -23,5 +23,6 @@ namespace UpdateMyList.Entity
         public Nullable<System.DateTime> updateDate { get; set; }
         public string updateBy { get; set; }
         public Nullable<int> sortSeq { get; set; }
+        public Nullable<int> consumeTypeId { get; set; }
     }
 }

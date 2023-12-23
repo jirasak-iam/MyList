@@ -65,6 +65,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -95,6 +98,9 @@
     <Compile Include="Entity\ConfigMyList.cs">
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\ConsumeTypeMast.cs">
+      <DependentUpon>MyListEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GenreGroup.cs">
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
@@ -110,6 +116,7 @@
     <Compile Include="Entity\Model\BaseModel.cs" />
     <Compile Include="Entity\Model\DataGridViewSettingModel.cs" />
     <Compile Include="Entity\Model\DataGridViewModel.cs" />
+    <Compile Include="Entity\Model\ConsumeTypeModel.cs" />
     <Compile Include="Entity\Model\SeasonGroupModel.cs" />
     <Compile Include="Entity\Model\GenreGroupModel.cs" />
     <Compile Include="Entity\Model\ListTypeModel.cs" />
@@ -138,6 +145,7 @@
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Repository\BaseRepository.cs" />
+    <Compile Include="Entity\Repository\ConsumeTypeRepository.cs" />
     <Compile Include="Entity\Repository\SeasonGroupRepository .cs" />
     <Compile Include="Entity\Repository\ConfigMyListRepository.cs" />
     <Compile Include="Entity\Repository\GenreGroupRepository.cs" />
@@ -151,6 +159,9 @@
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\SeasonMast.cs">
+      <DependentUpon>MyListEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\StsDatail.cs">
       <DependentUpon>MyListEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\StsMast.cs">

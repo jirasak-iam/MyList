@@ -1,13 +1,23 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using UpdateMyList.Common;
+using UpdateMyList.Entity;
 using UpdateMyList.Entity.Model;
 
 namespace UpdateMyList.Common
 {
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<GenreMast, GenreMast>();
+            CreateMap<SeasonMast, SeasonMast>();
+        }
+    }
     public class Utility
     {
         public static string SetRecDesc(string recStatus)
@@ -47,28 +57,28 @@ namespace UpdateMyList.Common
             result.Add(
                new SeasonMastModel
                {
-                   seasonCode = SeasonValue.Winter,
-                   seasonDesc = SeasonList.Winter.ToString(),
+                   seaCode = SeasonValue.Winter,
+                   seaDesc = SeasonList.Winter.ToString(),
                });
             result.Add(
                new SeasonMastModel
                {
-                   seasonCode = SeasonValue.Spring,
-                   seasonDesc = SeasonList.Spring.ToString(),
+                   seaCode = SeasonValue.Spring,
+                   seaDesc = SeasonList.Spring.ToString(),
                });
             result.Add(
                new SeasonMastModel
                {
-                   seasonCode = SeasonValue.Summer,
-                   seasonDesc = SeasonList.Summer.ToString(),
+                   seaCode = SeasonValue.Summer,
+                   seaDesc = SeasonList.Summer.ToString(),
                });
             result.Add(
                new SeasonMastModel
                {
-                   seasonCode = SeasonValue.Fall,
-                   seasonDesc = SeasonList.Fall.ToString(),
+                   seaCode = SeasonValue.Fall,
+                   seaDesc = SeasonList.Fall.ToString(),
                });
-            return result.OrderBy(o => o.seasonCode).ToList();
+            return result.OrderBy(o => o.seaCode).ToList();
         }
         public static DateTime ConvertDateTHToEn(string dateStr)
         {

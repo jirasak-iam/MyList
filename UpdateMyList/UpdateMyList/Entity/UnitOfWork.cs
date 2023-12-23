@@ -20,6 +20,7 @@ namespace UpdateMyList.Entity
         IGenreGroupRepository GenreGroupRepository { get; }
         IConfigMyListRepository ConfigMyListRepository { get; }
         ISeasonGroupRepository SeasonGroupRepository { get; }
+        IConsumeTypeRepository ConsumeTypeRepository { get; }
     }
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
@@ -69,6 +70,7 @@ namespace UpdateMyList.Entity
         private GenreGroupRepository _genreGroupRepository;
         private ConfigMyListRepository _configMyListRepository;
         private SeasonGroupRepository _seasonGroupRepository;
+        private ConsumeTypeRepository _consumeTypeRepository;
         public IMyListRepository MyListRepository
         {
             get { return _myListRepository ?? (_myListRepository = new MyListRepository(_context)); }
@@ -104,6 +106,10 @@ namespace UpdateMyList.Entity
         public ISeasonGroupRepository SeasonGroupRepository
         {
             get { return _seasonGroupRepository ?? (_seasonGroupRepository = new SeasonGroupRepository(_context)); }
+        }
+        public IConsumeTypeRepository ConsumeTypeRepository
+        {
+            get { return _consumeTypeRepository ?? (_consumeTypeRepository = new ConsumeTypeRepository(_context)); }
         }
     }
 }

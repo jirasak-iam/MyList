@@ -10,8 +10,8 @@ namespace UpdateMyList.Entity.Repository
         List<MapSettingParamModel> Select();
         List<MapSettingParamModel> SelectAll();
         List<MapSettingParamModel> SelectAllType();
-        int UpdateById(MapSettingParamModel data);
-        int Insert(MapSettingParamModel data);
+        //int UpdateById(MapSettingParamModel data);
+        //int Insert(MapSettingParamModel data);
     }
     public class MapSetingParamRepository : BaseRepository<MapSetingParam>, IMapSetingParamRepository
     {

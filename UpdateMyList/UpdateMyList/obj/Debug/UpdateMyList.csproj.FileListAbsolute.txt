@@ -21,3 +21,5 @@ D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.application
 D:\UpdateMyList\UpdateMyList\UpdateMyList\obj\Debug\UpdateMyList.csproj.CopyComplete
 D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\Newtonsoft.Json.dll
 D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\Newtonsoft.Json.xml
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\AutoMapper.dll
+D:\UpdateMyList\UpdateMyList\UpdateMyList\bin\Debug\AutoMapper.xml

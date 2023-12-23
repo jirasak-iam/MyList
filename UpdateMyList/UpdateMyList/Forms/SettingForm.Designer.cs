@@ -33,6 +33,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.consumecbb = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.listTypeclb = new System.Windows.Forms.CheckedListBox();
             this.gencodebtn = new System.Windows.Forms.Button();
             this.seasonlistlb = new System.Windows.Forms.ListBox();
             this.gbtn = new System.Windows.Forms.Button();
@@ -48,6 +51,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.codetxt = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.mapcbb = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.reloadbtn = new System.Windows.Forms.Button();
@@ -56,7 +60,6 @@
             this.txtcode = new System.Windows.Forms.TextBox();
             this.txtdesc = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.listTypeclb = new System.Windows.Forms.CheckedListBox();
             this.settingtap.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -68,6 +71,7 @@
             // 
             this.settingtap.Controls.Add(this.tabPage1);
             this.settingtap.Controls.Add(this.tabPage2);
+            this.settingtap.Controls.Add(this.tabPage3);
             this.settingtap.Location = new System.Drawing.Point(12, 75);
             this.settingtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.settingtap.Name = "settingtap";
@@ -102,6 +106,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.consumecbb);
+            this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.listTypeclb);
             this.tabPage2.Controls.Add(this.gencodebtn);
             this.tabPage2.Controls.Add(this.seasonlistlb);
@@ -126,6 +132,37 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "เพิ่ม/แก้ไข";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // consumecbb
+            // 
+            this.consumecbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.consumecbb.FormattingEnabled = true;
+            this.consumecbb.Location = new System.Drawing.Point(113, 167);
+            this.consumecbb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.consumecbb.Name = "consumecbb";
+            this.consumecbb.Size = new System.Drawing.Size(175, 24);
+            this.consumecbb.TabIndex = 17;
+            this.consumecbb.Visible = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(21, 170);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(63, 17);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "ประเภทสื่อ";
+            this.label9.Visible = false;
+            // 
+            // listTypeclb
+            // 
+            this.listTypeclb.FormattingEnabled = true;
+            this.listTypeclb.Location = new System.Drawing.Point(592, 16);
+            this.listTypeclb.Name = "listTypeclb";
+            this.listTypeclb.Size = new System.Drawing.Size(183, 140);
+            this.listTypeclb.TabIndex = 15;
+            this.listTypeclb.Visible = false;
+            this.listTypeclb.Click += new System.EventHandler(this.listTypeclb_Click);
             // 
             // gencodebtn
             // 
@@ -183,7 +220,7 @@
             // 
             // clearbtn
             // 
-            this.clearbtn.Location = new System.Drawing.Point(409, 193);
+            this.clearbtn.Location = new System.Drawing.Point(409, 202);
             this.clearbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.clearbtn.Name = "clearbtn";
             this.clearbtn.Size = new System.Drawing.Size(75, 31);
@@ -194,7 +231,7 @@
             // 
             // savebtn
             // 
-            this.savebtn.Location = new System.Drawing.Point(328, 193);
+            this.savebtn.Location = new System.Drawing.Point(328, 202);
             this.savebtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.savebtn.Name = "savebtn";
             this.savebtn.Size = new System.Drawing.Size(75, 31);
@@ -276,6 +313,15 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "รหัส";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(880, 335);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "รายละเอียด";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
             // mapcbb
             // 
             this.mapcbb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -352,15 +398,6 @@
             this.label8.TabIndex = 7;
             this.label8.Text = "รายละเอียด";
             // 
-            // listTypeclb
-            // 
-            this.listTypeclb.FormattingEnabled = true;
-            this.listTypeclb.Location = new System.Drawing.Point(592, 16);
-            this.listTypeclb.Name = "listTypeclb";
-            this.listTypeclb.Size = new System.Drawing.Size(183, 140);
-            this.listTypeclb.TabIndex = 15;
-            this.listTypeclb.Visible = false;
-            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -422,5 +459,8 @@
         private System.Windows.Forms.TextBox txtdesc;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckedListBox listTypeclb;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ComboBox consumecbb;
+        private System.Windows.Forms.Label label9;
     }
 }

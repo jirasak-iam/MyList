@@ -104,35 +104,26 @@ namespace UpdateMyList.Forms
         }
         private void listTypelb_DoubleClick(object sender, EventArgs e)
         {
-            var config = new ConfigMyList();
+            var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
             if (this.allrbtn.Checked)
             {
                 config.DataPerPage = null;
-                config.sortmode = StringSortMode();
-                config.IsSimilar = this.similarcb.Checked;
-                _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.tenrbtn.Checked)
             {
                 config.DataPerPage = 10;
-                config.sortmode = StringSortMode();
-                config.IsSimilar = this.similarcb.Checked;
-                _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.fiftyrbtn.Checked)
             {
                 config.DataPerPage = 50;
-                config.sortmode = StringSortMode();
-                config.IsSimilar = this.similarcb.Checked;
-                _uow.ConfigMyListRepository.UpdateConfig(config);
             }
             else if (this.hunrbtn.Checked)
             {
                 config.DataPerPage = 100;
-                config.sortmode = StringSortMode();
-                config.IsSimilar = this.similarcb.Checked;
-                _uow.ConfigMyListRepository.UpdateConfig(config);
             }
+            config.sortmode = StringSortMode();
+            config.IsSimilar = this.similarcb.Checked;
+            _uow.ConfigMyListRepository.UpdateConfig(config);
             openForm();
         }
 
@@ -158,7 +149,7 @@ namespace UpdateMyList.Forms
                     config.DataPerPage = 100;
                 }
                 config.IsSimilar = this.similarcb.Checked;
-                _uow.Save();
+                _uow.ConfigMyListRepository.UpdateConfig(config);
                 openForm();
             }
             if (e.KeyCode == Keys.Escape)

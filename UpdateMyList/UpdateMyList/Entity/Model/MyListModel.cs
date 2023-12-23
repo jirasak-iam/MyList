@@ -17,8 +17,8 @@ namespace UpdateMyList.Entity.Model
         public string listComment { get; set; }
         public int stsId { get; set; }
         public string stsDesc { get; set; }
-        public int? seasonId { get; set; }
-        public string seasonDesc { get; set; }
+        public int? seaId { get; set; }
+        public string seaDesc { get; set; }
         public string genDesc { get; set; }
         public string listEPLast { get; set; }
         public int? stsIdLast { get; set; }

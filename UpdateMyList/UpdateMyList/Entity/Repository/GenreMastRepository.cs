@@ -13,8 +13,11 @@ namespace UpdateMyList.Entity.Repository
         List<GenreModel> Select();
         List<GenreModel> SelectAllType();
         List<GenreModel> SelectAll();
-        int UpdateById(GenreModel data);
-        int Insert(GenreModel model);
+        #region temp
+        int UpdateById(GenreMast data);
+        //int Insert(GenreModel model);
+        #endregion
+
     }
     public class GenreMastRepository : BaseRepository<GenreMast>, IGenreMastRepository
     {
@@ -90,13 +93,14 @@ namespace UpdateMyList.Entity.Repository
 
             return rs;
         }
-        public int UpdateById(GenreModel data)
+        #region temp
+        public int UpdateById(GenreMast data)
         {
-            var model = _context.GenreMasts.FirstOrDefault(p => p.genId == data.genreId);
+            var model = _context.GenreMasts.FirstOrDefault(p => p.genId == data.genId);
             if (model != null)
             {
-                model.genCode = data.genreCode;
-                model.genDesc = data.genreDesc;
+                model.genCode = data.genCode;
+                model.genDesc = data.genDesc;
                 model.recStatus = data.recStatus;
                 model.sortSeq = data.sortSeq;
                 model.updateBy = data.updateBy;
@@ -105,21 +109,23 @@ namespace UpdateMyList.Entity.Repository
             var rs = _context.SaveChanges();
             return rs;
         }
-        public int Insert(GenreModel data)
-        {
-            if (data != null)
-            {
-                var model = new GenreMast();
-                model.genCode = data.genreCode;
-                model.genDesc = data.genreDesc;
-                model.recStatus = data.recStatus;
-                model.sortSeq = data.sortSeq;
-                model.createBy = data.createBy;
-                model.createDate = data.createDate;
-                _context.GenreMasts.Add(model);
-            }
-            var rs = _context.SaveChanges();
-            return rs;
-        }
+        //public int Insert(GenreModel data)
+        //{
+        //    if (data != null)
+        //    {
+        //        var model = new GenreMast();
+        //        model.genCode = data.genreCode;
+        //        model.genDesc = data.genreDesc;
+        //        model.recStatus = data.recStatus;
+        //        model.sortSeq = data.sortSeq;
+        //        model.createBy = data.createBy;
+        //        model.createDate = data.createDate;
+        //        _context.GenreMasts.Add(model);
+        //    }
+        //    var rs = _context.SaveChanges();
+        //    return rs;
+        //}
+        #endregion
+
     }
 }
