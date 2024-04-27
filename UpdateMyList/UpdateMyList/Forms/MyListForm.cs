@@ -416,25 +416,25 @@ namespace UpdateMyList.Forms
                     }
                     if (!string.IsNullOrEmpty(searchName))
                     {
-                        var splitSearchName = searchName.Split(Constants.delimiterChars).ToList();
-                        if (splitSearchName.Count > 0)
-                        {
-                            splitSearchName = splitSearchName.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
-                            if (splitSearchName.Count > 0)
-                            {
-                                var tempData = new List<MyListModel>();
-                                splitSearchName.ForEach(item => tempData.AddRange(getByType.Where(p => p.listName.ToUpper().Contains(item.ToUpper())).ToList()));
-                                getByType = tempData;
-                            }
-                            else
-                            {
-                                getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
-                            }
-                        }
-                        else
-                        {
-                            getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
-                        }
+                        //var splitSearchName = searchName.Split(Constants.delimiterChars).ToList();
+                        //if (splitSearchName.Count > 0)
+                        //{
+                        //    splitSearchName = splitSearchName.Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
+                        //    if (splitSearchName.Count > 0)
+                        //    {
+                        //        var tempData = new List<MyListModel>();
+                        //        splitSearchName.ForEach(item => tempData.AddRange(getByType.Where(p => p.listName.ToUpper().Contains(item.ToUpper())).ToList()));
+                        //        getByType = tempData;
+                        //    }
+                        //    else
+                        //    {
+                        //        getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                        //    }
+                        //}
+                        //else
+                        //{
+                        getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                        //}
                     }
                     this.totalCountAfterFilter = getByType.Count;
                     if (this.pageSelect > 1)
@@ -1148,6 +1148,12 @@ namespace UpdateMyList.Forms
             if (e.KeyCode == Keys.F5)
             {
                 reload();
+            }
+            if (e.KeyCode == Keys.Enter && e.Control)
+            {
+                this.openLink(cuurRow());
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
         private int cuurRow()
@@ -1878,7 +1884,7 @@ namespace UpdateMyList.Forms
                 this.genrelb.DisplayMember = "genreDisplay";
                 this.genrelb.ValueMember = "genreId";
             }
-            
+
         }
 
         private void clearTxtGen_Click(object sender, EventArgs e)
@@ -1887,6 +1893,110 @@ namespace UpdateMyList.Forms
             this.genrelb.DataSource = _uow.GenreMastRepository.SelectAll();
             this.genrelb.DisplayMember = "genreDisplay";
             this.genrelb.ValueMember = "genreId";
+        }
+
+        private void plusdecbtn_Click(object sender, EventArgs e)
+        {
+            var epVal = !string.IsNullOrEmpty(this.ePtxt.Text) ? Convert.ToDecimal(this.ePtxt.Text) + (decimal)0.1 : 1;
+            decimal eplast = 0;
+            decimal.TryParse(this.eplasttxt.Text, out eplast);
+            //int.TryParse(this.ePtxt.Text, out ep);
+            this.ePtxt.Text = "";
+
+            if (eplast <= epVal)
+            {
+                this.eplasttxt.Text = "";
+                this.eplasttxt.Text = ((decimal)epVal).ToString();
+            }
+
+            this.ePtxt.Text = ((decimal)epVal).ToString();
+            this.rePageFlag = false;
+            if (!string.IsNullOrEmpty(this.IU_Flag))
+            {
+                changeStsByEp();
+                if (this.IU_Flag.Equals("U"))
+                {
+                    saveBtn.PerformClick();
+                    this.rePageFlag = true;
+                }
+            }
+        }
+
+        private void minusdecbtn_Click(object sender, EventArgs e)
+        {
+            var epVal = !string.IsNullOrEmpty(this.ePtxt.Text) ?
+                            Convert.ToDecimal(this.ePtxt.Text) <= 0 ?
+                                0 :
+                                Convert.ToDecimal(this.ePtxt.Text) - (decimal)0.1 :
+                            0;
+            this.ePtxt.Text = "";
+            if ((decimal)epVal == 0)
+            {
+                this.eplasttxt.Text = "";
+                this.eplasttxt.Text = ((decimal)epVal).ToString();
+            }
+            this.ePtxt.Text = ((decimal)epVal).ToString();
+            this.rePageFlag = false;
+            if (!string.IsNullOrEmpty(this.IU_Flag))
+            {
+                changeStsByEp();
+                if (this.IU_Flag.Equals("U"))
+                {
+                    saveBtn.PerformClick();
+                    this.rePageFlag = true;
+                }
+            }
+        }
+
+        private void pluslastdecbtn_Click(object sender, EventArgs e)
+        {
+            var epLastVal = !string.IsNullOrEmpty(this.eplasttxt.Text) ? Convert.ToDecimal(this.eplasttxt.Text) + (decimal)0.1 : 1;
+            decimal epVal = 0;
+            decimal.TryParse(this.ePtxt.Text, out epVal);
+            if ((decimal)epLastVal <= epVal)
+            {
+                epLastVal = epVal;
+            }
+            this.eplasttxt.Text = "";
+            this.eplasttxt.Text = ((decimal)epLastVal).ToString();
+            this.rePageFlag = false;
+            if (!string.IsNullOrEmpty(this.IU_Flag))
+            {
+                changeStsByEp();
+                if (this.IU_Flag.Equals("U"))
+                {
+                    saveBtn.PerformClick();
+                    this.rePageFlag = true;
+                }
+            }
+        }
+
+        private void minuslastdecbtn_Click(object sender, EventArgs e)
+        {
+            var epLastVal = !string.IsNullOrEmpty(this.eplasttxt.Text) ?
+                            Convert.ToDecimal(this.eplasttxt.Text) <= 0 ?
+                                0 :
+                                Convert.ToDecimal(this.eplasttxt.Text) - (decimal)0.1 :
+                            0;
+            decimal epVal = 0;
+            decimal.TryParse(this.ePtxt.Text, out epVal);
+            this.eplasttxt.Text = "";
+            this.eplasttxt.Text = (((decimal)epLastVal) <= 0 ? 0 : (decimal)epLastVal).ToString();
+            if (epVal >= epLastVal)
+            {
+                this.ePtxt.Text = "";
+                this.ePtxt.Text = ((decimal)epLastVal).ToString();
+            }
+            this.rePageFlag = false;
+            if (!string.IsNullOrEmpty(this.IU_Flag))
+            {
+                changeStsByEp();
+                if (this.IU_Flag.Equals("U"))
+                {
+                    saveBtn.PerformClick();
+                    this.rePageFlag = true;
+                }
+            }
         }
     }
 }

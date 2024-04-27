@@ -33,6 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.clearTxtGen = new System.Windows.Forms.Button();
+            this.gensearchtxt = new System.Windows.Forms.TextBox();
             this.clearTxtSea = new System.Windows.Forms.Button();
             this.seasearchtxt = new System.Windows.Forms.TextBox();
             this.clearTxt = new System.Windows.Forms.Button();
@@ -88,8 +90,10 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.clearTxtGen = new System.Windows.Forms.Button();
-            this.gensearchtxt = new System.Windows.Forms.TextBox();
+            this.minusdecbtn = new System.Windows.Forms.Button();
+            this.plusdecbtn = new System.Windows.Forms.Button();
+            this.minuslastdecbtn = new System.Windows.Forms.Button();
+            this.pluslastdecbtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -157,6 +161,28 @@
             this.listtap.TabIndex = 0;
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
+            // 
+            // clearTxtGen
+            // 
+            this.clearTxtGen.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.clearTxtGen.ForeColor = System.Drawing.Color.Red;
+            this.clearTxtGen.Location = new System.Drawing.Point(1496, -1);
+            this.clearTxtGen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.clearTxtGen.Name = "clearTxtGen";
+            this.clearTxtGen.Size = new System.Drawing.Size(24, 23);
+            this.clearTxtGen.TabIndex = 44;
+            this.clearTxtGen.Text = "X";
+            this.clearTxtGen.UseVisualStyleBackColor = true;
+            this.clearTxtGen.Click += new System.EventHandler(this.clearTxtGen_Click);
+            // 
+            // gensearchtxt
+            // 
+            this.gensearchtxt.Location = new System.Drawing.Point(1225, 0);
+            this.gensearchtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gensearchtxt.Name = "gensearchtxt";
+            this.gensearchtxt.Size = new System.Drawing.Size(271, 22);
+            this.gensearchtxt.TabIndex = 43;
+            this.gensearchtxt.TextChanged += new System.EventHandler(this.gensearchtxt_TextChanged);
             // 
             // clearTxtSea
             // 
@@ -467,6 +493,10 @@
             // 
             // inserttap
             // 
+            this.inserttap.Controls.Add(this.minuslastdecbtn);
+            this.inserttap.Controls.Add(this.pluslastdecbtn);
+            this.inserttap.Controls.Add(this.minusdecbtn);
+            this.inserttap.Controls.Add(this.plusdecbtn);
             this.inserttap.Controls.Add(this.maxbtn);
             this.inserttap.Controls.Add(this.stslastcbb);
             this.inserttap.Controls.Add(this.minuslastbtn);
@@ -506,7 +536,7 @@
             // 
             // maxbtn
             // 
-            this.maxbtn.Location = new System.Drawing.Point(1013, 69);
+            this.maxbtn.Location = new System.Drawing.Point(1121, 69);
             this.maxbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.maxbtn.Name = "maxbtn";
             this.maxbtn.Size = new System.Drawing.Size(27, 23);
@@ -805,27 +835,49 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
-            // clearTxtGen
+            // minusdecbtn
             // 
-            this.clearTxtGen.Font = new System.Drawing.Font("Cloud", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.clearTxtGen.ForeColor = System.Drawing.Color.Red;
-            this.clearTxtGen.Location = new System.Drawing.Point(1496, -1);
-            this.clearTxtGen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.clearTxtGen.Name = "clearTxtGen";
-            this.clearTxtGen.Size = new System.Drawing.Size(24, 23);
-            this.clearTxtGen.TabIndex = 44;
-            this.clearTxtGen.Text = "X";
-            this.clearTxtGen.UseVisualStyleBackColor = true;
-            this.clearTxtGen.Click += new System.EventHandler(this.clearTxtGen_Click);
+            this.minusdecbtn.Location = new System.Drawing.Point(1067, 68);
+            this.minusdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.minusdecbtn.Name = "minusdecbtn";
+            this.minusdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.minusdecbtn.TabIndex = 42;
+            this.minusdecbtn.Text = "-.1";
+            this.minusdecbtn.UseVisualStyleBackColor = true;
+            this.minusdecbtn.Click += new System.EventHandler(this.minusdecbtn_Click);
             // 
-            // gensearchtxt
+            // plusdecbtn
             // 
-            this.gensearchtxt.Location = new System.Drawing.Point(1225, 0);
-            this.gensearchtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gensearchtxt.Name = "gensearchtxt";
-            this.gensearchtxt.Size = new System.Drawing.Size(271, 22);
-            this.gensearchtxt.TabIndex = 43;
-            this.gensearchtxt.TextChanged += new System.EventHandler(this.gensearchtxt_TextChanged);
+            this.plusdecbtn.Location = new System.Drawing.Point(1013, 68);
+            this.plusdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.plusdecbtn.Name = "plusdecbtn";
+            this.plusdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.plusdecbtn.TabIndex = 41;
+            this.plusdecbtn.Text = "+.1";
+            this.plusdecbtn.UseVisualStyleBackColor = true;
+            this.plusdecbtn.Click += new System.EventHandler(this.plusdecbtn_Click);
+            // 
+            // minuslastdecbtn
+            // 
+            this.minuslastdecbtn.Location = new System.Drawing.Point(1066, 101);
+            this.minuslastdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.minuslastdecbtn.Name = "minuslastdecbtn";
+            this.minuslastdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.minuslastdecbtn.TabIndex = 44;
+            this.minuslastdecbtn.Text = "-.1";
+            this.minuslastdecbtn.UseVisualStyleBackColor = true;
+            this.minuslastdecbtn.Click += new System.EventHandler(this.minuslastdecbtn_Click);
+            // 
+            // pluslastdecbtn
+            // 
+            this.pluslastdecbtn.Location = new System.Drawing.Point(1012, 101);
+            this.pluslastdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pluslastdecbtn.Name = "pluslastdecbtn";
+            this.pluslastdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.pluslastdecbtn.TabIndex = 43;
+            this.pluslastdecbtn.Text = "+.1";
+            this.pluslastdecbtn.UseVisualStyleBackColor = true;
+            this.pluslastdecbtn.Click += new System.EventHandler(this.pluslastdecbtn_Click);
             // 
             // MyListForm
             // 
@@ -833,7 +885,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(2040, 698);
+            this.ClientSize = new System.Drawing.Size(1924, 698);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -918,5 +970,9 @@
         private System.Windows.Forms.TextBox seasearchtxt;
         private System.Windows.Forms.Button clearTxtGen;
         private System.Windows.Forms.TextBox gensearchtxt;
+        private System.Windows.Forms.Button minusdecbtn;
+        private System.Windows.Forms.Button plusdecbtn;
+        private System.Windows.Forms.Button minuslastdecbtn;
+        private System.Windows.Forms.Button pluslastdecbtn;
     }
 }
