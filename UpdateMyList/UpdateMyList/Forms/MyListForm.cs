@@ -321,6 +321,8 @@ namespace UpdateMyList.Forms
             this.seasonlb.ValueMember = "seaId";
 
             this.myLists = _uow.MyListRepository.SelectByType(_model);
+            this.searchtxt.Select();
+            this.searchtxt.Focus();
             search();
             CalPage();
         }

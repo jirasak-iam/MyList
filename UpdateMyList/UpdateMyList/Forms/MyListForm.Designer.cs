@@ -62,6 +62,10 @@
             this.mainbtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.inserttap = new System.Windows.Forms.TabPage();
+            this.minuslastdecbtn = new System.Windows.Forms.Button();
+            this.pluslastdecbtn = new System.Windows.Forms.Button();
+            this.minusdecbtn = new System.Windows.Forms.Button();
+            this.plusdecbtn = new System.Windows.Forms.Button();
             this.maxbtn = new System.Windows.Forms.Button();
             this.stslastcbb = new System.Windows.Forms.ComboBox();
             this.minuslastbtn = new System.Windows.Forms.Button();
@@ -90,10 +94,6 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
-            this.minusdecbtn = new System.Windows.Forms.Button();
-            this.plusdecbtn = new System.Windows.Forms.Button();
-            this.minuslastdecbtn = new System.Windows.Forms.Button();
-            this.pluslastdecbtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
@@ -122,7 +122,7 @@
             this.myListtap.SelectedIndex = 0;
             this.myListtap.Size = new System.Drawing.Size(2545, 875);
             this.myListtap.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.myListtap.TabIndex = 2;
+            this.myListtap.TabIndex = 1;
             this.myListtap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.myListap_KeyDown);
             // 
             // listtap
@@ -442,7 +442,7 @@
             this.searchtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchtxt.Name = "searchtxt";
             this.searchtxt.Size = new System.Drawing.Size(171, 22);
-            this.searchtxt.TabIndex = 2;
+            this.searchtxt.TabIndex = 1;
             this.searchtxt.TextChanged += new System.EventHandler(this.searchtxt_TextChanged);
             this.searchtxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchtxt_KeyDown);
             // 
@@ -533,6 +533,50 @@
             this.inserttap.TabIndex = 1;
             this.inserttap.Text = "เพื่ม/แก้ไข";
             this.inserttap.UseVisualStyleBackColor = true;
+            // 
+            // minuslastdecbtn
+            // 
+            this.minuslastdecbtn.Location = new System.Drawing.Point(1066, 101);
+            this.minuslastdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.minuslastdecbtn.Name = "minuslastdecbtn";
+            this.minuslastdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.minuslastdecbtn.TabIndex = 44;
+            this.minuslastdecbtn.Text = "-.1";
+            this.minuslastdecbtn.UseVisualStyleBackColor = true;
+            this.minuslastdecbtn.Click += new System.EventHandler(this.minuslastdecbtn_Click);
+            // 
+            // pluslastdecbtn
+            // 
+            this.pluslastdecbtn.Location = new System.Drawing.Point(1012, 101);
+            this.pluslastdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pluslastdecbtn.Name = "pluslastdecbtn";
+            this.pluslastdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.pluslastdecbtn.TabIndex = 43;
+            this.pluslastdecbtn.Text = "+.1";
+            this.pluslastdecbtn.UseVisualStyleBackColor = true;
+            this.pluslastdecbtn.Click += new System.EventHandler(this.pluslastdecbtn_Click);
+            // 
+            // minusdecbtn
+            // 
+            this.minusdecbtn.Location = new System.Drawing.Point(1067, 68);
+            this.minusdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.minusdecbtn.Name = "minusdecbtn";
+            this.minusdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.minusdecbtn.TabIndex = 42;
+            this.minusdecbtn.Text = "-.1";
+            this.minusdecbtn.UseVisualStyleBackColor = true;
+            this.minusdecbtn.Click += new System.EventHandler(this.minusdecbtn_Click);
+            // 
+            // plusdecbtn
+            // 
+            this.plusdecbtn.Location = new System.Drawing.Point(1013, 68);
+            this.plusdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.plusdecbtn.Name = "plusdecbtn";
+            this.plusdecbtn.Size = new System.Drawing.Size(48, 23);
+            this.plusdecbtn.TabIndex = 41;
+            this.plusdecbtn.Text = "+.1";
+            this.plusdecbtn.UseVisualStyleBackColor = true;
+            this.plusdecbtn.Click += new System.EventHandler(this.plusdecbtn_Click);
             // 
             // maxbtn
             // 
@@ -834,50 +878,6 @@
             this.nametxt.Size = new System.Drawing.Size(789, 22);
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
-            // 
-            // minusdecbtn
-            // 
-            this.minusdecbtn.Location = new System.Drawing.Point(1067, 68);
-            this.minusdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.minusdecbtn.Name = "minusdecbtn";
-            this.minusdecbtn.Size = new System.Drawing.Size(48, 23);
-            this.minusdecbtn.TabIndex = 42;
-            this.minusdecbtn.Text = "-.1";
-            this.minusdecbtn.UseVisualStyleBackColor = true;
-            this.minusdecbtn.Click += new System.EventHandler(this.minusdecbtn_Click);
-            // 
-            // plusdecbtn
-            // 
-            this.plusdecbtn.Location = new System.Drawing.Point(1013, 68);
-            this.plusdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.plusdecbtn.Name = "plusdecbtn";
-            this.plusdecbtn.Size = new System.Drawing.Size(48, 23);
-            this.plusdecbtn.TabIndex = 41;
-            this.plusdecbtn.Text = "+.1";
-            this.plusdecbtn.UseVisualStyleBackColor = true;
-            this.plusdecbtn.Click += new System.EventHandler(this.plusdecbtn_Click);
-            // 
-            // minuslastdecbtn
-            // 
-            this.minuslastdecbtn.Location = new System.Drawing.Point(1066, 101);
-            this.minuslastdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.minuslastdecbtn.Name = "minuslastdecbtn";
-            this.minuslastdecbtn.Size = new System.Drawing.Size(48, 23);
-            this.minuslastdecbtn.TabIndex = 44;
-            this.minuslastdecbtn.Text = "-.1";
-            this.minuslastdecbtn.UseVisualStyleBackColor = true;
-            this.minuslastdecbtn.Click += new System.EventHandler(this.minuslastdecbtn_Click);
-            // 
-            // pluslastdecbtn
-            // 
-            this.pluslastdecbtn.Location = new System.Drawing.Point(1012, 101);
-            this.pluslastdecbtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pluslastdecbtn.Name = "pluslastdecbtn";
-            this.pluslastdecbtn.Size = new System.Drawing.Size(48, 23);
-            this.pluslastdecbtn.TabIndex = 43;
-            this.pluslastdecbtn.Text = "+.1";
-            this.pluslastdecbtn.UseVisualStyleBackColor = true;
-            this.pluslastdecbtn.Click += new System.EventHandler(this.pluslastdecbtn_Click);
             // 
             // MyListForm
             // 
