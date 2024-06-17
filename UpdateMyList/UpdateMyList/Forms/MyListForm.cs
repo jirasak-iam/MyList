@@ -435,7 +435,7 @@ namespace UpdateMyList.Forms
                         //}
                         //else
                         //{
-                        getByType = getByType.Where(p => p.listName.ToUpper().Contains(searchName)).ToList();
+                        getByType = getByType.Where(p => (p.listName + (p.listLink ?? "")).ToUpper().Contains(searchName)).ToList();
                         //}
                     }
                     this.totalCountAfterFilter = getByType.Count;
@@ -878,6 +878,14 @@ namespace UpdateMyList.Forms
             if (e.KeyCode == Keys.Escape)
             {
                 ClearPage(true);
+            }
+            if (e.KeyCode == Keys.Add && e.Control)
+            {
+                plusdecbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Subtract && e.Control)
+            {
+                minusdecbtn.PerformClick();
             }
         }
 
@@ -1613,6 +1621,14 @@ namespace UpdateMyList.Forms
             if (e.KeyCode == Keys.Escape)
             {
                 ClearPage(true);
+            }
+            if (e.KeyCode == Keys.Add && e.Control)
+            {
+                pluslastdecbtn.PerformClick();
+            }
+            if (e.KeyCode == Keys.Subtract && e.Control)
+            {
+                minuslastdecbtn.PerformClick();
             }
         }
 
