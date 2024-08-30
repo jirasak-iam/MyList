@@ -33,6 +33,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.myListtap = new System.Windows.Forms.TabControl();
             this.listtap = new System.Windows.Forms.TabPage();
+            this.copybtn = new System.Windows.Forms.Button();
             this.clearTxtGen = new System.Windows.Forms.Button();
             this.gensearchtxt = new System.Windows.Forms.TextBox();
             this.clearTxtSea = new System.Windows.Forms.Button();
@@ -128,6 +129,7 @@
             // listtap
             // 
             this.listtap.AutoScroll = true;
+            this.listtap.Controls.Add(this.copybtn);
             this.listtap.Controls.Add(this.clearTxtGen);
             this.listtap.Controls.Add(this.gensearchtxt);
             this.listtap.Controls.Add(this.clearTxtSea);
@@ -161,6 +163,17 @@
             this.listtap.TabIndex = 0;
             this.listtap.Text = "รายการ";
             this.listtap.UseVisualStyleBackColor = true;
+            // 
+            // copybtn
+            // 
+            this.copybtn.Location = new System.Drawing.Point(1748, 2);
+            this.copybtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.copybtn.Name = "copybtn";
+            this.copybtn.Size = new System.Drawing.Size(63, 30);
+            this.copybtn.TabIndex = 45;
+            this.copybtn.Text = "Copy";
+            this.copybtn.UseVisualStyleBackColor = true;
+            this.copybtn.Click += new System.EventHandler(this.copybtn_Click);
             // 
             // clearTxtGen
             // 
@@ -304,7 +317,7 @@
             // labelcountpage
             // 
             this.labelcountpage.AutoSize = true;
-            this.labelcountpage.Location = new System.Drawing.Point(1851, 102);
+            this.labelcountpage.Location = new System.Drawing.Point(1830, 102);
             this.labelcountpage.Name = "labelcountpage";
             this.labelcountpage.Size = new System.Drawing.Size(0, 17);
             this.labelcountpage.TabIndex = 35;
@@ -974,5 +987,6 @@
         private System.Windows.Forms.Button plusdecbtn;
         private System.Windows.Forms.Button minuslastdecbtn;
         private System.Windows.Forms.Button pluslastdecbtn;
+        private System.Windows.Forms.Button copybtn;
     }
 }

@@ -435,7 +435,7 @@ namespace UpdateMyList.Forms
                         //}
                         //else
                         //{
-                        getByType = getByType.Where(p => (p.listName + (p.listLink ?? "")).ToUpper().Contains(searchName)).ToList();
+                        getByType = getByType.Where(p => (p.listName + (p.listLink ?? "") + (p.listComment ?? "")).ToUpper().Contains(searchName)).ToList();
                         //}
                     }
                     this.totalCountAfterFilter = getByType.Count;
@@ -522,14 +522,46 @@ namespace UpdateMyList.Forms
                 this.dataGridView1.Columns[7].HeaderText = "แก้ไขล่าสุด";
                 this.dataGridView1.Columns[7].Width = 125;
                 this.dataGridView1.Columns[7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                var maxDataInPage = this.takeData is null ? this.countData : this.countData < this.takeData ? this.countData : this.takeData;
-                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                var maxDataInPage =
+                    this.takeData is null ?
+                    this.countData :
+                    this.countData < this.takeData ?
+                        this.countData :
+                        this.takeData;
+
+                int first = 0, last = 0;
+                if (this.takeData is null)
                 {
-                    labelcountpage.Text = $"{maxDataInPage}/{this.totalCount}";
+                    last = this.countData;
+                    first = 1;
                 }
                 else
                 {
-                    labelcountpage.Text = $"{maxDataInPage}/{this.totalCountAfterFilter}";
+                    if (this.pageCount == this.pageSelect)
+                    {
+                        if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                        {
+                            last = this.totalCount;
+                        }
+                        else
+                        {
+                            last = this.totalCountAfterFilter;
+                        }
+                        first = (last - (maxDataInPage ?? 0)) + 1;
+                    }
+                    else
+                    {
+                        last = maxDataInPage != null ? (maxDataInPage ?? 0) * this.pageSelect : this.countData;
+                        first = (last - (maxDataInPage ?? 0 )) + 1;
+                    }
+                }
+                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                {
+                    labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCount}";
+                }
+                else
+                {
+                    labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCountAfterFilter}";
                 }
             }
             catch (Exception)
@@ -643,6 +675,10 @@ namespace UpdateMyList.Forms
                     dataGridView1.CurrentCell = cell;
                 }
             }
+            else if (e.KeyCode == Keys.X && e.Control)
+            {
+                copy(dataGridView1.CurrentCell.RowIndex);
+            }
         }
 
         private void mainbtn_Click(object sender, EventArgs e)
@@ -744,7 +780,57 @@ namespace UpdateMyList.Forms
             }
 
         }
+        private void copy(int rowindex)
+        {
+            this.IU_Flag = "C";
+            this.gobtn.Enabled = false;
+            this.deletebtn.Enabled = false;
+            //int rowindex = row;
+            int columnindex = 0;
 
+
+            if (this.dataGridView1.RowCount > 0)
+            {
+                var myListId = (int)dataGridView1.Rows[rowindex].Cells[columnindex].Value;
+                if (myListId > 0)
+                {
+                    var data = _uow.MyListRepository.Read().FirstOrDefault(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
+
+                    this.nametxt.Text = data.listName;
+                    this.ePtxt.Text = data.listEP;
+                    this.eplasttxt.Text = data.listEPLast;
+                    this.linkUrltxt.Text = data.listLink;
+                    this.stscbb.SelectedValue = data.stsId;
+                    this.stslastcbb.SelectedValue = (data.stsIdLast ?? 5);
+                    this.commenttxt.Text = data.listComment;
+                    //this.myListId = data.listId;
+                    this.seasoncbb.SelectedValue = (data.seaId ?? 0);
+
+                    this.myListtap.SelectedTab = inserttap;
+                    ClearSelection();
+                    var genreGroup = _uow.GenreGroupRepository.SelectGenreGroupByListId(data.listId);
+                    if (genreGroup.Count > 0)
+                    {
+                        selectGen.AddRange(genreGroup.Select(p => p.genId).ToList());
+                        for (int i = 0; i < this.genreclb.Items.Count; i++)
+                        {
+                            var genre = (GenreModel)this.genreclb.Items[i];
+                            var chkData = genreGroup.FirstOrDefault(p => p.genId == genre.genreId);
+                            if (chkData != null)
+                            {
+                                this.genreclb.SetItemChecked(i, true);
+                            }
+                            else
+                            {
+                                this.genreclb.SetItemChecked(i, false);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
             edit(dataGridView1.CurrentCell.RowIndex);
@@ -1161,9 +1247,9 @@ namespace UpdateMyList.Forms
             }
             if (e.KeyCode == Keys.Enter && e.Control)
             {
-                this.openLink(cuurRow());
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+                this.openLink(cuurRow());
             }
         }
         private int cuurRow()
@@ -1831,6 +1917,7 @@ namespace UpdateMyList.Forms
         private void reloadbtn_Click(object sender, EventArgs e)
         {
             reload();
+            CalPage();
         }
 
         private void clearTxt_Click(object sender, EventArgs e)
@@ -2015,6 +2102,11 @@ namespace UpdateMyList.Forms
                     this.rePageFlag = true;
                 }
             }
+        }
+
+        private void copybtn_Click(object sender, EventArgs e)
+        {
+            copy(dataGridView1.CurrentCell.RowIndex);
         }
     }
 }
