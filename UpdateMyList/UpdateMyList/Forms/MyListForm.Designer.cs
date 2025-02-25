@@ -95,12 +95,16 @@
             this.linkUrltxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nametxt = new System.Windows.Forms.TextBox();
+            this.listwebtab = new System.Windows.Forms.TabPage();
+            this.searchlistwebtxt = new System.Windows.Forms.TextBox();
+            this.weblistlb = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.myListtap.SuspendLayout();
             this.listtap.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.inserttap.SuspendLayout();
+            this.listwebtab.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -116,6 +120,7 @@
             // 
             this.myListtap.Controls.Add(this.listtap);
             this.myListtap.Controls.Add(this.inserttap);
+            this.myListtap.Controls.Add(this.listwebtab);
             this.myListtap.ItemSize = new System.Drawing.Size(50, 30);
             this.myListtap.Location = new System.Drawing.Point(0, 2);
             this.myListtap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -892,6 +897,40 @@
             this.nametxt.TabIndex = 9;
             this.nametxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nametxt_KeyDown);
             // 
+            // listwebtab
+            // 
+            this.listwebtab.Controls.Add(this.searchlistwebtxt);
+            this.listwebtab.Controls.Add(this.weblistlb);
+            this.listwebtab.Location = new System.Drawing.Point(4, 34);
+            this.listwebtab.Name = "listwebtab";
+            this.listwebtab.Padding = new System.Windows.Forms.Padding(3);
+            this.listwebtab.Size = new System.Drawing.Size(2537, 837);
+            this.listwebtab.TabIndex = 2;
+            this.listwebtab.Text = "List Web";
+            this.listwebtab.UseVisualStyleBackColor = true;
+            // 
+            // searchlistwebtxt
+            // 
+            this.searchlistwebtxt.Location = new System.Drawing.Point(22, 25);
+            this.searchlistwebtxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.searchlistwebtxt.Name = "searchlistwebtxt";
+            this.searchlistwebtxt.Size = new System.Drawing.Size(318, 22);
+            this.searchlistwebtxt.TabIndex = 6;
+            this.searchlistwebtxt.TextChanged += new System.EventHandler(this.searchlistwebtxt_TextChanged);
+            this.searchlistwebtxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchlistwebtxt_KeyDown);
+            // 
+            // weblistlb
+            // 
+            this.weblistlb.FormattingEnabled = true;
+            this.weblistlb.ItemHeight = 16;
+            this.weblistlb.Location = new System.Drawing.Point(22, 65);
+            this.weblistlb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.weblistlb.Name = "weblistlb";
+            this.weblistlb.Size = new System.Drawing.Size(318, 260);
+            this.weblistlb.TabIndex = 5;
+            this.weblistlb.Click += new System.EventHandler(this.weblistlb_Click);
+            this.weblistlb.DoubleClick += new System.EventHandler(this.weblistlb_DoubleClick);
+            // 
             // MyListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -917,6 +956,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.inserttap.ResumeLayout(false);
             this.inserttap.PerformLayout();
+            this.listwebtab.ResumeLayout(false);
+            this.listwebtab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -988,5 +1029,8 @@
         private System.Windows.Forms.Button minuslastdecbtn;
         private System.Windows.Forms.Button pluslastdecbtn;
         private System.Windows.Forms.Button copybtn;
+        private System.Windows.Forms.TabPage listwebtab;
+        private System.Windows.Forms.ListBox weblistlb;
+        private System.Windows.Forms.TextBox searchlistwebtxt;
     }
 }

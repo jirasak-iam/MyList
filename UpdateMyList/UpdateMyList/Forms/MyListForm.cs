@@ -37,6 +37,7 @@ namespace UpdateMyList.Forms
         private List<SeasonMastModel> seasons { get; set; }
         private List<MyListModel> myLists { get; set; }
         private ConfigMyList config { get; set; }
+        private List<string> tempWebList { get; set; }
         private List<int> selectGen { get; set; } = new List<int>();
         public void ClearPage(bool allData)
         {
@@ -62,6 +63,7 @@ namespace UpdateMyList.Forms
                 this.deletebtn.Enabled = false;
                 this.seasoncbb.SelectedIndex = 0;
                 this.selectGen = new List<int>();
+                this.weblistlb.DataSource = new List<string>();
                 ClearSelection();
                 this.myListtap.SelectedTab = listtap;
             }
@@ -91,6 +93,7 @@ namespace UpdateMyList.Forms
             {
                 this.myLists = _uow.MyListRepository.SelectByType(_model);
                 search();
+                CalPage();
             }
             this.rePageFlag = true;
 
@@ -261,7 +264,7 @@ namespace UpdateMyList.Forms
         {
             //this.editbtn.Visible = false;
             //this.reloadbtn.Visible = false;
-            this.config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+            this.config = _uow.ConfigMyListRepository.ReadByPredicate(p => p.ConfigId == 1);
             var dataPerPage = this.config.DataPerPage ?? 0;
             if (dataPerPage == 0)
             {
@@ -321,6 +324,32 @@ namespace UpdateMyList.Forms
             this.seasonlb.ValueMember = "seaId";
 
             this.myLists = _uow.MyListRepository.SelectByType(_model);
+            var urls = this.myLists.Select(s => s.listLink).ToList();
+            var websiteNames = urls.Select(url =>
+            {
+                if (!string.IsNullOrEmpty(url))
+                {
+                    if (url.StartsWith("D:"))
+                    {
+                        return string.Empty;
+                    }
+                    // ตรวจสอบและเพิ่ม http:// ถ้าไม่มี protocol
+                    if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    {
+                        url = "http://" + url;
+                    }
+
+                    var uri = new Uri(url);
+                    // ดึงเฉพาะชื่อเว็บไซต์ (host) และตัด www. ออก (ถ้ามี)
+                    return uri.Host.StartsWith("www.") ? uri.Host.Substring(4) : uri.Host;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }).ToList();
+            this.tempWebList = websiteNames.Where(p => !string.IsNullOrEmpty(p)).Distinct().OrderBy(o => o).ToList();
+            this.weblistlb.DataSource = this.tempWebList;
             this.searchtxt.Select();
             this.searchtxt.Focus();
             search();
@@ -350,6 +379,37 @@ namespace UpdateMyList.Forms
 
             var stsNotEqrdb = this.stsnoteqrdb.Checked;
             var stsEqrdb = this.stseqrdb.Checked;
+
+            if (this.myLists != null)
+            {
+                var urls = this.myLists.Select(s => s.listLink).ToList();
+                var websiteNames = urls.Select(url =>
+                {
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        if (url.StartsWith("D:"))
+                        {
+                            return string.Empty;
+                        }
+                        // ตรวจสอบและเพิ่ม http:// ถ้าไม่มี protocol
+                        if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            url = "http://" + url;
+                        }
+
+                        var uri = new Uri(url);
+                        // ดึงเฉพาะชื่อเว็บไซต์ (host) และตัด www. ออก (ถ้ามี)
+                        return uri.Host.StartsWith("www.") ? uri.Host.Substring(4) : uri.Host;
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }).ToList();
+                this.tempWebList = websiteNames.Where(p => !string.IsNullOrEmpty(p)).Distinct().ToList();
+                this.weblistlb.DataSource = this.tempWebList;
+
+            }
 
             var searchName = this.searchtxt.Text.ToUpper();
             if (_model != null)
@@ -539,14 +599,15 @@ namespace UpdateMyList.Forms
                 {
                     if (this.pageCount == this.pageSelect)
                     {
-                        if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
-                        {
-                            last = this.totalCount;
-                        }
-                        else
-                        {
-                            last = this.totalCountAfterFilter;
-                        }
+                        //if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                        //{
+                        //    last = this.totalCount;
+                        //}
+                        //else
+                        //{
+                        //    last = this.totalCountAfterFilter;
+                        //}
+                        last = this.totalCountAfterFilter;
                         first = (last - (maxDataInPage ?? 0)) + 1;
                     }
                     else
@@ -555,14 +616,16 @@ namespace UpdateMyList.Forms
                         first = (last - (maxDataInPage ?? 0 )) + 1;
                     }
                 }
-                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
-                {
-                    labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCount}";
-                }
-                else
-                {
-                    labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCountAfterFilter}";
-                }
+                //if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                //{
+                //    labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCount}";
+                //}
+                //else
+                //{
+                //    labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCountAfterFilter}";
+                //}
+                labelcountpage.Text = $"P:{first}-{last}, TP:{maxDataInPage}, TA:{this.totalCountAfterFilter}";
+                
             }
             catch (Exception)
             {
@@ -638,7 +701,7 @@ namespace UpdateMyList.Forms
         private void openLink(int rowIndex)
         {
             var myListId = (int)dataGridView1.Rows[rowIndex].Cells[0].Value;
-            var data = _uow.MyListRepository.Read().FirstOrDefault(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
+            var data = _uow.MyListRepository.ReadByPredicate(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
             var url = data?.listLink;
             Process.Start(url);
         }
@@ -646,6 +709,7 @@ namespace UpdateMyList.Forms
         private void searchbtn_Click(object sender, EventArgs e)
         {
             search();
+            CalPage();
         }
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
@@ -743,7 +807,7 @@ namespace UpdateMyList.Forms
                 var myListId = (int)dataGridView1.Rows[rowindex].Cells[columnindex].Value;
                 if (myListId > 0)
                 {
-                    var data = _uow.MyListRepository.Read().FirstOrDefault(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
+                    var data = _uow.MyListRepository.ReadByPredicate(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
 
                     this.nametxt.Text = data.listName;
                     this.ePtxt.Text = data.listEP;
@@ -794,7 +858,7 @@ namespace UpdateMyList.Forms
                 var myListId = (int)dataGridView1.Rows[rowindex].Cells[columnindex].Value;
                 if (myListId > 0)
                 {
-                    var data = _uow.MyListRepository.Read().FirstOrDefault(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
+                    var data = _uow.MyListRepository.ReadByPredicate(p => p.listTypeId == _model.listTypeId && p.listCode == myListId);
 
                     this.nametxt.Text = data.listName;
                     this.ePtxt.Text = data.listEP;
@@ -1403,10 +1467,12 @@ namespace UpdateMyList.Forms
         {
             this.pageCount = 0;
             this.lbpage.DataSource = null;
+            var stseq = this.stseqrdb.Checked;
+            var stsnoteq = this.stsnoteqrdb.Checked;
             if (this.countData > 0)
             {
                 var dataCount = 0;
-                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0)
+                if (string.IsNullOrEmpty(this.searchtxt.Text) && this.stslb.SelectedIndex == 0 && this.seasonlb.SelectedIndex == 0 && this.genrelb.SelectedIndex == 0 && !stseq && !stsnoteq)
                 {
                     dataCount = this.totalCount;
                 }
@@ -1492,7 +1558,7 @@ namespace UpdateMyList.Forms
             {
                 try
                 {
-                    var dataGroup = _uow.GenreGroupRepository.Read().Where(p => p.listId == this.myListId).ToList();
+                    var dataGroup = _uow.GenreGroupRepository.ReadAllByPredicate(p => p.listId == this.myListId).ToList();
                     //var data = _uow.MyListRepository.Read().FirstOrDefault(p => p.listId == this.myListId);
                     if (dataGroup != null && dataGroup.Count > 0)
                     {
@@ -1528,6 +1594,7 @@ namespace UpdateMyList.Forms
         private void notincb_CheckedChanged(object sender, EventArgs e)
         {
             search();
+            CalPage();
         }
 
         private void searchSeaTxt_TextChanged(object sender, EventArgs e)
@@ -1744,6 +1811,7 @@ namespace UpdateMyList.Forms
         private void stseqsb_CheckedChanged(object sender, EventArgs e)
         {
             search();
+            CalPage();
         }
 
         private void genreclb_Click(object sender, EventArgs e)
@@ -2107,6 +2175,61 @@ namespace UpdateMyList.Forms
         private void copybtn_Click(object sender, EventArgs e)
         {
             copy(dataGridView1.CurrentCell.RowIndex);
+        }
+
+        private void webListSelect() 
+        {
+            var select = this.weblistlb.SelectedItem.ToString();
+            this.searchtxt.Text = select;
+            this.myListtap.SelectedTab = listtap;
+            this.searchlistwebtxt.Text = string.Empty;
+        }
+        private void weblistlb_DoubleClick(object sender, EventArgs e)
+        {
+            webListSelect();
+        }
+
+        private void searchlistwebtxt_TextChanged(object sender, EventArgs e)
+        {
+            var key = this.searchlistwebtxt.Text;
+            var temp = this.tempWebList.Where(p => p.Contains(key.ToLower())).OrderBy(o => o).ToList();
+            this.weblistlb.DataSource = temp;
+            //var temp2 = new List<string>();
+
+
+        }
+
+        private void searchlistwebtxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                webListSelect();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            if (e.KeyCode == Keys.PageUp)
+            {
+                var maxIndex = this.weblistlb.Items.Count - 1;
+                var currIndex = this.weblistlb.SelectedIndex;
+                if (currIndex > 0)
+                {
+                    this.weblistlb.SelectedIndex = currIndex - 1;
+                }
+            }
+            if (e.KeyCode == Keys.PageDown)
+            {
+                var maxIndex = this.weblistlb.Items.Count - 1;
+                var currIndex = this.weblistlb.SelectedIndex;
+                if (currIndex < maxIndex)
+                {
+                    this.weblistlb.SelectedIndex = currIndex + 1;
+                }
+            }
+        }
+
+        private void weblistlb_Click(object sender, EventArgs e)
+        {
+            webListSelect();
         }
     }
 }

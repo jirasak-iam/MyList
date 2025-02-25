@@ -11,6 +11,8 @@ namespace UpdateMyList.Entity.Repository
     public interface IBaseRepository<T> where T : class
     {
         IQueryable<T> Read();
+        T ReadByPredicate(Expression<Func<T, bool>> predicate);
+        IQueryable<T> ReadAllByPredicate(Expression<Func<T, bool>> predicate);
         T ReadByCreate(T t);
         T ReadById(object id);
         void Create(T t);
@@ -32,6 +34,14 @@ namespace UpdateMyList.Entity.Repository
         public virtual IQueryable<T> Read()
         {
             return DbSet;
+        }
+        public virtual T ReadByPredicate(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().FirstOrDefault(predicate);
+        }
+        public virtual IQueryable<T> ReadAllByPredicate(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Where(predicate);
         }
         public T ReadByCreate(T t)
         {

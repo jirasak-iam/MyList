@@ -28,7 +28,7 @@ namespace UpdateMyList.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+            var config = _uow.ConfigMyListRepository.ReadByPredicate(p => p.ConfigId == 1);
             var dataPerPage = config.DataPerPage ?? 0;
             var sortmode = config.sortmode.Split(',');
             var sortcolumn = sortmode.Length == 2 ? sortmode[0] : "";
@@ -104,7 +104,7 @@ namespace UpdateMyList.Forms
         }
         private void listTypelb_DoubleClick(object sender, EventArgs e)
         {
-            var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+            var config = _uow.ConfigMyListRepository.ReadByPredicate(p => p.ConfigId == 1);
             if (this.allrbtn.Checked)
             {
                 config.DataPerPage = null;
@@ -131,7 +131,7 @@ namespace UpdateMyList.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                var config = _uow.ConfigMyListRepository.Read().FirstOrDefault();
+                var config = _uow.ConfigMyListRepository.ReadByPredicate(p => p.ConfigId == 1);
                 if (this.allrbtn.Checked)
                 {
                     config.DataPerPage = null;

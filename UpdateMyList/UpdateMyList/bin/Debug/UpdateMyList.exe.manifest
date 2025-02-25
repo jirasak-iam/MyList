@@ -90,14 +90,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateMyList.exe" size="452096">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateMyList.exe" size="456192">
       <assemblyIdentity name="UpdateMyList" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ohpBsP0Ajv6Kkyz4qsqTmduxJth9KqJx/FkIKtL5+MM=</dsig:DigestValue>
+        <dsig:DigestValue>mwHor09YjwfLTsVAYk9YdfDlLLu1XA7jW4UWdW8nJcg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

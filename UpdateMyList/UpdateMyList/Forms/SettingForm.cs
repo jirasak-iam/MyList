@@ -414,7 +414,7 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.StsMastRepository.Read().FirstOrDefault(p => p.stsCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        var chqdup = _uow.StsMastRepository.ReadByPredicate(p => p.stsCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
                             var data = new StsMast
@@ -463,7 +463,7 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.ListTypeMastRepository.Read().FirstOrDefault(p => p.listTypeCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        var chqdup = _uow.ListTypeMastRepository.ReadByPredicate(p => p.listTypeCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
                             var data = new ListTypeMast
@@ -510,7 +510,7 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.GenreMastRepository.Read().FirstOrDefault(p => p.genCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        var chqdup = _uow.GenreMastRepository.ReadByPredicate(p => p.genCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
                             var data = new GenreMast
@@ -556,7 +556,7 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.SeasonMastRepository.Read().FirstOrDefault(p => p.seaCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        var chqdup = _uow.SeasonMastRepository.ReadByPredicate(p => p.seaCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
                             var data = new SeasonMast
@@ -660,7 +660,7 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.MapSetingParamRepository.Read().FirstOrDefault(p => p.mapCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        var chqdup = _uow.MapSetingParamRepository.ReadByPredicate(p => p.mapCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
                             var data = new MapSetingParam
@@ -709,7 +709,7 @@ namespace UpdateMyList.Forms
                     }
                     else
                     {
-                        var chqdup = _uow.ConsumeTypeRepository.Read().FirstOrDefault(p => p.consumeTypeCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
+                        var chqdup = _uow.ConsumeTypeRepository.ReadByPredicate(p => p.consumeTypeCode.ToUpper().Equals(this.codetxt.Text.ToUpper()));
                         if (chqdup is null)
                         {
                             var data = new ConsumeTypeMast
