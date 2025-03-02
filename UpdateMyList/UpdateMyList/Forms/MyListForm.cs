@@ -327,21 +327,30 @@ namespace UpdateMyList.Forms
             var urls = this.myLists.Select(s => s.listLink).ToList();
             var websiteNames = urls.Select(url =>
             {
-                if (!string.IsNullOrEmpty(url))
+                if (!string.IsNullOrEmpty(url) && !string.IsNullOrWhiteSpace(url))
                 {
-                    if (url.StartsWith("D:"))
+                    try
+                    {
+                        if (url.StartsWith("D:") || url.StartsWith("C:"))
+                        {
+                            return url;
+                        }
+                        // ตรวจสอบและเพิ่ม http:// ถ้าไม่มี protocol
+                        if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            url = "http://" + url;
+                        }
+
+                        var uri = new Uri(url);
+                        // ดึงเฉพาะชื่อเว็บไซต์ (host) และตัด www. ออก (ถ้ามี)
+                        return uri.Host.StartsWith("www.") ? uri.Host.Substring(4) : uri.Host;
+                    }
+                    catch (Exception)
                     {
                         return string.Empty;
                     }
-                    // ตรวจสอบและเพิ่ม http:// ถ้าไม่มี protocol
-                    if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                    {
-                        url = "http://" + url;
-                    }
 
-                    var uri = new Uri(url);
-                    // ดึงเฉพาะชื่อเว็บไซต์ (host) และตัด www. ออก (ถ้ามี)
-                    return uri.Host.StartsWith("www.") ? uri.Host.Substring(4) : uri.Host;
+
                 }
                 else
                 {
@@ -385,28 +394,37 @@ namespace UpdateMyList.Forms
                 var urls = this.myLists.Select(s => s.listLink).ToList();
                 var websiteNames = urls.Select(url =>
                 {
-                    if (!string.IsNullOrEmpty(url))
+                    if (!string.IsNullOrEmpty(url) && !string.IsNullOrWhiteSpace(url))
                     {
-                        if (url.StartsWith("D:"))
+                        try
+                        {
+                            if (url.StartsWith("D:") || url.StartsWith("C:"))
+                            {
+                                return url;
+                            }
+                            // ตรวจสอบและเพิ่ม http:// ถ้าไม่มี protocol
+                            if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                            {
+                                url = "http://" + url;
+                            }
+
+                            var uri = new Uri(url);
+                            // ดึงเฉพาะชื่อเว็บไซต์ (host) และตัด www. ออก (ถ้ามี)
+                            return uri.Host.StartsWith("www.") ? uri.Host.Substring(4) : uri.Host;
+                        }
+                        catch (Exception)
                         {
                             return string.Empty;
                         }
-                        // ตรวจสอบและเพิ่ม http:// ถ้าไม่มี protocol
-                        if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                        {
-                            url = "http://" + url;
-                        }
-
-                        var uri = new Uri(url);
-                        // ดึงเฉพาะชื่อเว็บไซต์ (host) และตัด www. ออก (ถ้ามี)
-                        return uri.Host.StartsWith("www.") ? uri.Host.Substring(4) : uri.Host;
+                        
+                        
                     }
                     else
                     {
                         return string.Empty;
                     }
                 }).ToList();
-                this.tempWebList = websiteNames.Where(p => !string.IsNullOrEmpty(p)).Distinct().ToList();
+                this.tempWebList = websiteNames.Where(p => !string.IsNullOrEmpty(p)).Distinct().OrderBy(o => o).ToList();
                 this.weblistlb.DataSource = this.tempWebList;
 
             }
